@@ -9,7 +9,18 @@
             font-family: Arial, sans-serif;
             margin: 20px;
         }
+        #menu {
+            margin-bottom: 20px;
+        }
 
+        #menu a {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            border-radius: 5px;
+        }
         #logo {
             position: fixed;
             top: 40px; /* Ajuste conforme necessário */
@@ -49,7 +60,8 @@
     </style>
 </head>
 <body>
-    <img id="logo" src="./logo.jpg" alt="Logo da Empresa">
+   
+    <img id="logo" src="/logo.jpg" alt="Logo da Empresa">
 
     <div id="total-ventas">
         <p>Total de Vendas do día: <span id="total-amount">0</span></p>
@@ -71,7 +83,7 @@
     <table id="detalle-ventas">
         <tr>
             <th>Equipe</th>
-            <th>Quantia de Vendas</th>
+            <th>Quantia de Ventas</th>
             <th>Agente</th>
             <th>Data</th>
             <th>Hora</th>
@@ -79,7 +91,9 @@
         <!-- Puedes eliminar las filas existentes si deseas comenzar desde cero -->
     </table>
 
-    <button id="descargar-informe" onclick="descargarInforme()">Descargar Informe</button>
+    <button id="menu" onclick="descargarInforme()">Descargar Informe</button> <div id="menu">
+        <a href="#" onclick="abrirPanelControl()">Panel de Control</a>
+    </div>
 
     <script>
         // Inicializa el total de ventas en 0
@@ -130,7 +144,7 @@
             return fecha.toLocaleDateString('es-ES', options);
         }
 
-        function obtenerHoraActual() {
+        function obtenerHoraActual() { 
             var fecha = new Date();
             var options = { hour: 'numeric', minute: 'numeric', second: 'numeric' };
             return fecha.toLocaleTimeString('es-ES', options);
@@ -144,5 +158,14 @@
             XLSX.writeFile(wb, 'informe_ventas.xlsx');
         }
     </script>
+     <script>
+        // Función para abrir el enlace del Panel de Control
+        function abrirPanelControl() {
+            window.open('https://twistar.my.canva.site/dashboard', '_blank');
+        }
+
+        // Resto del código existente ...
+    </script>
 </body>
 </html>
+
