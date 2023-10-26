@@ -5,10 +5,75 @@
     <title>Vendas Twistar by Jorge</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
     <style>
+        
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 5px;
         }
+        nav {
+            background-color: #55aee9;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease;
+}
+
+nav a:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.911);
+}
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        h1, h2 {
+            color: #888484;
+        }
+
+        section {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 0px rgba(60, 122, 151, 0.658);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            padding: 8px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: #333;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+        }
+
+        #resultado {
+            margin-top: 15px;
+        }
+
         #menu {
             margin-bottom: 20px;
         }
@@ -60,7 +125,13 @@
     </style>
 </head>
 <body>
-   
+    <nav>
+        <ul>
+            <li><a href="index.html">Página Inicial</a></li>
+            <li><a href="meta.html">Calculadora de Meta</a></li>
+            <!-- Adicione mais itens conforme necessário -->
+        </ul>
+    </nav>
     <img id="logo" src="./logo.jpg" alt="Logo da Empresa">
 
     <div id="total-ventas">
@@ -69,13 +140,13 @@
 
     <form id="input-form">
         <label for="equipo-input">Equipe:</label>
-        <input type="text" id="equipo-input" placeholder="Equipe">
+        <input type="text" id="equipo-input" placeholder="Nome da equipe">
 
         <label for="cantidad-input">Quantia de Vendas:</label>
         <input type="number" id="cantidad-input" placeholder="Quantia">
 
         <label for="agente-input">Agente:</label>
-        <input type="text" id="agente-input" placeholder="Agente">
+        <input type="text" id="agente-input" placeholder="Nome do Agente">
 
         <button type="button" onclick="agregarVenta()">Agregar Venda</button>
     </form>
