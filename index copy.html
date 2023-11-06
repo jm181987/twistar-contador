@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Vendas Twistar by Jorge</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/openai/dist/openai.js"></script>
+    
+    <style>
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 5px;
+        }
+        nav {
+            background-color: #30536b;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease;
+}
+
+nav a:hover {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.911);
+}
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        h1, h2 {
+            color: #888484;
+        }
+
+        section {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 0px rgba(60, 122, 151, 0.658);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            padding: 8px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: #333;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+        }
+
+        #resultado {
+            margin-top: 15px;
+        }
+
+        #menu {
+            margin-bottom: 20px;
+        }
+
+        #menu a {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            border-radius: 5px;
+        }
+        #logo {
+            position: fixed;
+            top: 40px; /* Ajuste conforme necessário */
+            right: 40px; /* Ajuste conforme necessário */
+            max-width: 100px; /* Ajuste conforme necessário */
+            max-height: 100px; /* Ajuste conforme necessário */
+        }
+
+        #total-ventas {
+            background-color: #729cda;
+            color: white;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-size: 40px;
+        }
+
+        #detalle-ventas {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #detalle-ventas th, #detalle-ventas td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        #detalle-ventas th {
+            background-color: #729cda;
+            color: white;
+        }
+
+        #input-form {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Página Inicial</a></li>
+            <li><a href="cripto.html">Valores principais Criptos</a></li>
+            <li><a href="acoes.html">Açoes HEATMAP </a></li>
+            <li><a onclick="abrirPanelControl()"> Dashboard Vendas </a></li>
+            <li><a onclick="abrirNoticias()"> Noticias</a></li>
+            <li><a href="meta.html">Calculadora de Meta</a></li>
+            <!-- Adicione mais itens conforme necessário -->
+        </ul>
+    </nav>
+    <img id="logo" src="./logo.jpg" alt="Logo da Empresa">
+
+    <div id="total-ventas">
+        <p>Total de Vendas do día: <span id="total-amount">0</span></p>
+    </div>
+
+    <form id="input-form">
+        <label for="equipo-input">Equipe:</label>
+        <input type="text" id="equipo-input" placeholder="Nome da equipe">
+
+        <label for="cantidad-input">Quantia de Vendas:</label>
+        <input type="number" id="cantidad-input" placeholder="Quantia">
+
+        <label for="agente-input">Agente:</label>
+        <input type="text" id="agente-input" placeholder="Nome do Agente">
+
+        <button type="button" onclick="agregarVenta()">Agregar Venda</button>
+    </form>
+
+    <table id="detalle-ventas">
+        <tr>
+            <th>Equipe</th>
+            <th>Quantia de Ventas</th>
+            <th>Agente</th>
+            <th>Data</th>
+            <th>Hora</th>
+        </tr>
+        <!-- Puedes eliminar las filas existentes si deseas comenzar desde cero -->
+    </table>
+
+    <button id="menu" onclick="descargarInforme()">Descargar Informe</button> <div id="menu">
+        
+    </div>
+
+    <script>
+        // Inicializa el total de ventas en 0
+        var totalVentas = 0;
+
+        // Actualiza el total de ventas en la página
+        document.getElementById('total-amount').textContent = totalVentas;
+
+        function agregarVenta() {
+            var equipoInput = document.getElementById('equipo-input').value;
+            var cantidadInput = parseInt(document.getElementById('cantidad-input').value);
+            var agenteInput = document.getElementById('agente-input').value;
+
+            // Validación simple para asegurarse de que se ingresen valores
+            if (equipoInput && !isNaN(cantidadInput) && agenteInput) {
+                // Crea una nueva fila en la tabla con los valores ingresados y la fecha y hora actual
+                var newRow = document.getElementById('detalle-ventas').insertRow(-1);
+                var cell1 = newRow.insertCell(0);
+                var cell2 = newRow.insertCell(1);
+                var cell3 = newRow.insertCell(2);
+                var cell4 = newRow.insertCell(3);
+                var cell5 = newRow.insertCell(4);
+
+                cell1.textContent = equipoInput;
+                cell2.textContent = cantidadInput;
+                cell3.textContent = agenteInput;
+                cell4.textContent = obtenerFechaActual();
+                cell5.textContent = obtenerHoraActual();
+
+                // Suma la nueva cantidad al total de ventas
+                totalVentas += cantidadInput;
+
+                // Actualiza el total de ventas automáticamente
+                actualizarTotalVentas();
+            } else {
+                alert('Por favor, ingresa valores válidos en todos los campos.');
+            }
+        }
+
+        function actualizarTotalVentas() {
+            // Actualiza el total de ventas en la página
+            document.getElementById('total-amount').textContent = totalVentas;
+        }
+
+        function obtenerFechaActual() {
+            var fecha = new Date();
+            var options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+            return fecha.toLocaleDateString('es-ES', options);
+        }
+
+        function obtenerHoraActual() { 
+            var fecha = new Date();
+            var options = { hour: 'numeric', minute: 'numeric', second: 'numeric' };
+            return fecha.toLocaleTimeString('es-ES', options);
+        }
+
+        function descargarInforme() {
+            // Crea una hoja de cálculo en formato Excel
+            var wb = XLSX.utils.table_to_book(document.getElementById('detalle-ventas'));
+
+            // Descarga el archivo Excel
+            XLSX.writeFile(wb, 'informe_ventas.xlsx');
+        }
+    </script>
+    <script>
+        // Función para abrir el enlace del Panel de Control
+        function abrirPanelControl() {
+            window.open('https://twistar.my.canva.site/dashboard', '_blank');
+        }
+    
+        // Resto del código existente ...
+    </script>
+    <script>
+        // Función para abrir el enlace del Panel de Control
+        function abrirNoticias() {
+            window.open('https://www.infomoney.com.br', '_blank');
+        }
+    
+        // Resto del código existente ...
+    </script>
+    </body>
+</html>
+

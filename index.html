@@ -2,9 +2,11 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Vendas Twistar by Jorge</title>
+    <title>Rebatedor de objeçoes</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/openai/dist/openai.js"></script>
+    <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+
     
     <style>
         
@@ -18,6 +20,13 @@
             padding: 10px;
             text-align: center;
         }
+        .titulo {
+            background-color: #30536b;
+            color: white;
+            padding: 2px;
+            text-align: center;
+        }
+
         nav a {
     color: white;
     text-decoration: none;
@@ -48,7 +57,7 @@ nav a:hover {
 
         section {
             background-color: #fff;
-            padding: 20px;
+            padding: 5px;
             margin: 20px;
             border-radius: 8px;
             box-shadow: 0 0 0px rgba(60, 122, 151, 0.658);
@@ -90,7 +99,7 @@ nav a:hover {
         }
         #logo {
             position: fixed;
-            top: 40px; /* Ajuste conforme necessário */
+            top: 170px; /* Ajuste conforme necessário */
             right: 40px; /* Ajuste conforme necessário */
             max-width: 100px; /* Ajuste conforme necessário */
             max-height: 100px; /* Ajuste conforme necessário */
@@ -129,7 +138,7 @@ nav a:hover {
 <body>
     <nav>
         <ul>
-            <li><a href="index.html">Página Inicial</a></li>
+            <li><a href="index.html">Rebatedor de Objeçoes</a></li>
             <li><a href="cripto.html">Valores principais Criptos</a></li>
             <li><a href="acoes.html">Açoes HEATMAP </a></li>
             <li><a onclick="abrirPanelControl()"> Dashboard Vendas </a></li>
@@ -140,101 +149,33 @@ nav a:hover {
     </nav>
     <img id="logo" src="./logo.jpg" alt="Logo da Empresa">
 
-    <div id="total-ventas">
-        <p>Total de Vendas do día: <span id="total-amount">0</span></p>
-    </div>
+    <script src="pdf.js"></script>
+</head>
+<div><h1 class="titulo">APERTE A LUPA ESCREVA UMA PALAVRA QUE DESCREVA A OBJEÇAO</h1></div>
+<iframe id="pdfViewer" src="objecoes.pdf" width="100%" height="650px" style="border: none;"></iframe>
 
-    <form id="input-form">
-        <label for="equipo-input">Equipe:</label>
-        <input type="text" id="equipo-input" placeholder="Nome da equipe">
 
-        <label for="cantidad-input">Quantia de Vendas:</label>
-        <input type="number" id="cantidad-input" placeholder="Quantia">
+<script>
+    var pdfViewer = document.getElementById('pdfViewer');
+    var searchInput = document.getElementById('searchInput');
 
-        <label for="agente-input">Agente:</label>
-        <input type="text" id="agente-input" placeholder="Nome do Agente">
+    pdfViewer.onload = function () {
+        var pdfWindow = pdfViewer.contentWindow;
+        var pdfDocument = pdfWindow.PDFViewerApplication.pdfDocument;
 
-        <button type="button" onclick="agregarVenta()">Agregar Venda</button>
-    </form>
+        // Configurar la búsqueda en el visor de PDF
+        var findController = new pdfWindow.PDFViewerApplication.findController({ pdfViewer: pdfWindow.PDFViewer });
+        findController.setFindBar(searchInput);
 
-    <table id="detalle-ventas">
-        <tr>
-            <th>Equipe</th>
-            <th>Quantia de Ventas</th>
-            <th>Agente</th>
-            <th>Data</th>
-            <th>Hora</th>
-        </tr>
-        <!-- Puedes eliminar las filas existentes si deseas comenzar desde cero -->
-    </table>
+        // Iniciar la búsqueda cuando se escriba en el campo de búsqueda
+        searchInput.addEventListener('input', function () {
+            findController.executeCommand('find', { query: searchInput.value, caseSensitive: false, findPrevious: undefined });
+        });
+    };
+</script>
 
-    <button id="menu" onclick="descargarInforme()">Descargar Informe</button> <div id="menu">
-        
-    </div>
 
-    <script>
-        // Inicializa el total de ventas en 0
-        var totalVentas = 0;
-
-        // Actualiza el total de ventas en la página
-        document.getElementById('total-amount').textContent = totalVentas;
-
-        function agregarVenta() {
-            var equipoInput = document.getElementById('equipo-input').value;
-            var cantidadInput = parseInt(document.getElementById('cantidad-input').value);
-            var agenteInput = document.getElementById('agente-input').value;
-
-            // Validación simple para asegurarse de que se ingresen valores
-            if (equipoInput && !isNaN(cantidadInput) && agenteInput) {
-                // Crea una nueva fila en la tabla con los valores ingresados y la fecha y hora actual
-                var newRow = document.getElementById('detalle-ventas').insertRow(-1);
-                var cell1 = newRow.insertCell(0);
-                var cell2 = newRow.insertCell(1);
-                var cell3 = newRow.insertCell(2);
-                var cell4 = newRow.insertCell(3);
-                var cell5 = newRow.insertCell(4);
-
-                cell1.textContent = equipoInput;
-                cell2.textContent = cantidadInput;
-                cell3.textContent = agenteInput;
-                cell4.textContent = obtenerFechaActual();
-                cell5.textContent = obtenerHoraActual();
-
-                // Suma la nueva cantidad al total de ventas
-                totalVentas += cantidadInput;
-
-                // Actualiza el total de ventas automáticamente
-                actualizarTotalVentas();
-            } else {
-                alert('Por favor, ingresa valores válidos en todos los campos.');
-            }
-        }
-
-        function actualizarTotalVentas() {
-            // Actualiza el total de ventas en la página
-            document.getElementById('total-amount').textContent = totalVentas;
-        }
-
-        function obtenerFechaActual() {
-            var fecha = new Date();
-            var options = { year: 'numeric', month: 'numeric', day: 'numeric' };
-            return fecha.toLocaleDateString('es-ES', options);
-        }
-
-        function obtenerHoraActual() { 
-            var fecha = new Date();
-            var options = { hour: 'numeric', minute: 'numeric', second: 'numeric' };
-            return fecha.toLocaleTimeString('es-ES', options);
-        }
-
-        function descargarInforme() {
-            // Crea una hoja de cálculo en formato Excel
-            var wb = XLSX.utils.table_to_book(document.getElementById('detalle-ventas'));
-
-            // Descarga el archivo Excel
-            XLSX.writeFile(wb, 'informe_ventas.xlsx');
-        }
-    </script>
+    
     <script>
         // Función para abrir el enlace del Panel de Control
         function abrirPanelControl() {
