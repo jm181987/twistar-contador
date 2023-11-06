@@ -133,17 +133,28 @@ nav a:hover {
         #input-form {
             margin-bottom: 20px;
         }
+        @media only screen and (max-width: 600px) {
+    /* Estilos para telas pequenas (ex. smartphones) */
+}
+
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+    /* Estilos para telas médias (ex. tablets) */
+}
+
+@media only screen and (min-width: 1025px) {
+    /* Estilos para telas grandes (ex. desktops) */
+}
     </style>
 </head>
 <body>
     <nav>
         <ul>
-            <li><a href="index.html">Rebatedor de Objeçoes</a></li>
-            <li><a href="cripto.html">Valores principais Criptos</a></li>
+            <li><a href="index.html">Rebater Objeçoes</a></li>
+            <li><a href="cripto.html">Valores Criptos</a></li>
             <li><a href="acoes.html">Açoes HEATMAP </a></li>
             <li><a onclick="abrirPanelControl()"> Dashboard Vendas </a></li>
             <li><a onclick="abrirNoticias()"> Noticias</a></li>
-            <li><a href="meta.html">Calculadora de Meta</a></li>
+            <li><a href="meta.html">% Meta</a></li>
             <!-- Adicione mais itens conforme necessário -->
         </ul>
     </nav>
@@ -151,7 +162,7 @@ nav a:hover {
 
     <script src="pdf.js"></script>
 </head>
-<div><h1 class="titulo">APERTE A LUPA ESCREVA UMA PALAVRA QUE DESCREVA A OBJEÇAO</h1></div>
+<div><h1 class="titulo">APERTE A LUPA, ESCREVA UMA PALAVRA QUE DESCREVA A OBJEÇAO</h1></div>
 <iframe id="pdfViewer" src="objecoes.pdf" width="100%" height="650px" style="border: none;"></iframe>
 
 
