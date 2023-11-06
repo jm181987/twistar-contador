@@ -104,34 +104,12 @@ nav a:hover {
 </nav>
 
 <!-- Conteúdo da Página -->
-<h1>Bem-vindo</h1>
+<h1>Valores Principais Criptos</h1>
 
-<!-- Seção da Calculadora de Meta -->
-<section>
-    <h2>Calculadora de Meta de Vendas</h2>
-    
-    <label for="vendas">Vendas Realizadas:</label>
-    <input type="number" id="vendas" placeholder="Digite o número de vendas">
 
-    <label for="meta">Meta:</label>
-    <input type="number" id="meta" placeholder="Digite a meta de vendas">
 
-    <button onclick="calcularPorcentagem()">Calcular Porcentagem</button>
-
-    <div id="resultado"></div>
-</section>
-
-<!-- Script para a Calculadora -->
-<script>
-    function calcularPorcentagem() {
-        var vendas = document.getElementById('vendas').value;
-        var meta = document.getElementById('meta').value;
-
-        var porcentagemAtingida = (vendas / meta) * 100;
-
-        document.getElementById('resultado').innerHTML = 'Porcentagem atingida: ' + porcentagemAtingida.toFixed(2) + '%';
-    }
-</script>
+<script src="https://widgets.coingecko.com/coingecko-coin-list-widget.js"></script>
+<coingecko-coin-list-widget  coin-ids="bitcoin,ethereum,litecoin,dogecoin,binancecoin,tether,ripple,usd-coin,solana,cardano,monero" currency="usd" locale="pt"></coingecko-coin-list-widget>
 
 <!-- Adicione o link para o script da sua página aqui -->
 
