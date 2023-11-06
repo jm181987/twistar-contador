@@ -97,8 +97,10 @@ nav a:hover {
     <img id="logo" src="./logo.jpg" alt="Logo da Empresa">
     <ul>
         <li><a href="index.html">Página Inicial</a></li>
-        <li><a href="meta.html">Calculadora de Meta</a></li>
         <li><a href="cripto.html">Valores principais Criptos</a></li>
+        <li><a onclick="abrirPanelControl()"> Dashboard Vendas</a></li>
+        <li><a onclick="abrirNoticias()"> Noticias</a></li>
+        <li><a href="meta.html">Calculadora de Meta</a></li>
         <!-- Adicione mais itens conforme necessário -->
     </ul>
 </nav>
@@ -132,7 +134,22 @@ nav a:hover {
         document.getElementById('resultado').innerHTML = 'Porcentagem atingida: ' + porcentagemAtingida.toFixed(2) + '%';
     }
 </script>
+<script>
+    // Función para abrir el enlace del Panel de Control
+    function abrirPanelControl() {
+        window.open('https://twistar.my.canva.site/dashboard', '_blank');
+    }
 
+    // Resto del código existente ...
+</script>
+<script>
+    // Función para abrir el enlace del Panel de Control
+    function abrirNoticias() {
+        window.open('https://www.infomoney.com.br', '_blank');
+    }
+
+    // Resto del código existente ...
+</script>
 <!-- Adicione o link para o script da sua página aqui -->
 
 </body>

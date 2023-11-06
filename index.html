@@ -13,7 +13,7 @@
             margin: 5px;
         }
         nav {
-            background-color: #55aee9;
+            background-color: #30536b;
             color: white;
             padding: 10px;
             text-align: center;
@@ -29,7 +29,7 @@
 }
 
 nav a:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.911);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.911);
 }
         nav ul {
             list-style-type: none;
@@ -130,8 +130,10 @@ nav a:hover {
     <nav>
         <ul>
             <li><a href="index.html">Página Inicial</a></li>
-            <li><a href="meta.html">Calculadora de Meta</a></li>
-            <li><a href="cripto.html">Valores principais Criptos</a></li>
+        <li><a href="cripto.html">Valores principais Criptos</a></li>
+        <li><a onclick="abrirPanelControl()"> Dashboard Vendas</a></li>
+        <li><a onclick="abrirNoticias()"> Noticias</a></li>
+        <li><a href="meta.html">Calculadora de Meta</a></li>
             <!-- Adicione mais itens conforme necessário -->
         </ul>
     </nav>
@@ -166,7 +168,7 @@ nav a:hover {
     </table>
 
     <button id="menu" onclick="descargarInforme()">Descargar Informe</button> <div id="menu">
-        <a href="#" onclick="abrirPanelControl()">Panel de Control</a>
+        
     </div>
 
     <script>
@@ -232,12 +234,20 @@ nav a:hover {
             XLSX.writeFile(wb, 'informe_ventas.xlsx');
         }
     </script>
-     <script>
+    <script>
         // Función para abrir el enlace del Panel de Control
         function abrirPanelControl() {
             window.open('https://twistar.my.canva.site/dashboard', '_blank');
         }
-
+    
+        // Resto del código existente ...
+    </script>
+    <script>
+        // Función para abrir el enlace del Panel de Control
+        function abrirNoticias() {
+            window.open('https://www.infomoney.com.br', '_blank');
+        }
+    
         // Resto del código existente ...
     </script>
     </body>
