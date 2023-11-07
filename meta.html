@@ -19,28 +19,28 @@
             padding: 10px;
             text-align: center;
         }
+
         #logo {
             position: fixed;
-            top: 40px; /* Ajuste conforme necessário */
-            right: 40px; /* Ajuste conforme necessário */
-            max-width: 100px; /* Ajuste conforme necessário */
-            max-height: 100px; /* Ajuste conforme necessário */
+            top: 40px;
+            right: 40px;
+            max-width: 100px;
+            max-height: 100px;
         }
 
-
         nav a {
-    color: white;
-    text-decoration: none;
-    padding: 10px;
-    border: 1px solid #333;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    transition: box-shadow 0.3s ease;
-}
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            transition: box-shadow 0.3s ease;
+        }
 
-nav a:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.911);
-}
+        nav a:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.911);
+        }
 
         nav ul {
             list-style-type: none;
@@ -57,7 +57,7 @@ nav a:hover {
             color: #333;
         }
 
-        section {
+        section, div {
             background-color: #fff;
             padding: 20px;
             margin: 20px;
@@ -81,14 +81,15 @@ nav a:hover {
             padding: 10px 15px;
             border: none;
             cursor: pointer;
+            margin-right: 26px;
         }
 
-        #resultado {
+        #resultado, #resultadoComissao {
             margin-top: 15px;
+            color: green;
+            font-weight: bold;
         }
     </style>
-    <!-- Adicione o link para o estilo do seu Navbar aqui -->
-    <link rel="stylesheet" href="caminho/do/seu/estilo.css">
 </head>
 <body>
 
@@ -102,7 +103,6 @@ nav a:hover {
         <li><a onclick="abrirPanelControl()"> Dashboard Vendas </a></li>
         <li><a onclick="abrirNoticias()"> Noticias</a></li>
         <li><a href="meta.html">% Meta</a></li>
-        <!-- Adicione mais itens conforme necessário -->
     </ul>
 </nav>
 
@@ -112,46 +112,77 @@ nav a:hover {
 <!-- Seção da Calculadora de Meta -->
 <section>
     <h2>Calculadora de Meta de Vendas</h2>
-    
     <label for="vendas">Vendas Realizadas:</label>
     <input type="number" id="vendas" placeholder="Digite o número de vendas">
-
     <label for="meta">Meta:</label>
     <input type="number" id="meta" placeholder="Digite a meta de vendas">
-
     <button onclick="calcularPorcentagem()">Calcular Porcentagem</button>
-
     <div id="resultado"></div>
 </section>
+
+<!-- Seção da Calculadora de Comissão -->
+<div>
+    <h2>Calculadora de Comissão</h2>
+    <label for="valorVenda">Valor total das Venda:</label>
+    <input type="number" id="valorVenda" placeholder="Digite o valor da venda">
+    <label for="numVendas">Número de Vendas:</label>
+    <input type="number" id="numVendas" placeholder="Digite o número de vendas">
+    <label for="bonus250">tenho de 14 a 20 vendas (seleccionar)</label>
+    <input type="checkbox" id="bonus250">
+    <label for="bonus500">tenho 21 ou + vendas (seleccionar)</label>
+    <input type="checkbox" id="bonus500">
+    <button onclick="calcularComissao()">Calcular Comissão</button>
+    <div id="resultadoComissao"></div>
+</div>
 
 <!-- Script para a Calculadora -->
 <script>
     function calcularPorcentagem() {
         var vendas = document.getElementById('vendas').value;
         var meta = document.getElementById('meta').value;
-
         var porcentagemAtingida = (vendas / meta) * 100;
-
         document.getElementById('resultado').innerHTML = 'Porcentagem atingida: ' + porcentagemAtingida.toFixed(2) + '%';
     }
-</script>
-<script>
-    // Función para abrir el enlace del Panel de Control
+
     function abrirPanelControl() {
         window.open('https://twistar.my.canva.site/dashboard', '_blank');
     }
 
-    // Resto del código existente ...
-</script>
-<script>
-    // Función para abrir el enlace del Panel de Control
     function abrirNoticias() {
         window.open('https://www.infomoney.com.br', '_blank');
     }
 
-    // Resto del código existente ...
+    function calcularComissao() {
+        var valorVenda = parseFloat(document.getElementById('valorVenda').value);
+        var numVendas = parseInt(document.getElementById('numVendas').value);
+        var comissao = 0;
+        var bonus = 0;
+
+        if (numVendas >= 1 && numVendas <= 6) {
+            comissao = valorVenda * 0.1;
+        } else if (numVendas >= 7 && numVendas <= 11) {
+            comissao = valorVenda * 0.15;
+        } else if (numVendas >= 12 && numVendas <= 17) {
+            comissao = valorVenda * 0.175;
+        } else if (numVendas >= 18 && numVendas <= 21) {
+            comissao = valorVenda * 0.2;
+        } else if (numVendas >= 22 && numVendas <= 100) {
+            comissao = valorVenda * 0.25;
+        }
+
+        if (document.getElementById('bonus250').checked) {
+            bonus += 250;
+        }
+        if (document.getElementById('bonus500').checked) {
+            bonus += 500;
+        }
+
+        var resultadoFinal = comissao + bonus;
+        var bonusMessage = bonus > 0 ? " Foi acrescentado um bônus de $" + bonus + "." : "";
+
+        document.getElementById('resultadoComissao').innerHTML = 'Total: $' + resultadoFinal.toFixed(2) + bonusMessage;
+    }
 </script>
-<!-- Adicione o link para o script da sua página aqui -->
 
 </body>
 </html>
