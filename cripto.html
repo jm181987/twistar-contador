@@ -88,7 +88,32 @@ nav a:hover {
 
         #resultado {
             margin-top: 15px;
+        
         }
+        .info1 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        
+        }
+        .info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        
+        }
+        .titulo {
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+        
+        }
+       
+       
         @media only screen and (max-width: 600px) {
     /* Estilos para telas pequenas (ex. smartphones) */
 }
@@ -121,14 +146,14 @@ nav a:hover {
 </nav>
 
 <!-- Conteúdo da Página -->
-<h1>Valores Principais Criptos</h1>
+<h1 class="titulo">Valores Principais Criptos</h1>
 
 
 
 <script src="https://widgets.coingecko.com/coingecko-coin-list-widget.js"></script>
-<coingecko-coin-list-widget  coin-ids="bitcoin,ethereum,litecoin,dogecoin,binancecoin,tether,ripple,usd-coin,solana,cardano,monero" currency="usd" height="900" locale="pt" width="900"></coingecko-coin-list-widget>
+<coingecko-coin-list-widget  coin-ids="bitcoin,ethereum,litecoin,dogecoin,binancecoin,tether,ripple,usd-coin,solana,cardano,monero" currency="usd" height="900" locale="pt" width="900" class="info"></coingecko-coin-list-widget>
 <script src="https://widgets.coingecko.com/coingecko-coin-heatmap-widget.js"></script>
-<coingecko-coin-heatmap-widget  height="900" locale="pt" width="900"></coingecko-coin-heatmap-widget>
+<coingecko-coin-heatmap-widget  height="900" locale="pt" width="900" class="info1"></coingecko-coin-heatmap-widget>
 
 
 
