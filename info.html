@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campanhas</title>
+    <link rel="icon" type="image/ico" href="logo.jpg">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            margin: 5px;
+        }
+
+        nav {
+            background-color: #55aee9;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        #logo {
+            position: fixed;
+            top: 40px; /* Ajuste conforme necessário */
+            right: 40px; /* Ajuste conforme necessário */
+            max-width: 100px; /* Ajuste conforme necessário */
+            max-height: 100px; /* Ajuste conforme necessário */
+        }
+
+
+        nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease;
+}
+
+nav a:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.911);
+}
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        section {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            padding: 8px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: #333;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+        }
+
+        #resultado {
+            margin-top: 15px;
+        }
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #000000;
+        }
+        footer a {
+            color: #4446e0;
+            text-decoration: underline;
+        }
+        @media only screen and (max-width: 600px) {
+    /* Estilos para telas pequenas (ex. smartphones) */
+}
+
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+    /* Estilos para telas médias (ex. tablets) */
+}
+
+@media only screen and (min-width: 1025px) {
+    /* Estilos para telas grandes (ex. desktops) */
+}
+    </style>
+    <!-- Adicione o link para o estilo do seu Navbar aqui -->
+    <link rel="stylesheet" href="caminho/do/seu/estilo.css">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav>
+    <img id="logo" src="./logo.jpg" alt="Logo da Empresa">
+    <ul>
+        <li><a href="index.html">Rebater Objeçoes</a></li>
+            <li><a href="cripto.html">Valores Criptos</a></li>
+            <li><a href="acoes.html">Açoes HEATMAP </a></li>
+            <li><a href="info.html">Info Campanhas</a></li>
+            <li><a href="meta.html">% Meta</a></li>
+            <li><a onclick="abrirPanelControl()"> Dashboard Vendas </a></li>
+            <li><a onclick="abrirNoticias()"> Noticias</a></li>
+ 
+        <!-- Adicione mais itens conforme necessário -->
+    </ul>
+</nav>
+<H1 class="titulo">Informaçoes de campanhas</H1>
+
+
+<script>
+    // Función para abrir el enlace del Panel de Control
+    function abrirPanelControl() {
+        window.open('https://twistar.my.canva.site/dashboard', '_blank');
+    }
+
+    // Resto del código existente ...
+</script>
+<script>
+    // Función para abrir el enlace del Panel de Control
+    function abrirNoticias() {
+        window.open('https://www.infomoney.com.br', '_blank');
+    }
+
+    // Resto del código existente ...
+
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela de Informações</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            margin: 5px;
+        }
+        .titulo {
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+        }
+        nav {
+            background-color: #30536b;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            width: auto;
+        }
+        nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    border: 1px solid #c7c3c3;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease;
+}
+
+nav a:hover {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.911);
+}
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            display: inline;
+            margin-right: 20px;
+        }
+        #logo {
+            position: fixed;
+            top: 40px; /* Ajuste conforme necessário */
+            right: 40px; /* Ajuste conforme necessário */
+            max-width: 100px; /* Ajuste conforme necessário */
+            max-height: 100px; /* Ajuste conforme necessário */
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center; /* Agora centralizando o texto */
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Tabela de Informações -->
+<table>
+    <thead>
+        <tr>
+            <th>Campanha</th>
+            <th>Info</th>
+            <th>Funnel</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>AFF_19 / AFF_2958156</td>
+            <td>cripto / petroleo</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>AFF_21 / 037</td>
+            <td>Mercadolivre / Amazon - Acoes stock</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>AFF_29</td>
+            <td>Cripto</td>
+            <td>General Ethereum code</td>
+        </tr>
+        <tr>
+            <td>AFF_2958037</td>
+            <td>Mercadolivre Açoes</td>
+            <td>EMM BR</td>
+        </tr>
+        <tr>
+            <td>AFF_2958094</td>
+            <td>cripto y automacao</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>AFF_2958138</td>
+            <td>petroleo</td>
+            <td>Forex Hype</td>
+        </tr>
+        <tr>
+            <td>AFF_2958151</td>
+            <td>UY LEADS</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>AFF_33</td>
+            <td>amazon/ black friday</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>AFF_35 / 101 / 172</td>
+            <td>Bitcoin - Automatizar</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>AFF_36</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>AFF_38</td>
+            <td>-</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>AFF_46</td>
+            <td>Petroleo / </td>
+            <td>Petrobras</td>
+        </tr>
+        <tr>
+            <td>AFF_6</td>
+            <td>-</td>
+            <td>Ethereum Trader</td>
+        </tr>
+        <tr>
+            <td>AFF_63</td>
+            <td>-</td>
+            <td>Ethereum Code</td>
+        </tr>
+        <tr>
+            <td>AFF_7</td>
+            <td>-</td>
+            <td>GPT Definity /cointrader1000</td>
+        </tr>
+        <tr>
+            <td>AFF_37 / AFF_2958109</td>
+            <td>Cripto</td>
+            <td>Zero One / Gptdefinity / cointrade1000</td>
+        </tr>
+        <tr>
+            <td>AFF_2958085</td>
+            <td>filler</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>AFF_2958068</td>
+            <td>filler</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>AFF_</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
+
+<!-- Adicione o link para o script da sua página aqui -->
+<footer>
+    Desenvolvido por <a href="https://wa.me/59893867429">Jorge Marquez</a>
+</footer>
+</body>
+</html>
