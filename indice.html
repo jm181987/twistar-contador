@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campanhas</title>
+    <title>Indices</title>
     <link rel="icon" type="image/ico" href="logo.jpg">
 
     <style>
@@ -119,20 +119,22 @@ nav a:hover {
     <img id="logo" src="./logo.jpg" alt="Logo da Empresa">
     <ul>
         <li><a href="index.html">Rebater Objeçoes</a></li>
-        <li><a href="cripto.html">Criptos</a></li>
-        <li><a href="acoes.html">Açoes </a></li>
-        <li><a href="forex.html">Forex </a></li>
-        <li><a href="indice.html">Indices </a></li>
-        <li><a href="info.html">Info Campanhas</a></li>
-        <li><a href="meta.html">% Meta</a></li>
-        <li><a href="calen.html">Calendario</a></li>
-        <li><a onclick="abrirPanelControl()"> Painel Vendas </a></li>
-        <li><a onclick="abrirNoticias()"> Noticias</a></li>
+            <li><a href="cripto.html">Criptos</a></li>
+            <li><a href="acoes.html">Açoes </a></li>
+            <li><a href="forex.html">Forex </a></li>
+            <li><a href="indice.html">Indices </a></li>
+            <li><a href="info.html">Info Campanhas</a></li>
+            <li><a href="meta.html">% Meta</a></li>
+            <li><a href="calen.html">Calendario</a></li>
+            <li><a onclick="abrirPanelControl()"> Painel Vendas </a></li>
+            <li><a onclick="abrirNoticias()"> Noticias</a></li>
  
         <!-- Adicione mais itens conforme necessário -->
     </ul>
 </nav>
-<H1 class="titulo">Informaçoes de campanhas</H1>
+<H1 class="titulo">Indices</H1>
+<h5 class="titulo">NAO LIMITADO SO A INDICES PODE VER ACÇOES, FUNDOS, CRIPTO, FOREX, CFD, TÍTULOS, ECONOMIA. <strong>SO USAR A LUPA</strong> </h5>
+
 
 
 <script>
@@ -235,116 +237,31 @@ nav a:hover {
 </head>
 <body>
 
-<!-- Tabela de Informações -->
-<table>
-    <thead>
-        <tr>
-            <th>Campanha</th>
-            <th>Info</th>
-            <th>Funnel</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>AFF_19 / AFF_2958156</td>
-            <td>cripto / petroleo</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>AFF_21 / 037</td>
-            <td>Mercadolivre / Amazon - Acoes stock</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>AFF_29</td>
-            <td>Cripto</td>
-            <td>General Ethereum code</td>
-        </tr>
-        <tr>
-            <td>AFF_2958037</td>
-            <td>Mercadolivre Açoes</td>
-            <td>EMM BR</td>
-        </tr>
-        <tr>
-            <td>AFF_2958094</td>
-            <td>cripto y automacao</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>AFF_2958138</td>
-            <td>petroleo</td>
-            <td>Forex Hype</td>
-        </tr>
-        <tr>
-            <td>AFF_2958151</td>
-            <td>UY LEADS</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>AFF_33</td>
-            <td>amazon/ black friday</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>AFF_35 / 101 / 172</td>
-            <td>Bitcoin - Automatizar</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>AFF_36</td>
-            <td>-</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>AFF_38</td>
-            <td>-</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>AFF_46</td>
-            <td>Petroleo / </td>
-            <td>Petrobras</td>
-        </tr>
-        <tr>
-            <td>AFF_6</td>
-            <td>-</td>
-            <td>Ethereum Trader</td>
-        </tr>
-        <tr>
-            <td>AFF_63</td>
-            <td>-</td>
-            <td>Ethereum Code</td>
-        </tr>
-        <tr>
-            <td>AFF_7</td>
-            <td>-</td>
-            <td>GPT Definity /cointrader1000</td>
-        </tr>
-        <tr>
-            <td>AFF_37 / AFF_2958109</td>
-            <td>Cripto</td>
-            <td>Zero One / Gptdefinity / cointrade1000</td>
-        </tr>
-        <tr>
-            <td>AFF_2958085</td>
-            <td>filler</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>AFF_2958068</td>
-            <td>filler</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>AFF_</td>
-            <td></td>
-            <td></td>
-        </tr>
-    </tbody>
-</table>
-
-</body>
-</html>
+<!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container" style="height:550px;width:100%">
+    <div id="tradingview_dc8b0" style="height:calc(100% - 32px);width:100%"></div>
+    <div class="tradingview-widget-copyright"><a href="https://br.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text"></span></a></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <script type="text/javascript">
+    new TradingView.widget(
+    {
+    "autosize": true,
+    "symbol": "NASDAQ:NDX",
+    "interval": "1",
+    "timezone": "Etc/UTC",
+    "theme": "light",
+    "style": "1",
+    "locale": "br",
+    "enable_publishing": true,
+    "allow_symbol_change": true,
+    "hotlist": true,
+    "calendar": true,
+    "container_id": "tradingview_dc8b0"
+  }
+    );
+    </script>
+  </div>
+  <!-- TradingView Widget END -->
 
 <!-- Adicione o link para o script da sua página aqui -->
 <footer>
