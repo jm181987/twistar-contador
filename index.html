@@ -143,6 +143,28 @@ nav a:hover {
             color: #4446e0;
             text-decoration: underline;
         }
+        .botao-3d {
+  display: inline-block;
+  padding: 5px 15px;
+  font-size: 20px;
+  background-color: #2faac9;
+  color: #ffffff;
+  border-radius: 6px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #000;
+  box-shadow: 0px 3px 0px #00b35a;
+  transition: all 0.2s ease-in-out;
+}
+
+.botao-3d:hover {
+  background-color: #15531d;
+}
+
+.botao-3d:active {
+  position: relative;
+  top: 3px;
+  box-shadow: none;
+}
 
         @media only screen and (max-width: 600px) {
     /* Estilos para telas pequenas (ex. smartphones) */
@@ -159,7 +181,9 @@ nav a:hover {
 </head>
 <body>
     <nav>
-        <ul>
+        <ul><a href="https://talkai.info/pt/chat/" target="_blank" class="botao-3d">
+            IA 
+         </a>
             <li><a href="index.html">Rebater Objeçoes</a></li>
             <li><a href="cripto.html">Criptos</a></li>
             <li><a href="acoes.html">Açoes </a></li>
