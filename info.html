@@ -220,16 +220,27 @@ nav a:hover {
             border-collapse: collapse;
             width: 80%;
             margin: 20px auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
         }
 
         th, td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: center; /* Agora centralizando o texto */
+            transition: background-color 0.3s ease; /* Adicionando uma transição de cor */
         }
 
         th {
             background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #81afce; /* Altere a cor conforme necessário */
+        }
+
+        table:hover {
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
