@@ -8,6 +8,47 @@
     <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
 
     <link rel="icon" type="image/ico" href="logo.jpg">
+    <script>
+        // Função para verificar se o cookie 'visited' está presente
+        function checkVisited() {
+          var visited = getCookie('visited');
+          
+          // Se o cookie não estiver presente, exiba o pop-up e defina o cookie
+          if (!visited) {
+            // Exiba o pop-up (substitua este alert pelo código do seu pop-up)
+            alert('Bem-vindo ao universo da TWISTAR! Estamos aqui para tornar sua experiência de venda incrível. Explore, descubra e aproveite ao máximo o site de ajuda. Se precisar de assistência, e so me chamar! ');
+            
+            // Defina o cookie 'visited' com a data de expiração em 365 dias
+            setCookie('visited', 'true', 365);
+          }
+        }
+      
+        // Função para obter o valor de um cookie
+        function getCookie(name) {
+          var nameEQ = name + "=";
+          var ca = document.cookie.split(';');
+          for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+          }
+          return null;
+        }
+      
+        // Função para definir um cookie
+        function setCookie(name, value, days) {
+          var expires = "";
+          if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+          }
+          document.cookie = name + "=" + value + expires + "; path=/";
+        }
+      
+        // Chame a função checkVisited quando a página carregar
+        window.onload = checkVisited;
+      </script>
 
     <style>
         
