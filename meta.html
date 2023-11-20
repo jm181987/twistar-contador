@@ -1,127 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>META</title>
-    <link rel="icon" type="image/ico" href="logo.jpg">
+    <link rel="icon" type="image/ico" href="logo.jpg" />
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            margin: 5px;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        margin: 5px;
+      }
 
-        nav {
-            background-color: #30536b;
-            color: white;
-            padding: 10px;
-            text-align: center;
-        }
+      nav {
+        background-color: #30536b;
+        color: white;
+        padding: 10px;
+        text-align: center;
+      }
 
-        #logo {
-            position: fixed;
-            top: 40px;
-            right: 40px;
-            max-width: 100px;
-            max-height: 100px;
-        }
+      #logo {
+        position: fixed;
+        top: 40px;
+        right: 40px;
+        max-width: 100px;
+        max-height: 100px;
+      }
 
-        nav a {
-    color: white;
-    text-decoration: none;
-    padding: 10px;
-    border: 1px solid #c7c3c3;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    transition: box-shadow 0.3s ease, background-color 0.3s ease;
-}
+      nav a {
+        color: white;
+        text-decoration: none;
+        padding: 10px;
+        border: 1px solid #c7c3c3;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        transition: box-shadow 0.3s ease, background-color 0.3s ease;
+      }
 
-nav a:hover {
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.911), 0 0 20px rgba(255, 255, 255, 0.911);
-    background-color: #15531d; /* Cambia esto al color predeterminado cuando haces hover */
-    color: #000;
-    font-weight: bold;
-}
+      nav a:hover {
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.911),
+          0 0 20px rgba(255, 255, 255, 0.911);
+        background-color: #15531d; /* Cambia esto al color predeterminado cuando haces hover */
+        color: #000;
+        font-weight: bold;
+      }
 
-nav a:nth-child(1):hover {
-    background-color: #97e69e; /* Cambia esto al color que desees para el primer enlace */
-}
+      nav a:nth-child(1):hover {
+        background-color: #97e69e; /* Cambia esto al color que desees para el primer enlace */
+      }
 
-        nav ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
+      nav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
 
-        nav li {
-            display: inline;
-            margin-right: 20px;
-        }
+      nav li {
+        display: inline;
+        margin-right: 20px;
+      }
 
-        h1, h2 {
-            color: #333;
-        }
+      h1,
+      h2 {
+        color: #333;
+      }
 
-        section, div {
-            background-color: #fff;
-            padding: 20px;
-            margin: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+      section,
+      div {
+        background-color: #fff;
+        padding: 20px;
+        margin: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
 
-        label {
-            display: block;
-            margin-bottom: 10px;
-        }
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
 
-        input {
-            padding: 8px;
-            margin-bottom: 15px;
-        }
+      input {
+        padding: 8px;
+        margin-bottom: 15px;
+      }
 
-        button {
-            background-color: #333;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            cursor: pointer;
-            margin-right: 26px;
-        }
+      button {
+        background-color: #333;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        cursor: pointer;
+        margin-right: 26px;
+      }
 
-        #resultado, #resultadoComissao {
-            margin-top: 15px;
-            color: green;
-            font-weight: bold;
-        }
-        .titulo {
-            display: flex;
-            justify-content: center; 
-            align-items: center; 
-        
-        }
-        footer {
-            margin-top: 20px;
-            text-align: center;
-            color: #000000;
-        }
-        footer a {
-            color: #4446e0;
-            text-decoration: underline;
-        }
-       
+      #resultado,
+      #resultadoComissao {
+        margin-top: 15px;
+        color: green;
+        font-weight: bold;
+      }
+      .titulo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      footer {
+        margin-top: 20px;
+        text-align: center;
+        color: #000000;
+      }
+      footer a {
+        color: #4446e0;
+        text-decoration: underline;
+      }
     </style>
-</head>
-<body>
-
-<!-- Navbar -->
-<nav>
-    <img id="logo" src="./logo.jpg" alt="Logo da Empresa">
-    <ul>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav>
+      <img id="logo" src="./logo.jpg" alt="Logo da Empresa" />
+      <ul>
         <li><a href="index.html">Rebater Objeçoes</a></li>
         <li><a href="cripto.html">Criptos</a></li>
         <li><a href="acoes.html">Açoes </a></li>
@@ -132,88 +133,103 @@ nav a:nth-child(1):hover {
         <li><a href="calen.html">Calendario</a></li>
         <li><a onclick="abrirPanelControl()"> Painel Vendas </a></li>
         <li><a onclick="abrirNoticias()"> Noticias</a></li>
-    </ul>
-</nav>
+      </ul>
+    </nav>
 
-<!-- Conteúdo da Página -->
-<h1 class="titulo">Calculadoras Twistar</h1>
-<!-- Seção da Calculadora de Comissão -->
-<div>
-    <h2>Calculadora de Comissão</h2>
-    <label for="valorVenda">Valor total das Venda:</label>
-    <input type="number" id="valorVenda" placeholder="Digite o valor da venda">
-    <label for="numVendas">Número de Vendas:</label>
-    <input type="number" id="numVendas" placeholder="Digite o número de vendas">
-    <label for="bonus250">tenho de 14 a 20 vendas (seleccionar)</label>
-    <input type="checkbox" id="bonus250">
-    <label for="bonus500">tenho 21 ou + vendas (seleccionar)</label>
-    <input type="checkbox" id="bonus500">
-    <button onclick="calcularComissao()">Calcular Comissão</button>
-    <div id="resultadoComissao"></div>
-</div>
-<!-- Seção da Calculadora de Meta -->
-<section>
-    <h2>Calculadora de Meta de Vendas</h2>
-    <label for="vendas">Vendas Realizadas:</label>
-    <input type="number" id="vendas" placeholder="Digite o número de vendas">
-    <label for="meta">Meta:</label>
-    <input type="number" id="meta" placeholder="Digite a meta de vendas">
-    <button onclick="calcularPorcentagem()">Calcular Porcentagem</button>
-    <div id="resultado"></div>
-</section>
+    <!-- Conteúdo da Página -->
+    <h1 class="titulo">Calculadoras Twistar</h1>
+    <!-- Seção da Calculadora de Comissão -->
+    <div>
+      <h2>Calculadora de Comissão</h2>
+      <label for="valorVenda">Valor total das Venda:</label>
+      <input
+        type="number"
+        id="valorVenda"
+        placeholder="Digite o valor da venda"
+      />
+      <label for="numVendas">Número de Vendas:</label>
+      <input
+        type="number"
+        id="numVendas"
+        placeholder="Digite o número de vendas"
+      />
+      <label for="bonus250">tenho de 14 a 20 vendas (seleccionar)</label>
+      <input type="checkbox" id="bonus250" />
+      <label for="bonus500">tenho 21 ou + vendas (seleccionar)</label>
+      <input type="checkbox" id="bonus500" />
+      <button onclick="calcularComissao()">Calcular Comissão</button>
+      <div id="resultadoComissao"></div>
+    </div>
+    <!-- Seção da Calculadora de Meta -->
+    <section>
+      <h2>Calculadora de Meta de Vendas</h2>
+      <label for="vendas">Vendas Realizadas:</label>
+      <input
+        type="number"
+        id="vendas"
+        placeholder="Digite o número de vendas"
+      />
+      <label for="meta">Meta:</label>
+      <input type="number" id="meta" placeholder="Digite a meta de vendas" />
+      <button onclick="calcularPorcentagem()">Calcular Porcentagem</button>
+      <div id="resultado"></div>
+    </section>
 
-
-
-<!-- Script para a Calculadora -->
-<script>
-    function calcularPorcentagem() {
-        var vendas = document.getElementById('vendas').value;
-        var meta = document.getElementById('meta').value;
+    <!-- Script para a Calculadora -->
+    <script>
+      function calcularPorcentagem() {
+        var vendas = document.getElementById("vendas").value;
+        var meta = document.getElementById("meta").value;
         var porcentagemAtingida = (vendas / meta) * 100;
-        document.getElementById('resultado').innerHTML = 'Porcentagem atingida: ' + porcentagemAtingida.toFixed(2) + '%';
-    }
+        document.getElementById("resultado").innerHTML =
+          "Porcentagem atingida: " + porcentagemAtingida.toFixed(2) + "%";
+      }
 
-    function abrirPanelControl() {
-        window.open('https://twistar.my.canva.site/dashboard', '_blank');
-    }
+      function abrirPanelControl() {
+        window.open("https://twistar.my.canva.site/dashboard", "_blank");
+      }
 
-    function abrirNoticias() {
-        window.open('https://www.infomoney.com.br', '_blank');
-    }
+      function abrirNoticias() {
+        window.open("https://www.infomoney.com.br", "_blank");
+      }
 
-    function calcularComissao() {
-        var valorVenda = parseFloat(document.getElementById('valorVenda').value);
-        var numVendas = parseInt(document.getElementById('numVendas').value);
+      function calcularComissao() {
+        var valorVenda = parseFloat(
+          document.getElementById("valorVenda").value
+        );
+        var numVendas = parseInt(document.getElementById("numVendas").value);
         var comissao = 0;
         var bonus = 0;
 
         if (numVendas >= 1 && numVendas <= 6) {
-            comissao = valorVenda * 0.1;
+          comissao = valorVenda * 0.1;
         } else if (numVendas >= 7 && numVendas <= 11) {
-            comissao = valorVenda * 0.15;
+          comissao = valorVenda * 0.15;
         } else if (numVendas >= 12 && numVendas <= 17) {
-            comissao = valorVenda * 0.175;
+          comissao = valorVenda * 0.175;
         } else if (numVendas >= 18 && numVendas <= 21) {
-            comissao = valorVenda * 0.2;
+          comissao = valorVenda * 0.2;
         } else if (numVendas >= 22 && numVendas <= 100) {
-            comissao = valorVenda * 0.25;
+          comissao = valorVenda * 0.25;
         }
 
-        if (document.getElementById('bonus250').checked) {
-            bonus += 250;
+        if (document.getElementById("bonus250").checked) {
+          bonus += 250;
         }
-        if (document.getElementById('bonus500').checked) {
-            bonus += 500;
+        if (document.getElementById("bonus500").checked) {
+          bonus += 500;
         }
 
         var resultadoFinal = comissao + bonus;
-        var bonusMessage = bonus > 0 ? " Foi acrescentado um bônus de $" + bonus + "." : "";
+        var bonusMessage =
+          bonus > 0 ? " Foi acrescentado um bônus de $" + bonus + "." : "";
 
-        document.getElementById('resultadoComissao').innerHTML = 'Total: $' + resultadoFinal.toFixed(2) + bonusMessage;
-    }
-</script>
-<footer>
-    Desenvolvido por <a href="https://wa.me/59893867429">Jorge Marquez</a>
-</footer>
-</body>
+        document.getElementById("resultadoComissao").innerHTML =
+          "Total: $" + resultadoFinal.toFixed(2) + bonusMessage;
+      }
+    </script>
+    <footer>
+      Desenvolvido por <a href="https://wa.me/59893867429">Jorge Marquez</a>
+    </footer>
+  </body>
 </html>

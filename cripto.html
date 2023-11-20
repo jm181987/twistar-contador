@@ -1,169 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CRIPTO</title>
-    <link rel="icon" type="image/ico" href="logo.jpg">
-    
+    <link rel="icon" type="image/ico" href="logo.jpg" />
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            margin: 5px;
-            
-        }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        margin: 5px;
+      }
 
-        
-        
-        #logo {
-            position: fixed;
-            top: 40px; /* Ajuste conforme necessário */
-            right: 40px; /* Ajuste conforme necessário */
-            max-width: 100px; /* Ajuste conforme necessário */
-            max-height: 100px; /* Ajuste conforme necessário */
-        }
+      #logo {
+        position: fixed;
+        top: 40px; /* Ajuste conforme necessário */
+        right: 40px; /* Ajuste conforme necessário */
+        max-width: 100px; /* Ajuste conforme necessário */
+        max-height: 100px; /* Ajuste conforme necessário */
+      }
 
-        nav {
-            background-color: #30536b;
-            color: white;
-            padding: 10px;
-            text-align: center;
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-            width: auto;
-        }
-        nav a {
-    color: white;
-    text-decoration: none;
-    padding: 10px;
-    border: 1px solid #c7c3c3;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    transition: box-shadow 0.3s ease, background-color 0.3s ease;
-}
+      nav {
+        background-color: #30536b;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        width: auto;
+      }
+      nav a {
+        color: white;
+        text-decoration: none;
+        padding: 10px;
+        border: 1px solid #c7c3c3;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        transition: box-shadow 0.3s ease, background-color 0.3s ease;
+      }
 
-nav a:hover {
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.911), 0 0 20px rgba(255, 255, 255, 0.911);
-    background-color: #15531d; /* Cambia esto al color predeterminado cuando haces hover */
-    color: #000;
-    font-weight: bold;
-}
+      nav a:hover {
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.911),
+          0 0 20px rgba(255, 255, 255, 0.911);
+        background-color: #15531d; /* Cambia esto al color predeterminado cuando haces hover */
+        color: #000;
+        font-weight: bold;
+      }
 
-nav a:nth-child(1):hover {
-    background-color: #97e69e; /* Cambia esto al color que desees para el primer enlace */
-}
+      nav a:nth-child(1):hover {
+        background-color: #97e69e; /* Cambia esto al color que desees para el primer enlace */
+      }
 
+      nav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+      }
 
-        nav ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-        }
+      nav li {
+        margin-right: 20px;
+      }
 
-        nav li {
-            margin-right: 20px;
-        }
-       
+      h1,
+      h2 {
+        color: #333;
+      }
 
-        h1, h2 {
-            color: #333;
-        }
+      section {
+        background-color: #fff;
+        padding: 20px;
+        margin: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
 
-        section {
-            background-color: #fff;
-            padding: 20px;
-            margin: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
 
-        label {
-            display: block;
-            margin-bottom: 10px;
-        }
+      input {
+        padding: 8px;
+        margin-bottom: 15px;
+      }
 
-        input {
-            padding: 8px;
-            margin-bottom: 15px;
-        }
+      button {
+        background-color: #333;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        cursor: pointer;
+      }
 
-        button {
-            background-color: #333;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            cursor: pointer;
-        }
+      #resultado {
+        margin-top: 15px;
+      }
+      .info1 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        min-width: 100%;
+      }
+      .info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        min-width: 100%;
+      }
+      .titulo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      footer {
+        margin-top: 20px;
+        text-align: center;
+        color: #000000;
+      }
+      footer a {
+        color: #4446e0;
+        text-decoration: underline;
+      }
 
-        #resultado {
-            margin-top: 15px;
-        
-        }
-        .info1 {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            min-width: 100%;
+      @media only screen and (max-width: 600px) {
+        /* Estilos para telas pequenas (ex. smartphones) */
+      }
 
-        
-        }
-        .info {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            min-width: 100%;
+      @media only screen and (min-width: 601px) and (max-width: 1024px) {
+        /* Estilos para telas médias (ex. tablets) */
+      }
 
-        
-        }
-        .titulo {
-            display: flex;
-            justify-content: center; 
-            align-items: center; 
-        
-        }
-        footer {
-            margin-top: 20px;
-            text-align: center;
-            color: #000000;
-        }
-        footer a {
-            color: #4446e0;
-            text-decoration: underline;
-        }
-       
-        @media only screen and (max-width: 600px) {
-    /* Estilos para telas pequenas (ex. smartphones) */
-}
-
-@media only screen and (min-width: 601px) and (max-width: 1024px) {
-    /* Estilos para telas médias (ex. tablets) */
-}
-
-@media only screen and (min-width: 1025px) {
-    /* Estilos para telas grandes (ex. desktops) */
-}
+      @media only screen and (min-width: 1025px) {
+        /* Estilos para telas grandes (ex. desktops) */
+      }
     </style>
     <!-- Adicione o link para o estilo do seu Navbar aqui -->
-    <link rel="stylesheet" href="caminho/do/seu/estilo.css">
-</head>
-<body>
+    <link rel="stylesheet" href="caminho/do/seu/estilo.css" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav>
+      <img id="logo" src="./logo.jpg" alt="Logo da Empresa" />
 
-<!-- Navbar -->
-<nav>
-    <img id="logo" src="./logo.jpg" alt="Logo da Empresa">
-    
-    <ul>
+      <ul>
         <li><a href="index.html">Rebater Objeçoes</a></li>
         <li><a href="cripto.html">Criptos</a></li>
         <li><a href="acoes.html">Açoes </a></li>
@@ -175,96 +164,115 @@ nav a:nth-child(1):hover {
         <li><a onclick="abrirPanelControl()"> Painel Vendas </a></li>
         <li><a onclick="abrirNoticias()"> Noticias</a></li>
         <!-- Adicione mais itens conforme necessário -->
-    </ul>
-</nav>
+      </ul>
+    </nav>
 
-<!-- Conteúdo da Página -->
-<h1 class="titulo">Valores Principais Criptos</h1>
-<!-- TradingView Widget BEGIN -->
-<div class="tradingview-widget-container">
-    <div class="tradingview-widget-container__widget"></div>
-    <div class="tradingview-widget-copyright"><a href="https://br.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text"></span></a></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-    {
-    "symbols": [
-      {
-        "description": "BITCOIN USD",
-        "proName": "BITSTAMP:BTCUSD"
-      },
-      {
-        "description": "ETHEREUM USD",
-        "proName": "BINANCE:ETHUSD"
-      },
-      {
-        "description": "LITECOIN USD",
-        "proName": "OANDA:LTCUSD"
-      },
-      {
-        "description": "USD A YEN",
-        "proName": "PYTH:USDJPY"
-      },
-      {
-        "description": "BNB A USD",
-        "proName": "CRYPTO:BNBUSD"
-      }
-    ],
-    "showSymbolLogo": true,
-    "colorTheme": "light",
-    "isTransparent": false,
-    "displayMode": "adaptive",
-    "locale": "br"
-  }
-    </script>
-  </div>
-  <!-- TradingView Widget END -->
+    <!-- Conteúdo da Página -->
+    <h1 class="titulo">Valores Principais Criptos</h1>
+    <!-- TradingView Widget BEGIN -->
+    <div class="tradingview-widget-container">
+      <div class="tradingview-widget-container__widget"></div>
+      <div class="tradingview-widget-copyright">
+        <a
+          href="https://br.tradingview.com/"
+          rel="noopener nofollow"
+          target="_blank"
+          ><span class="blue-text"></span
+        ></a>
+      </div>
+      <script
+        type="text/javascript"
+        src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js"
+        async
+      >
+          {
+          "symbols": [
+            {
+              "description": "BITCOIN USD",
+              "proName": "BITSTAMP:BTCUSD"
+            },
+            {
+              "description": "ETHEREUM USD",
+              "proName": "BINANCE:ETHUSD"
+            },
+            {
+              "description": "LITECOIN USD",
+              "proName": "OANDA:LTCUSD"
+            },
+            {
+              "description": "USD A YEN",
+              "proName": "PYTH:USDJPY"
+            },
+            {
+              "description": "BNB A USD",
+              "proName": "CRYPTO:BNBUSD"
+            }
+          ],
+          "showSymbolLogo": true,
+          "colorTheme": "light",
+          "isTransparent": false,
+          "displayMode": "adaptive",
+          "locale": "br"
+        }
+      </script>
+    </div>
+    <!-- TradingView Widget END -->
 
-
-<!-- <script src="https://widgets.coingecko.com/coingecko-coin-list-widget.js"></script>
+    <!-- <script src="https://widgets.coingecko.com/coingecko-coin-list-widget.js"></script>
 <coingecko-coin-list-widget  coin-ids="bitcoin,ethereum,litecoin,dogecoin,binancecoin,tether,ripple,usd-coin,solana,cardano,monero" currency="usd" height="900" locale="pt" width="900" class="info"></coingecko-coin-list-widget> -->
-<!-- TradingView Widget BEGIN -->
-<div class="tradingview-widget-container">
-    <div class="tradingview-widget-container__widget"></div>
-    <div class="tradingview-widget-copyright"><a href="https://br.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text"></span></a></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-crypto-coins-heatmap.js" async>
-    {
-    "dataSource": "Crypto",
-    "blockSize": "market_cap_calc",
-    "blockColor": "change",
-    "locale": "br",
-    "symbolUrl": "",
-    "colorTheme": "light",
-    "hasTopBar": true,
-    "isDataSetEnabled": true,
-    "isZoomEnabled": true,
-    "hasSymbolTooltip": true,
-    "width": "100%",
-    "height": "800"
-  }
+    <!-- TradingView Widget BEGIN -->
+    <div class="tradingview-widget-container">
+      <div class="tradingview-widget-container__widget"></div>
+      <div class="tradingview-widget-copyright">
+        <a
+          href="https://br.tradingview.com/"
+          rel="noopener nofollow"
+          target="_blank"
+          ><span class="blue-text"></span
+        ></a>
+      </div>
+      <script
+        type="text/javascript"
+        src="https://s3.tradingview.com/external-embedding/embed-widget-crypto-coins-heatmap.js"
+        async
+      >
+          {
+          "dataSource": "Crypto",
+          "blockSize": "market_cap_calc",
+          "blockColor": "change",
+          "locale": "br",
+          "symbolUrl": "",
+          "colorTheme": "light",
+          "hasTopBar": true,
+          "isDataSetEnabled": true,
+          "isZoomEnabled": true,
+          "hasSymbolTooltip": true,
+          "width": "100%",
+          "height": "800"
+        }
+      </script>
+    </div>
+    <!-- TradingView Widget END -->
+
+    <script>
+      // Función para abrir el enlace del Panel de Control
+      function abrirPanelControl() {
+        window.open("https://twistar.my.canva.site/dashboard", "_blank");
+      }
+
+      // Resto del código existente ...
     </script>
-  </div>
-  <!-- TradingView Widget END -->
+    <script>
+      // Función para abrir el enlace del Panel de Control
+      function abrirNoticias() {
+        window.open("https://www.infomoney.com.br", "_blank");
+      }
 
-
-<script>
-    // Función para abrir el enlace del Panel de Control
-    function abrirPanelControl() {
-        window.open('https://twistar.my.canva.site/dashboard', '_blank');
-    }
-
-    // Resto del código existente ...
-</script>
-<script>
-    // Función para abrir el enlace del Panel de Control
-    function abrirNoticias() {
-        window.open('https://www.infomoney.com.br', '_blank');
-    }
-
-    // Resto del código existente ...
-</script>
-<!-- Adicione o link para o script da sua página aqui -->
-
-</body>
-<footer>
+      // Resto del código existente ...
+    </script>
+    <!-- Adicione o link para o script da sua página aqui -->
+  </body>
+  <footer>
     Desenvolvido por <a href="https://wa.me/59893867429">Jorge Marquez</a>
-</footer>
+  </footer>
 </html>
