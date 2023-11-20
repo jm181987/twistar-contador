@@ -34,14 +34,21 @@
     color: white;
     text-decoration: none;
     padding: 10px;
-    border: 1px solid #333;
+    border: 1px solid #c7c3c3;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    transition: box-shadow 0.3s ease;
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
 nav a:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.911);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.911), 0 0 20px rgba(255, 255, 255, 0.911);
+    background-color: #15531d; /* Cambia esto al color predeterminado cuando haces hover */
+    color: #000;
+    font-weight: bold;
+}
+
+nav a:nth-child(1):hover {
+    background-color: #97e69e; /* Cambia esto al color que desees para el primer enlace */
 }
 
         nav ul {
