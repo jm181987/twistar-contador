@@ -543,8 +543,28 @@ nav a:nth-child(1):hover {
             });
             </script>
             </td>
-            <td></td>
-            <td></td>
+            <td></i></td>
+            <td><h5>Escolha o banco para ver um manual de como fazer PIX</h5>
+                    <select id="bankSelector">
+                        <option value="">Escolha um banco</option>
+                        <option value="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.techtudo.com.br%2Fdicas-e-tutoriais%2F2020%2F11%2Fcomo-usar-o-pix-no-bradesco-saiba-se-cadastrar-e-transferir-dinheiro.ghtml&psig=AOvVaw3ul32CArNwq0AVXZrPgMbu&ust=1700858556303000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCJDvk4X-2oIDFQAAAAAdAAAAABAD">Bradesco Pix</option>
+                        <option value="https://www.bb.com.br/pbb/pagina-inicial/solucoes-digitais/como-fazer/transferencia-ou-pagamento-com-pix">Banco do Brasil Pix</option>
+                        <option value="https://blog.nubank.com.br/como-pagar-com-pix/">Nubank Pix</option>
+                        <option value="https://canaltech.com.br/apps/como-usar-pix-caixa-economica/">Caixa Pix</option>
+                        <option value="https://canaltech.com.br/apps/como-usar-o-pix-no-itau/">Itau Pix</option>
+                        <option value="https://canaltech.com.br/apps/como-usar-pix-banco-santander/">Santander Pix</option>
+                    </select>
+                
+                    <script>
+                    document.getElementById('bankSelector').addEventListener('change', function() {
+                      var selectedUrl = this.value;
+                      if (selectedUrl) {
+                        window.open(selectedUrl, '_blank');
+                      }
+                    });
+                    </script>
+            
+                </td>
             </tr>
     </tbody>
 </table>
