@@ -131,9 +131,15 @@ nav a:hover {
  
         <!-- Adicione mais itens conforme necessário -->
     </ul>
+    
 </nav>
+
 <H1 class="titulo">Informaçoes de campanhas</H1>
 
+        <!-- Adicione mais itens conforme necessário -->
+
+
+        <!-- Adicione mais itens conforme necessário -->
 
 <script>
     // Función para abrir el enlace del Panel de Control
@@ -253,8 +259,10 @@ nav a:nth-child(1):hover {
     </style>
 </head>
 <body>
+    <!-- <div id="ww_a119ecf1ed3bc" v='1.3' loc='id' a='{"t":"responsive","lang":"pt","sl_lpl":1,"ids":["wl10105"],"font":"Arial","sl_ics":"one_a","sl_sot":"celsius","cl_bkg":"image","cl_font":"#FFFFFF","cl_cloud":"#FFFFFF","cl_persp":"#81D4FA","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722","sl_tof":"5"}'>Más previsiones: <a href="https://wetterlang.de/" id="ww_a119ecf1ed3bc_u" target="_blank">Wetter 30 tage vorschau</a></div><script async src="https://app2.weatherwidget.org/js/?id=ww_a119ecf1ed3bc"></script> -->
 
 <!-- Tabela de Informações -->
+<h5></h5>
 <table>
     <thead>
         <tr>
@@ -379,6 +387,163 @@ nav a:nth-child(1):hover {
             <td>cripto </td>
             <td> Bitcoin Bank</td>
         </tr>
+
+        <tr>
+            
+            <td>
+        <h5 >Seleccione DDD para saber o estado</H5>
+            <select id="codeSelector">
+                <option value="">Seleccione  DDD</option>
+                <option value="61">61</option>
+                <option value="62">62</option>
+                <option value="64">64</option>
+                <option value="65">65</option>
+                <option value="66">66</option>
+                <option value="67">67</option>
+                <option value="82">82</option>
+                <option value="71">71</option>
+                <option value="73">73</option>
+                <option value="74">74</option>
+                <option value="75">75</option>
+                <option value="77">77</option>
+                <option value="85">85</option>
+                <option value="88">88</option>
+                <option value="98">98</option>
+                <option value="99">99</option>
+                <option value="83">83</option>
+                <option value="81">81</option>
+                <option value="87">87</option>
+                <option value="86">86</option>
+                <option value="89">89</option>
+                <option value="84">84</option>
+                <option value="79">79</option>
+                <option value="68">68</option>
+                <option value="96">96</option>
+                <option value="92">92</option>
+                <option value="97">97</option>
+                <option value="91">91</option>
+                <option value="93">93</option>
+                <option value="94">94</option>
+                <option value="69">69</option>
+                <option value="95">95</option>
+                <option value="63">63</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="31">31</option>
+                <option value="32">32</option>
+                <option value="33">33</option>
+                <option value="34">34</option>
+                <option value="35">35</option>
+                <option value="37">37</option>
+                <option value="38">38</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="24">24</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="41">41</option>
+                <option value="42">42</option>
+                <option value="43">43</option>
+                <option value="44">44</option>
+                <option value="45">45</option>
+                <option value="46">46</option>
+                <option value="51">51</option>
+                <option value="53">53</option>
+                <option value="54">54</option>
+                <option value="55">55</option>
+                <option value="47">47</option>
+                <option value="48">48</option>
+                <option value="49">49</option>
+            </select>
+            
+            <p id="regionDisplay"></p>
+            
+            <script>
+            var codeRegions = {
+              "61": "Distrito Federal",
+              "62": "Goiás",
+              "64": "Goiás",
+              "65": "Mato Grosso",
+              "66": "Mato Grosso",
+              "67": "Mato Grosso do Sul",
+              "82": "Alagoas",
+              "71": "Bahia",
+              "73": "Bahia",
+              "74": "Bahia",
+              "75": "Bahia",
+              "77": "Bahia",
+              "85": "Ceará",
+              "88": "Ceará",
+              "98": "Maranhão",
+              "99": "Maranhão",
+              "83": "Paraíba",
+              "81": "Pernambuco",
+              "87": "Pernambuco",
+              "86": "Piauí",
+              "89": "Piauí",
+              "84": "Rio Grande do Norte",
+              "79": "Sergipe",
+              "68": "Acre",
+              "96": "Amapá",
+              "92": "Amazonas",
+              "97": "Amazonas",
+              "91": "Pará",
+              "93": "Pará",
+              "94": "Pará",
+              "69": "Rondônia",
+              "95": "Roraima",
+              "63": "Tocantins",
+              "27": "Espírito Santo",
+              "28": "Espírito Santo",
+              "31": "Minas Gerais",
+              "32": "Minas Gerais",
+              "33": "Minas Gerais",
+              "34": "Minas Gerais",
+              "35": "Minas Gerais",
+              "37": "Minas Gerais",
+              "38": "Minas Gerais",
+              "21": "Rio de Janeiro",
+              "22": "Rio de Janeiro",
+              "24": "Rio de Janeiro",
+              "11": "São Paulo",
+              "12": "São Paulo",
+              "13": "São Paulo",
+              "14": "São Paulo",
+              "15": "São Paulo",
+              "16": "São Paulo",
+              "17": "São Paulo",
+              "18": "São Paulo",
+              "19": "São Paulo",
+              "41": "Paraná",
+              "42": "Paraná",
+              "43": "Paraná",
+              "44": "Paraná",
+              "45": "Paraná",
+              "46": "Paraná",
+              "51": "Rio Grande do Sul",
+              "53": "Rio Grande do Sul",
+              "54": "Rio Grande do Sul",
+              "55": "Rio Grande do Sul",
+              "47": "Santa Catarina",
+              "48": "Santa Catarina",
+              "49": "Santa Catarina"
+            };
+            
+            document.getElementById('codeSelector').addEventListener('change', function() {
+              var selectedCode = this.value;
+              var region = codeRegions[selectedCode];
+              document.getElementById('regionDisplay').textContent = 'O estado para o código ' + selectedCode + ' e: ' + region;
+            });
+            </script>
+            </td>
+            </tr>
     </tbody>
 </table>
 
