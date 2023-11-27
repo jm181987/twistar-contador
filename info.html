@@ -23,36 +23,43 @@
         }
         #logo {
             position: fixed;
-            top: 40px; /* Ajuste conforme necessário */
-            right: 40px; /* Ajuste conforme necessário */
-            max-width: 100px; /* Ajuste conforme necessário */
-            max-height: 100px; /* Ajuste conforme necessário */
+            top: 40px;
+            right: 40px;
+            max-width: 100px;
+            max-height: 100px;
         }
 
-
         nav a {
-    color: white;
-    text-decoration: none;
-    padding: 10px;
-    border: 1px solid #333;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    transition: box-shadow 0.3s ease;
-}
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            transition: box-shadow 0.3s ease;
+        }
 
-nav a:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.911);
-}
+        nav a:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.911);
+        }
 
         nav ul {
             list-style-type: none;
             margin: 0;
             padding: 0;
+            display: flex;
+            align-items: center;
         }
 
         nav li {
-            display: inline;
             margin-right: 20px;
+        }
+
+        #container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
         }
 
         h1, h2 {
@@ -88,6 +95,7 @@ nav a:hover {
         #resultado {
             margin-top: 15px;
         }
+
         footer {
             margin-top: 20px;
             text-align: center;
@@ -97,17 +105,71 @@ nav a:hover {
             color: #4446e0;
             text-decoration: underline;
         }
+
+        #infoContainer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-grow: 1;
+            background-color: #e0e0e0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+        }
+
+        #infoDiv h5 {
+            color: #333;
+        }
+
+        #infoDiv select {
+            margin-top: 10px;
+            padding: 8px;
+        }
+
+        #infoDiv #bankSelector {
+            margin-top: 10px;
+            padding: 8px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #81afce;
+        }
+
+        table:hover {
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
         @media only screen and (max-width: 600px) {
-    /* Estilos para telas pequenas (ex. smartphones) */
-}
+            /* Estilos para telas pequenas (ex. smartphones) */
+        }
 
-@media only screen and (min-width: 601px) and (max-width: 1024px) {
-    /* Estilos para telas médias (ex. tablets) */
-}
+        @media only screen and (min-width: 601px) and (max-width: 1024px) {
+            /* Estilos para telas médias (ex. tablets) */
+        }
 
-@media only screen and (min-width: 1025px) {
-    /* Estilos para telas grandes (ex. desktops) */
-}
+        @media only screen and (min-width: 1025px) {
+            /* Estilos para telas grandes (ex. desktops) */
+        }
     </style>
     <!-- Adicione o link para o estilo do seu Navbar aqui -->
     <link rel="stylesheet" href="caminho/do/seu/estilo.css">
@@ -159,11 +221,7 @@ nav a:hover {
 
 </script>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Tabela de Informações</title>
     <style>
         body {
@@ -387,10 +445,11 @@ nav a:nth-child(1):hover {
             <td>cripto </td>
             <td> Bitcoin Bank</td>
         </tr>
-
-        <tr>
-            
-            <td>
+    </tbody>
+</table>
+    
+<div id="infoContainer">
+<div id="infoDiv"> 
         <h5 >Seleccione DDD para saber o estado</H5>
             <select id="codeSelector">
                 <option value="">Seleccione  DDD</option>
@@ -570,10 +629,10 @@ nav a:nth-child(1):hover {
                     });
                     </script>
             
-                </td>
-            </tr>
-    </tbody>
-</table>
+                
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
