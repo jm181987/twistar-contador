@@ -37,8 +37,7 @@
         color: white;
         text-decoration: none;
         padding: 10px;
-        border: 1px solid #c7c3c3;
-        border-radius: 5px;
+        
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
         transition: box-shadow 0.3s ease, background-color 0.3s ease;
       }
@@ -133,9 +132,29 @@
       }
 
       @media only screen and (max-width: 600px) {
-        /* Estilos para telas pequenas (ex. smartphones) */
-      }
+        /* Estilos para telas pequenas (ex. smartphones) */ 
+         nav {
+    flex-direction: column;
+    align-items: center;
+    margin: 2px;
+  }
+  
 
+  nav ul {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  nav li {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  #logo {
+    position: static;
+    margin-bottom: 20px;
+  }
+}
       @media only screen and (min-width: 601px) and (max-width: 1024px) {
         /* Estilos para telas médias (ex. tablets) */
       }
