@@ -273,6 +273,88 @@
           "Total: $" + resultadoFinal.toFixed(2) + bonusMessage;
       }
     </script>
+    
+    <!-- Script clima -->
+
+    <script>
+      (function(d, s, id) {
+          if (d.getElementById(id)) {
+              if (window.__TOMORROW__) {
+                  window.__TOMORROW__.renderWidget();
+              }
+              return;
+          }
+          const fjs = d.getElementsByTagName(s)[0];
+          const js = d.createElement(s);
+          js.id = id;
+          js.src = "https://www.tomorrow.io/v1/widget/sdk/sdk.bundle.min.js";
+
+          fjs.parentNode.insertBefore(js, fjs);
+      })(document, 'script', 'tomorrow-sdk');
+      </script>
+
+      <div class="tomorrow"
+         data-location-id="015325,015101,129833,014404,014309,013994"
+         data-language="PT"
+         data-unit-system="METRIC"
+         data-skin="dark"
+         data-widget-type="current6"
+         style="padding-bottom:22px;position:relative;"
+      >
+        <a
+          href="https://www.tomorrow.io/weather-api/"
+          rel="nofollow noopener noreferrer"
+          target="_blank"
+          style="position: absolute; bottom: 0; transform: translateX(-50%); left: 50%;"
+        >
+          <img
+            alt="Powered by the Tomorrow.io Weather API"
+            src="https://weather-website-client.tomorrow.io/img/powered-by.svg"
+            width="250"
+            height="18"
+          />
+        </a>
+      </div>
+      <script>
+        (function(d, s, id) {
+            if (d.getElementById(id)) {
+                if (window.__TOMORROW__) {
+                    window.__TOMORROW__.renderWidget();
+                }
+                return;
+            }
+            const fjs = d.getElementsByTagName(s)[0];
+            const js = d.createElement(s);
+            js.id = id;
+            js.src = "https://www.tomorrow.io/v1/widget/sdk/sdk.bundle.min.js";
+
+            fjs.parentNode.insertBefore(js, fjs);
+        })(document, 'script', 'tomorrow-sdk');
+        </script>
+
+        <div class="tomorrow"
+           data-location-id="010615,014585,011863,011843,014179,010607"
+           data-language="PT"
+           data-unit-system="METRIC"
+           data-skin="dark"
+           data-widget-type="current6"
+           style="padding-bottom:22px;position:relative;"
+        >
+          <a
+            href="https://www.tomorrow.io/weather-api/"
+            rel="nofollow noopener noreferrer"
+            target="_blank"
+            style="position: absolute; bottom: 0; transform: translateX(-50%); left: 50%;"
+          >
+            <img
+              alt="Powered by the Tomorrow.io Weather API"
+              src="https://weather-website-client.tomorrow.io/img/powered-by.svg"
+              width="250"
+              height="18"
+            />
+          </a>
+        </div>
+    
 
     <iframe
       width="800"
@@ -282,7 +364,10 @@
       allowfullscreen
       scrolling="no"
       allow="autoplay *; fullscreen *"
-    ></iframe
+    >
+        <!-- /Script clima -->
+
+    </iframe
     ><noscript><span>Inspirese</span></noscript>
 
     <footer>
