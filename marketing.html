@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Métricas de Marketing</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f0f0;
+      padding: 20px;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .calculator-container {
+      max-width: calc(33.33% - 8px);
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin:10px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    input {
+      width: calc(100% - 16px);
+      padding: 8px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .resultado-container {
+      margin-top: 15px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div style="display: flex; justify-content: space-between; flex-wrap: wrap; max-width: 1200px; margin: 0 auto;">
+    <div class="calculator-container">
+      <h2>Calculadora CPM</h2>
+      <label for="impressions">Impresiones:</label>
+      <input type="number" id="impressions" placeholder="Ingrese el número de impresiones" required>
+
+      <label for="cost">Costo total:</label>
+      <input type="number" id="cost" placeholder="Ingrese el costo total" required>
+
+      <button onclick="calcularCPM()">Calcular CPM</button>
+
+      <div class="resultado-container">
+        <p id="resultadoCPM"></p>
+      </div>
+    </div>
+
+    <!-- Repite la estructura para las demás calculadoras -->
+
+    <div class="calculator-container">
+      <h2>Calculadora CPV</h2>
+      <label for="views">Vistas:</label>
+      <input type="number" id="views" placeholder="Ingrese el número de vistas" required>
+
+      <label for="cost2">Costo total:</label>
+      <input type="number" id="cost2" placeholder="Ingrese el costo total" required>
+
+      <button onclick="calcularCPV()">Calcular CPV</button>
+
+      <div class="resultado-container">
+        <p id="resultadoCPV"></p>
+      </div>
+    </div>
+
+    <!-- Repite la estructura para las demás calculadoras -->
+
+    <div class="calculator-container">
+      <h2>Calculadora CPC</h2>
+      <label for="clicks">Clicks:</label>
+      <input type="number" id="clicks" placeholder="Ingrese el número de clics" required>
+
+      <label for="cost3">Costo total:</label>
+      <input type="number" id="cost3" placeholder="Ingrese el costo total" required>
+
+      <button onclick="calcularCPC()">Calcular CPC</button>
+
+      <div class="resultado-container">
+        <p id="resultadoCPC"></p>
+      </div>
+    </div>
+
+    <!-- Repite la estructura para las demás calculadoras -->
+
+    <div class="calculator-container">
+      <h2>Calculadora CPL</h2>
+      <label for="leads">Leads:</label>
+      <input type="number" id="leads" placeholder="Ingrese el número de leads" required>
+
+      <label for="cost4">Costo total:</label>
+      <input type="number" id="cost4" placeholder="Ingrese el costo total" required>
+
+      <button onclick="calcularCPL()">Calcular CPL</button>
+
+      <div class="resultado-container">
+        <p id="resultadoCPL"></p>
+      </div>
+    </div>
+
+    <!-- Repite la estructura para las demás calculadoras -->
+
+    <div class="calculator-container">
+      <h2>Calculadora CPA</h2>
+      <label for="acquisitions">Adquisiciones:</label>
+      <input type="number" id="acquisitions" placeholder="Ingrese el número de adquisiciones" required>
+
+      <label for="cost5">Costo total:</label>
+      <input type="number" id="cost5" placeholder="Ingrese el costo total" required>
+
+      <button onclick="calcularCPA()">Calcular CPA</button>
+
+      <div class="resultado-container">
+        <p id="resultadoCPA"></p>
+      </div>
+    </div>
+
+    <!-- Repite la estructura para las demás calculadoras -->
+
+    <div class="calculator-container">
+      <h2>Calculadora ROAS</h2>
+      <label for="revenue">Ingresos:</label>
+      <input type="number" id="revenue" placeholder="Ingrese los ingresos generados" required>
+
+      <label for="cost6">Costo total:</label>
+      <input type="number" id="cost6" placeholder="Ingrese el costo total" required>
+
+      <button onclick="calcularROAS()">Calcular ROAS</button>
+
+      <div class="resultado-container">
+        <p id="resultadoROAS"></p>
+      </div>
+    </div>
+
+    <!-- Repite la estructura para las demás calculadoras -->
+
+    <div class="calculator-container">
+      <h2>Calculadora ROI</h2>
+      <label for="profit">Ganancia neta:</label>
+      <input type="number" id="profit" placeholder="Ingrese la ganancia neta" required>
+
+      <label for="investment">Inversión total:</label>
+      <input type="number" id="investment" placeholder="Ingrese la inversión total" required>
+
+      <button onclick="calcularROI()">Calcular ROI</button>
+
+      <div class="resultado-container">
+        <p id="resultadoROI"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Tus funciones de cálculo aquí
+    function calcularCPM() {
+      var impressions = parseFloat(document.getElementById('impressions').value) || 0;
+      var cost = parseFloat(document.getElementById('cost').value) || 0;
+
+      var cpm = (cost / impressions) * 1000;
+
+      document.getElementById('resultadoCPM').innerText = 'CPM: ' + cpm.toFixed(2);
+    }
+
+    function calcularCPV() {
+      var views = parseFloat(document.getElementById('views').value) || 0;
+      var cost = parseFloat(document.getElementById('cost2').value) || 0;
+
+      var cpv = cost / views;
+
+      document.getElementById('resultadoCPV').innerText = 'CPV: ' + cpv.toFixed(2);
+    }
+
+    function calcularCPC() {
+      var clicks = parseFloat(document.getElementById('clicks').value) || 0;
+      var cost = parseFloat(document.getElementById('cost3').value) || 0;
+
+      var cpc = cost / clicks;
+
+      document.getElementById('resultadoCPC').innerText = 'CPC: ' + cpc.toFixed(2);
+    }
+
+    function calcularCPL() {
+      var leads = parseFloat(document.getElementById('leads').value) || 0;
+      var cost = parseFloat(document.getElementById('cost4').value) || 0;
+
+      var cpl = cost / leads;
+
+      document.getElementById('resultadoCPL').innerText = 'CPL: ' + cpl.toFixed(2);
+    }
+
+    function calcularCPA() {
+      var acquisitions = parseFloat(document.getElementById('acquisitions').value) || 0;
+      var cost = parseFloat(document.getElementById('cost5').value) || 0;
+
+      var cpa = cost / acquisitions;
+
+      document.getElementById('resultadoCPA').innerText = 'CPA: ' + cpa.toFixed(2);
+    }
+
+    function calcularROAS() {
+      var revenue = parseFloat(document.getElementById('revenue').value) || 0;
+      var cost = parseFloat(document.getElementById('cost6').value) || 0;
+
+      var roas = revenue / cost;
+
+      document.getElementById('resultadoROAS').innerText = 'ROAS: ' + roas.toFixed(2);
+    }
+
+    function calcularROI() {
+      var profit = parseFloat(document.getElementById('profit').value) || 0;
+      var investment = parseFloat(document.getElementById('investment').value) || 0;
+
+      var roi = (profit / investment) * 100;
+
+      document.getElementById('resultadoROI').innerText = 'ROI: ' + roi.toFixed(2) + '%';
+    }
+  </script>
+  
+</body>
+</html>
