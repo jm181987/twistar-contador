@@ -168,6 +168,17 @@
         <li><a onclick="abrirNoticias()"> Noticias</a></li>
       </ul>
     </nav>
+     <!-- Seção da conta regresiva -->
+     <div>
+      <h2 style="display: flex">TEMPO RESTANTE PARA ESPANCAR A META</h2>
+      <iframe
+        id="online-alarm-kur-iframe"
+        src="https://embed-countdown.onlinealarmkur.com/pt/#2023-12-31T18:00:00@America%2FSao_Paulo"
+        width="360"
+        height="80"
+        style="display: flex; margin: 0px auto; border: 0px"
+      ></iframe>
+    </div>
 
     <!-- Conteúdo da Página -->
     <h1 class="titulo">Calculadoras Twistar</h1>
@@ -193,17 +204,7 @@
       <button onclick="calcularComissao()">Calcular Comissão</button>
       <div id="resultadoComissao"></div>
     </div>
-    <!-- Seção da conta regresiva -->
-    <div>
-      <h2 style="display: flex">TEMPO RESTANTE PARA ESPANCAR A META</h2>
-      <iframe
-        id="online-alarm-kur-iframe"
-        src="https://embed-countdown.onlinealarmkur.com/pt/#2023-12-31T18:00:00@America%2FSao_Paulo"
-        width="360"
-        height="80"
-        style="display: flex; margin: 0px auto; border: 0px"
-      ></iframe>
-    </div>
+   
 
     <!-- Seção da Calculadora de Meta -->
     <section>
@@ -274,24 +275,8 @@
       }
     </script>
     
-    <!-- Script clima -->
+    <h2 style="display: flex">Clima principais Cidades</h2>
 
-    <script>
-      (function(d, s, id) {
-          if (d.getElementById(id)) {
-              if (window.__TOMORROW__) {
-                  window.__TOMORROW__.renderWidget();
-              }
-              return;
-          }
-          const fjs = d.getElementsByTagName(s)[0];
-          const js = d.createElement(s);
-          js.id = id;
-          js.src = "https://www.tomorrow.io/v1/widget/sdk/sdk.bundle.min.js";
-
-          fjs.parentNode.insertBefore(js, fjs);
-      })(document, 'script', 'tomorrow-sdk');
-      </script>
 
       <div class="tomorrow"
          data-location-id="015325,015101,129833,014404,014309,013994"
@@ -355,8 +340,10 @@
           </a>
         </div>
     
+        <h2 style="display: flex">Escute Chamadas para melhorar seu speech</h2>
 
     <iframe
+    
       width="800"
       height="430"
       src="https://rtcdn.cincopa.com/iframe.aspx?fid=AMGATFPYpGQ1"
@@ -369,6 +356,25 @@
 
     </iframe
     ><noscript><span>Inspirese</span></noscript>
+     <!-- Script clima -->
+
+     <script>
+      
+      (function(d, s, id) {
+          if (d.getElementById(id)) {
+              if (window.__TOMORROW__) {
+                  window.__TOMORROW__.renderWidget();
+              }
+              return;
+          }
+          const fjs = d.getElementsByTagName(s)[0];
+          const js = d.createElement(s);
+          js.id = id;
+          js.src = "https://www.tomorrow.io/v1/widget/sdk/sdk.bundle.min.js";
+
+          fjs.parentNode.insertBefore(js, fjs);
+      })(document, 'script', 'tomorrow-sdk');
+      </script>
 
     <footer>
       Desenvolvido por <a href="https://wa.me/59893867429">Jorge Marquez</a>
