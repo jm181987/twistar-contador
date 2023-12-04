@@ -21,6 +21,10 @@
         padding: 10px;
         text-align: center;
       }
+      iframe {
+        max-width: 100%;
+        max-height: 100%;
+      }
 
       #logo {
         position: fixed;
@@ -34,7 +38,7 @@
         color: white;
         text-decoration: none;
         padding: 10px;
-       
+
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
         transition: box-shadow 0.3s ease, background-color 0.3s ease;
       }
@@ -117,30 +121,28 @@
         text-decoration: underline;
       }
       @media only screen and (max-width: 600px) {
-        /* Estilos para telas pequenas (ex. smartphones) */ 
-         nav {
-    flex-direction: column;
-    align-items: center;
-    margin: 2px;
-  }
-  
+        /* Estilos para telas pequenas (ex. smartphones) */
+        nav {
+          flex-direction: column;
+          align-items: center;
+          margin: 2px;
+        }
 
-  nav ul {
-    flex-direction: column;
-    text-align: center;
-  }
+        nav ul {
+          flex-direction: column;
+          text-align: center;
+        }
 
-  nav li {
-    margin-right: 0;
-    margin-bottom: 10px;
-  }
+        nav li {
+          margin-right: 0;
+          margin-bottom: 10px;
+        }
 
-  #logo {
-    position: static;
-    margin-bottom: 20px;
-  }
-}
-      
+        #logo {
+          position: static;
+          margin-bottom: 20px;
+        }
+      }
 
       @media only screen and (min-width: 601px) and (max-width: 1024px) {
         /* Estilos para telas médias (ex. tablets) */
@@ -168,8 +170,8 @@
         <li><a onclick="abrirNoticias()"> Noticias</a></li>
       </ul>
     </nav>
-     <!-- Seção da conta regresiva -->
-     <div>
+    <!-- Seção da conta regresiva -->
+    <div>
       <h2 style="display: flex">TEMPO RESTANTE PARA ESPANCAR A META</h2>
       <iframe
         id="online-alarm-kur-iframe"
@@ -204,7 +206,6 @@
       <button onclick="calcularComissao()">Calcular Comissão</button>
       <div id="resultadoComissao"></div>
     </div>
-   
 
     <!-- Seção da Calculadora de Meta -->
     <section>
@@ -274,107 +275,114 @@
           "Total: $" + resultadoFinal.toFixed(2) + bonusMessage;
       }
     </script>
-    
+
     <h2 style="display: flex">Clima principais Cidades</h2>
 
-
-      <div class="tomorrow"
-         data-location-id="015325,015101,129833,014404,014309,013994"
-         data-language="PT"
-         data-unit-system="METRIC"
-         data-skin="dark"
-         data-widget-type="current6"
-         style="padding-bottom:22px;position:relative;"
+    <div
+      class="tomorrow"
+      data-location-id="015325,015101,129833,014404,014309,013994"
+      data-language="PT"
+      data-unit-system="METRIC"
+      data-skin="dark"
+      data-widget-type="current6"
+      style="padding-bottom: 22px; position: relative"
+    >
+      <a
+        href="https://www.tomorrow.io/weather-api/"
+        rel="nofollow noopener noreferrer"
+        target="_blank"
+        style="
+          position: absolute;
+          bottom: 0;
+          transform: translateX(-50%);
+          left: 50%;
+        "
       >
-        <a
-          href="https://www.tomorrow.io/weather-api/"
-          rel="nofollow noopener noreferrer"
-          target="_blank"
-          style="position: absolute; bottom: 0; transform: translateX(-50%); left: 50%;"
-        >
-          <img
-            alt="Powered by the Tomorrow.io Weather API"
-            src="https://weather-website-client.tomorrow.io/img/powered-by.svg"
-            width="250"
-            height="18"
-          />
-        </a>
-      </div>
-      <script>
-        (function(d, s, id) {
-            if (d.getElementById(id)) {
-                if (window.__TOMORROW__) {
-                    window.__TOMORROW__.renderWidget();
-                }
-                return;
-            }
-            const fjs = d.getElementsByTagName(s)[0];
-            const js = d.createElement(s);
-            js.id = id;
-            js.src = "https://www.tomorrow.io/v1/widget/sdk/sdk.bundle.min.js";
+        <img
+          alt="Powered by the Tomorrow.io Weather API"
+          src="https://weather-website-client.tomorrow.io/img/powered-by.svg"
+          width="250"
+          height="18"
+        />
+      </a>
+    </div>
+    <script>
+      (function (d, s, id) {
+        if (d.getElementById(id)) {
+          if (window.__TOMORROW__) {
+            window.__TOMORROW__.renderWidget();
+          }
+          return;
+        }
+        const fjs = d.getElementsByTagName(s)[0];
+        const js = d.createElement(s);
+        js.id = id;
+        js.src = "https://www.tomorrow.io/v1/widget/sdk/sdk.bundle.min.js";
 
-            fjs.parentNode.insertBefore(js, fjs);
-        })(document, 'script', 'tomorrow-sdk');
-        </script>
+        fjs.parentNode.insertBefore(js, fjs);
+      })(document, "script", "tomorrow-sdk");
+    </script>
 
-        <div class="tomorrow"
-           data-location-id="010615,014585,011863,011843,014179,010607"
-           data-language="PT"
-           data-unit-system="METRIC"
-           data-skin="dark"
-           data-widget-type="current6"
-           style="padding-bottom:22px;position:relative;"
-        >
-          <a
-            href="https://www.tomorrow.io/weather-api/"
-            rel="nofollow noopener noreferrer"
-            target="_blank"
-            style="position: absolute; bottom: 0; transform: translateX(-50%); left: 50%;"
-          >
-            <img
-              alt="Powered by the Tomorrow.io Weather API"
-              src="https://weather-website-client.tomorrow.io/img/powered-by.svg"
-              width="250"
-              height="18"
-            />
-          </a>
-        </div>
-    
-        <h2 style="display: flex">Escute Chamadas para melhorar seu speech</h2>
+    <div
+      class="tomorrow"
+      data-location-id="010615,014585,011863,011843,014179,010607"
+      data-language="PT"
+      data-unit-system="METRIC"
+      data-skin="dark"
+      data-widget-type="current6"
+      style="padding-bottom: 22px; position: relative"
+    >
+      <a
+        href="https://www.tomorrow.io/weather-api/"
+        rel="nofollow noopener noreferrer"
+        target="_blank"
+        style="
+          position: absolute;
+          bottom: 0;
+          transform: translateX(-50%);
+          left: 50%;
+        "
+      >
+        <img
+          alt="Powered by the Tomorrow.io Weather API"
+          src="https://weather-website-client.tomorrow.io/img/powered-by.svg"
+          width="250"
+          height="18"
+        />
+      </a>
+    </div>
 
+       <!-- reproductor -->
+<div>
+  <h2 style="display: flex">Escute Chamadas para melhorar seu speech</h2>
     <iframe
-    
-      width="800"
-      height="430"
+      width="100%"
       src="https://rtcdn.cincopa.com/iframe.aspx?fid=AMGATFPYpGQ1"
       frameborder="0"
       allowfullscreen
       scrolling="no"
       allow="autoplay *; fullscreen *"
     >
-        <!-- /Script clima -->
-
-    </iframe
-    ><noscript><span>Inspirese</span></noscript>
-     <!-- Script clima -->
-
-     <script>
+      </iframe>
       
-      (function(d, s, id) {
-          if (d.getElementById(id)) {
-              if (window.__TOMORROW__) {
-                  window.__TOMORROW__.renderWidget();
-              }
-              return;
-          }
-          const fjs = d.getElementsByTagName(s)[0];
-          const js = d.createElement(s);
-          js.id = id;
-          js.src = "https://www.tomorrow.io/v1/widget/sdk/sdk.bundle.min.js";
+    <!-- Script clima -->
 
-          fjs.parentNode.insertBefore(js, fjs);
-      })(document, 'script', 'tomorrow-sdk');
-      </script>
+    <script>
+      (function (d, s, id) {
+        if (d.getElementById(id)) {
+          if (window.__TOMORROW__) {
+            window.__TOMORROW__.renderWidget();
+          }
+          return;
+        }
+        const fjs = d.getElementsByTagName(s)[0];
+        const js = d.createElement(s);
+        js.id = id;
+        js.src = "https://www.tomorrow.io/v1/widget/sdk/sdk.bundle.min.js";
+
+        fjs.parentNode.insertBefore(js, fjs);
+      })(document, "script", "tomorrow-sdk");
+    </script></div>
 
     <footer>
       Desenvolvido por <a href="https://wa.me/59893867429">Jorge Marquez</a>
