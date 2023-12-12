@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recordes</title>
+    <link rel="icon" type="image/ico" href="logo.jpg">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            margin: 5px;
+        }
+
+        nav {
+            background-color: #55aee9;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        #logo {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            max-width: 100px;
+            max-height: 100px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+           
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            transition: box-shadow 0.3s ease;
+        }
+
+        nav a:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.911);
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        nav li {
+            margin-right: 20px;
+        }
+
+        #container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        h1, h2 {
+            color: #ffffff;
+        }
+
+        section {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            padding: 8px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: #333;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+        }
+
+        #resultado {
+            margin-top: 15px;
+        }
+
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #000000;
+        }
+        footer a {
+            color: #4446e0;
+            text-decoration: underline;
+        }
+
+        #infoContainer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-grow: 1;
+            background-color: #e0e0e0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+        }
+
+        #infoDiv h5 {
+            color: #333;
+        }
+
+        #infoDiv select {
+            margin-top: 10px;
+            padding: 8px;
+        }
+
+        #infoDiv #bankSelector {
+            margin-top: 10px;
+            padding: 8px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #81afce;
+        }
+
+        table:hover {
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @media only screen and (max-width: 600px) {
+        /* Estilos para telas pequenas (ex. smartphones) */ 
+         nav {
+    flex-direction: column;
+    align-items: center;
+    margin: 2px;
+  }
+  
+
+  nav ul {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  nav li {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  #logo {
+    position: static;
+    margin-bottom: 20px;
+  }
+}
+
+        @media only screen and (min-width: 601px) and (max-width: 1024px) {
+            /* Estilos para telas médias (ex. tablets) */
+        }
+
+        @media only screen and (min-width: 1025px) {
+            /* Estilos para telas grandes (ex. desktops) */
+        }
+    </style>
+    <!-- Adicione o link para o estilo do seu Navbar aqui -->
+    <link rel="stylesheet" href="caminho/do/seu/estilo.css">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav>
+    <img id="logo" src="./logo.jpg" alt="Logo da Empresa">
+    <ul>
+        <li><a href="index.html">Rebater Objeçoes</a></li>
+        <li><a href="cripto.html">Criptos</a></li>
+        <li><a href="acoes.html">Açoes </a></li>
+        <li><a href="forex.html">Forex </a></li>
+        <li><a href="indice.html">Indices </a></li>
+        <li><a href="info.html">Info Campanhas</a></li>
+        <li><a href="meta.html">% Meta</a></li>
+        <li><a href="calen.html">Calendario</a></li>
+        <li><a onclick="abrirPanelControl()"> Painel Vendas </a></li>
+        <li><a href="noticias.html"> Noticias</a></li> 
+        <!-- Adicione mais itens conforme necessário -->
+    </ul>
+    
+</nav>
+
+
+        <!-- Adicione mais itens conforme necessário -->
+
+
+        <!-- Adicione mais itens conforme necessário -->
+
+<script>
+    // Función para abrir el enlace del Panel de Control
+    function abrirPanelControl() {
+        window.open('https://twistar.my.canva.site/dashboard', '_blank');
+    }
+
+    // Resto del código existente ...
+</script>
+<script>
+    // Función para abrir el enlace del Panel de Control
+    function abrirNoticias() {
+        window.open('https://www.infomoney.com.br', '_blank');
+    }
+
+    // Resto del código existente ...
+
+</script>
+
+
+    <title>Tabela de Informações</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            margin: 5px;
+        }
+        .titulo {
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+        }
+        nav {
+            background-color: #30536b;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            width: auto;
+        }
+        nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+nav a:hover {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.911), 0 0 20px rgba(255, 255, 255, 0.911);
+    background-color: #15531d; /* Cambia esto al color predeterminado cuando haces hover */
+    color: #000;
+    font-weight: bold;
+}
+
+nav a:nth-child(1):hover {
+    background-color: #97e69e; /* Cambia esto al color que desees para el primer enlace */
+}
+
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        nav li {
+            margin-right: 20px;
+        }
+
+        #logo {
+            position: fixed;
+            top: 40px; /* Ajuste conforme necessário */
+            right: 40px; /* Ajuste conforme necessário */
+            max-width: 100px; /* Ajuste conforme necessário */
+            max-height: 100px; /* Ajuste conforme necessário */
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center; /* Agora centralizando o texto */
+            transition: background-color 0.3s ease; /* Adicionando uma transição de cor */
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #81afce; /* Altere a cor conforme necessário */
+        }
+
+        table:hover {
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        } 
+        .button-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        margin: 20px auto;
+        max-width: 600px;
+    }
+
+    button {
+        background: linear-gradient(45deg, #96a596, #35665e);
+        color: white;
+       
+        padding: 15px 20px;
+        border: none;
+        cursor: pointer;
+        transition: background 0.5s ease-in-out;
+        width: auto; /* Agora o botão se ajustará ao tamanho do texto */
+        max-width: 200px;
+        box-sizing: border-box;
+    }
+
+    @media only screen and (max-width: 600px) {
+        button {
+            width: 100%;
+        }
+    }
+
+    button:hover {
+        background: linear-gradient(45deg, #a1cfcf, #1E90FF);
+    }
+    </style>
+</head>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+
+    header {
+        background-color: #333;
+        color: white;
+        padding: 15px;
+        text-align: center;
+    }
+
+    section {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        color: #333;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+</head>
+<body>
+
+<header>
+<h1>Placar de Recordes</h1>
+</header>
+<section>
+    <h2>Recorde de vendas em 1 dia (geral)</h2>
+    <table>
+        <tr>
+            <th>Vendas</th>
+        </tr>
+        <tr>
+            <td>29</td>
+        </tr>
+    </table>
+    </section>
+
+<section>
+<h2>Recordes de venda no Dia</h2>
+<table>
+    <tr>
+        <th>Vendas</th>
+        <th>Agente</th>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Alex Melo</td>
+    </tr>
+</table>
+</section>
+
+<section>
+<h2>Recorde de numeros de vendas no Mês x 1 Agente</h2>
+<table>
+    <tr>
+        <th>Vendas</th>
+        <th>Agente</th>
+    </tr>
+    <tr>
+        <td>31</td>
+        <td>Grazi</td>
+    </tr>
+</table>
+</section>
+
+
+
+
+</body>
+<footer>
+    Desenvolvido por <a href="https://wa.me/59893867429">Jorge Marquez</a>
+</footer>
+</html>
