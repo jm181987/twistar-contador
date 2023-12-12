@@ -330,9 +330,41 @@ nav a:nth-child(1):hover {
 
         table:hover {
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        } 
+        .button-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        margin: 20px auto;
+        max-width: 600px;
+    }
+
+    button {
+        background: linear-gradient(45deg, #96a596, #35665e);
+        color: white;
+       
+        padding: 15px 20px;
+        border: none;
+        cursor: pointer;
+        transition: background 0.5s ease-in-out;
+        width: auto; /* Agora o botão se ajustará ao tamanho do texto */
+        max-width: 200px;
+        box-sizing: border-box;
+    }
+
+    @media only screen and (max-width: 600px) {
+        button {
+            width: 100%;
         }
+    }
+
+    button:hover {
+        background: linear-gradient(45deg, #a1cfcf, #1E90FF);
+    }
     </style>
 </head>
+<div class="button-container">
 
 <a href="https://es.tradingview.com/news/world/" target="_blank">
     <button style="padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
@@ -344,9 +376,28 @@ nav a:nth-child(1):hover {
             Ver noticias na Infomoney
         </button>
 </a>
+<a href="https://br.investing.com/news" target="_blank">
+    <button style="padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        Ver noticias na Investing
+    </button>
+</a>
+<a href="https://www.moneytimes.com.br/ultimas-noticias/" target="_blank">
+    <button style="padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        Ver noticias na MoneyTimes
+    </button>
+</a>
+<a href="https://investnews.com.br/" target="_blank">
+    <button style="padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        Ver noticias na Investnews
+    </button>
+</a>
+<a href="https://inteligenciafinanceira.com.br/" target="_blank">
+    <button style="padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        Ver noticias na Inteligencia Financeira
+    </button>
+</a>
 
-
-
+</div>
 
 
 <!-- Adicione o link para o script da sua página aqui -->
