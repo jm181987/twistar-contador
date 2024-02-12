@@ -111,7 +111,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Sorteo desde Excel</h1>
+        <h1>Sorteo Twistar</h1>
         <input type="file" id="fileInput">
         <label for="fileInput">Seleccionar archivo</label>
         <button id="startButton" disabled>Iniciar Sorteo</button>
@@ -128,29 +128,34 @@
                 var data = new Uint8Array(event.target.result);
                 var workbook = XLSX.read(data, { type: 'array' });
 
-                // Asumimos que la lista de nombres está en la primera hoja y en la columna B
+                // Asumimos que la lista de nombres está en la primera hoja y en las columnas B y D para nombre y número respectivamente
                 var firstSheetName = workbook.SheetNames[0];
                 var worksheet = workbook.Sheets[firstSheetName];
                 var range = XLSX.utils.decode_range(worksheet['!ref']);
-                var names = [];
+                var data = [];
 
                 for (var rowNum = range.s.r; rowNum <= range.e.r; rowNum++) {
-                    var cellAddress = { c: 1, r: rowNum }; // Cambiamos c: 1 para la columna B
-                    var cellRef = XLSX.utils.encode_cell(cellAddress);
-                    var cell = worksheet[cellRef];
-                    if (cell && cell.v && !cell.v.toLowerCase().includes('mexico') && !cell.v.toLowerCase().includes('supervisor')) {
-                        names.push(cell.v);
+                    var nameCellAddress = { c: 1, r: rowNum }; // Cambiamos c: 1 para la columna B
+                    var nameCellRef = XLSX.utils.encode_cell(nameCellAddress);
+                    var nameCell = worksheet[nameCellRef];
+                    
+                    var numberCellAddress = { c: 3, r: rowNum }; // Cambiamos c: 3 para la columna D
+                    var numberCellRef = XLSX.utils.encode_cell(numberCellAddress);
+                    var numberCell = worksheet[numberCellRef];
+
+                    if (nameCell && nameCell.v && !nameCell.v.toLowerCase().includes('mexico') && !nameCell.v.toLowerCase().includes('supervisor')) {
+                        var entry = { name: nameCell.v, number: numberCell ? numberCell.v : '' };
+                        data.push(entry);
                     }
                 }
 
                 // Habilitamos el botón de sorteo
                 document.getElementById('startButton').disabled = false;
 
-                // Función para obtener un nombre aleatorio de la lista
-                function getRandomName() {
-                    var randomIndex = Math.floor(Math.random() * names.length);
-                    var winner = { number: randomIndex + 1, name: names[randomIndex] };
-                    return winner;
+                // Función para obtener un nombre y número aleatorio de la lista
+                function getRandomEntry() {
+                    var randomIndex = Math.floor(Math.random() * data.length);
+                    return data[randomIndex];
                 }
 
                 // Manejador de evento para el botón de sorteo
@@ -159,7 +164,7 @@
                     document.getElementById('loading').style.display = "block";
 
                     setTimeout(function() {
-                        var winner = getRandomName();
+                        var winner = getRandomEntry();
                         document.getElementById('loading').style.display = "none";
                         document.getElementById('resultArea').innerHTML = "El ganador es: <span class='highlighted'>" + winner.number + " - " + winner.name + "</span>";
 
