@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tipos de Clientes</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/openai/dist/openai.js"></script>
+    <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+
+    <link rel="icon" type="image/ico" href="logo.jpg">
+    <script>
+        // Função para verificar se o cookie 'visited' está presente
+        function checkVisited() {
+          var visited = getCookie('visited');
+          
+          // Se o cookie não estiver presente, exiba o pop-up e defina o cookie
+          if (!visited) {
+            // Exiba o pop-up (substitua este alert pelo código do seu pop-up)
+            alert('Bem-vindo ao universo da TWISTAR! Estamos aqui para tornar sua experiência de venda incrível. Explore, descubra e aproveite ao máximo o site de ajuda. Se precisar de assistência, e so me chamar! ');
+            
+            // Defina o cookie 'visited' com a data de expiração em 365 dias
+            setCookie('visited', 'true', 365);
+          }
+        }
+      
+        // Função para obter o valor de um cookie
+        function getCookie(name) {
+          var nameEQ = name + "=";
+          var ca = document.cookie.split(';');
+          for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+          }
+          return null;
+        }
+      
+        // Função para definir um cookie
+        function setCookie(name, value, days) {
+          var expires = "";
+          if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+          }
+          document.cookie = name + "=" + value + expires + "; path=/";
+        }
+      
+        // Chame a função checkVisited quando a página carregar
+        window.onload = checkVisited;
+      </script>
+
+    <style>
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 5px;
+        }
+        nav {
+            background-color: #30536b;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .titulo {
+            background-color: #30536b;
+            color: white;
+            padding: 2px;
+            text-align: center;
+        }
+
+        nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease;
+}
+
+nav a:hover {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.911);
+}
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            display: inline;
+            margin-right: 20px;
+        }
+        nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+   
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+nav a:hover {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.911), 0 0 20px rgba(255, 255, 255, 0.911);
+    background-color: #15531d; /* Cambia esto al color predeterminado cuando haces hover */
+    color: #000;
+    font-weight: bold;
+}
+
+nav a:nth-child(1):hover {
+    background-color: #97e69e; /* Cambia esto al color que desees para el primer enlace */
+}
+
+
+
+        h1, h2 {
+            color: #888484;
+        }
+
+        section {
+            background-color: #fff;
+            padding: 5px;
+            margin: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 0px rgba(60, 122, 151, 0.658);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            padding: 8px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: #333;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+        }
+
+        #resultado {
+            margin-top: 15px;
+        }
+
+        #menu {
+            margin-bottom: 20px;
+        }
+
+        #menu a {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            border-radius: 5px;
+        }
+        #logo {
+            position: fixed;
+            top: 170px; /* Ajuste conforme necessário */
+            right: 40px; /* Ajuste conforme necessário */
+            max-width: 100px; /* Ajuste conforme necessário */
+            max-height: 100px; /* Ajuste conforme necessário */
+        }
+
+        #total-ventas {
+            background-color: #729cda;
+            color: white;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-size: 40px;
+        }
+
+        #detalle-ventas {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #detalle-ventas th, #detalle-ventas td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        #detalle-ventas th {
+            background-color: #729cda;
+            color: white;
+        }
+
+        #input-form {
+            margin-bottom: 20px;
+        }
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #000000;
+        }
+        footer a {
+            color: #4446e0;
+            text-decoration: underline;
+        }
+        .botao-3d {
+  display: inline-block;
+  padding: 5px 15px;
+  font-size: 20px;
+  background-color: rgba(104, 146, 165, 0.658);
+  color: #ffffff;
+  border-radius: 6px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #000;
+  box-shadow: 0px 3px 0px #00b35a;
+  transition: all 0.2s ease-in-out;
+}
+
+.botao-3d:hover {
+  background-color: #15531d;
+}
+
+.botao-3d:active {
+  position: relative;
+  top: 3px;
+  box-shadow: none;
+}
+
+@media only screen and (max-width: 600px) {
+        /* Estilos para telas pequenas (ex. smartphones) */ 
+         nav {
+    flex-direction: column;
+    align-items: center;
+    margin: 2px;
+  }
+  
+
+  nav ul {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  nav li {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  #logo {
+    position: static;
+    margin-bottom: 20px;
+  }
+}
+      @media only screen and (min-width: 601px) and (max-width: 1024px) {
+        /* Estilos para telas médias (ex. tablets) */
+      }
+
+      @media only screen and (min-width: 1025px) {
+        /* Estilos para telas grandes (ex. desktops) */
+      }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul><a href="https://talkai.info/pt/chat/" target="_blank" class="botao-3d">
+            IA 
+         </a>
+         <li><a href="index.html">Rebater Objeçoes</a></li>
+         <li><a href="cripto.html">Criptos</a></li>
+         <li><a href="acoes.html">Açoes </a></li>
+         <li><a href="forex.html">Forex </a></li>
+         <li><a href="indice.html">Indices </a></li>
+         <li><a href="info.html">Info Campanhas</a></li>
+         <li><a href="meta.html">% Meta</a></li>
+         <li><a href="calen.html">Calendario</a></li>
+        <!-- <li><a onclick="abrirPanelControl()"> Painel Vendas </a></li> -->
+        <li><a href="noticias.html"> Noticias</a></li> 
+         <li><a href="placar.html"> Recordes</a></li>      
+         <li><a href="clientes.html"> Tipo de Clientes</a></li> 
+         <!-- Adicione mais itens conforme necessário -->
+        </ul>
+        
+    </nav>
+    <img id="logo" src="./logo.jpg" alt="Logo da Empresa">
+
+    <script src="pdf.js"></script>
+</head>
+<iframe id="pdfViewer" src="png2pdf.pdf" width="100%" height="650px" style="border: none;"></iframe>
+
+
+<script>
+    var pdfViewer = document.getElementById('pdfViewer');
+    var searchInput = document.getElementById('searchInput');
+
+    pdfViewer.onload = function () {
+        var pdfWindow = pdfViewer.contentWindow;
+        var pdfDocument = pdfWindow.PDFViewerApplication.pdfDocument;
+
+        // Configurar la búsqueda en el visor de PDF
+        var findController = new pdfWindow.PDFViewerApplication.findController({ pdfViewer: pdfWindow.PDFViewer });
+        findController.setFindBar(searchInput);
+
+        // Iniciar la búsqueda cuando se escriba en el campo de búsqueda
+        searchInput.addEventListener('input', function () {
+            findController.executeCommand('find', { query: searchInput.value, caseSensitive: false, findPrevious: undefined });
+        });
+    };
+</script>
+
+
+    
+    <script>
+        // Función para abrir el enlace del Panel de Control
+        function abrirPanelControl() {
+            window.open('https://twistar.my.canva.site/dashboard', '_blank');
+        }
+    
+        // Resto del código existente ...
+    </script>
+    <script>
+        // Función para abrir el enlace del Panel de Control
+        function abrirNoticias() {
+            window.open('https://www.infomoney.com.br', '_blank');
+        }
+    
+        // Resto del código existente ...
+    </script>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-X0MD2NYWYY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-X0MD2NYWYY');
+</script>
+    <footer>
+        Desenvolvido por <a href="https://wa.me/59893867429">Jorge Marquez</a>
+        
+    </footer>
+    <script src="https://cdn.pulse.is/livechat/loader.js" data-live-chat-id="65575c2878b27e23f6055582" async></script>
+    </body>
+</html>
+
