@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reproductor de Audios - Jorge</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+/* Estilos CSS */
+/* Estilos CSS */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f3f3f3;
+}
+
+.container {
+  max-width: 800px;
+  margin: 50px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+#buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.audio-button {
+  margin: 10px;
+  padding: 15px 30px;
+  font-size: 16px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); /* Agrega una sombra para un efecto tridimensional */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease; /* Agrega transición al color de fondo y transformación */
+}
+
+.audio-button:hover {
+  background-color: #555;
+}
+
+.audio-button:active {
+  transform: translateY(2px); /* Desplaza ligeramente el botón hacia abajo al hacer clic */
+  box-shadow: none; /* Quita la sombra al hacer clic */
+}
+
+
+  </style>
+
+<body>
+  <div class="container">
+    <h1>Reproductor de Audios by Jorge</h1>
+    <div id="buttons-container">
+      <!-- Botones para reproducir los audios -->
+      <button class="audio-button" onclick="playAudio('ratinho.mp3')">Ratinho</button>
+      <button class="audio-button" onclick="playAudio('rapaz.mp3')">Rapaz</button>
+      <button class="audio-button" onclick="playAudio('dançagatinho.mp3')">Dança gatinho</button>
+      <button class="audio-button" onclick="playAudio('uepaaa.mp3')">ueeepaa</button>
+      <button class="audio-button" onclick="playAudio('que isso meu filho.mp3')">Que isso meu filho, Calma</button>
+      <button class="audio-button" onclick="playAudio('ihaaaaaaaaa.mp3')">ihaaaaaaaaa</button>
+      <button class="audio-button" onclick="playAudio('esse e meu patrao.mp3')">esse e meu patrao</button>
+      <button class="audio-button" onclick="playAudio('money.mp3')">money</button>
+      <button class="audio-button" onclick="playAudio('pai para.mp3')">Ay pai para</button>
+      <button class="audio-button" onclick="playAudio('audio2.mp3')">Reproducir Audio 2</button>
+      <button class="audio-button" onclick="playAudio('audio1.mp3')">Reproducir Audio 1</button>
+ 
+    </div>
+  </div>
+
+  <script> function playAudio(audioSrc) {
+    var audio = new Audio();
+    audio.src = audioSrc;
+    audio.play();}
+
+    </script>
+</body>
+</html>
