@@ -62,6 +62,15 @@ h1 {
   </style>
 
 <body>
+
+    <div id="controls-container">
+        <label for="volume">Volumen:</label>
+        <input type="range" id="volume" min="0" max="1" step="0.01" value="1" onchange="changeVolume(this.value)">
+  
+        <label for="pitch">Pitch:</label>
+        <input type="range" id="pitch" min="0.5" max="2" step="0.1" value="1" onchange="changePitch(this.value)">
+      </div>
+
   <div class="container">
     <h1>Reproductor de Audios by Jorge</h1>
     <div id="buttons-container">
@@ -90,6 +99,31 @@ h1 {
     var audio = new Audio();
     audio.src = audioSrc;
     audio.play();}
+
+      // Función para reproducir el audio con el volumen y el pitch actual
+      function playAudio(audioSrc) {
+      var audio = new Audio();
+      audio.src = audioSrc;
+      audio.volume = document.getElementById('volume').value; // Establece el volumen
+      audio.playbackRate = document.getElementById('pitch').value; // Establece el pitch
+      audio.play();
+    }
+
+    // Función para cambiar el volumen
+    function changeVolume(value) {
+      var audioElements = document.getElementsByTagName('audio');
+      for (var i = 0; i < audioElements.length; i++) {
+        audioElements[i].volume = value;
+      }
+    }
+
+    // Función para cambiar el pitch
+    function changePitch(value) {
+      var audioElements = document.getElementsByTagName('audio');
+      for (var i = 0; i < audioElements.length; i++) {
+        audioElements[i].playbackRate = value;
+      }
+    }
 
     </script>
 </body>
