@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top de Ventas</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+      background-image: url('https://wallpaperboat.com/wp-content/uploads/2020/11/03/59121/forex-11.jpg'); /* Ruta de la imagen de fondo */
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: center;
+      margin: 0;
+      padding: 0;
+
+    }
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .output-container {
+      margin-bottom: 20px;
+    }
+    #output {
+      margin-top: 20px;
+    }
+    .podium {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+      width: 100%;
+    }
+    .podium-item {
+      width: 100px;
+      text-align: center;
+      position: relative;
+    }
+    .trophy {
+      font-size: 35px;
+      margin-top: 10px;
+    }
+    .trophy:before {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-weight: bold;
+    }
+    #first .trophy:before {
+      content: "1";
+    }
+    #second .trophy:before {
+      content: "2";
+    }
+    #third .trophy:before {
+      content: "3";
+    }
+    .vendor-name {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    #first .vendor-name,
+    #second .vendor-name,
+    #third .vendor-name {
+      font-size: 24px;
+      
+    }
+    .podium-item .trophy {
+      animation: bounce 0.5s infinite alternate;
+    }
+    @keyframes bounce {
+      0% {
+        transform: translateY(0);
+      }
+      100% {
+        transform: translateY(-10px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Subir Archivo Excel</h2>
+    <input type="file" id="excel-file" accept=".xlsx,.xls" onchange="processExcel()">
+    <div class="output-container">
+      <h2>Top de Ventas</h2>
+      <div id="output"></div>
+    </div>
+    <div class="podium" id="podium">
+      <div class="podium-item" id="first">
+        <div class="vendor-name" id="first-vendor"></div>
+        <div class="trophy">🏆</div>
+      </div>
+      <div class="podium-item" id="second">
+        <div class="vendor-name" id="second-vendor"></div>
+        <div class="trophy">🏆</div>
+      </div>
+      <div class="podium-item" id="third">
+        <div class="vendor-name" id="third-vendor"></div>
+        <div class="trophy">🏆</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script>
+    function processExcel() {
+      const fileInput = document.getElementById('excel-file');
+      const outputDiv = document.getElementById('output');
+      const firstVendorDiv = document.getElementById('first-vendor');
+      const secondVendorDiv = document.getElementById('second-vendor');
+      const thirdVendorDiv = document.getElementById('third-vendor');
+      
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+      
+      reader.onload = function(e) {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, {type: 'array'});
+        const sheetName = "Datos Abril"; // Nombre de la hoja de cálculo
+        const sheet = workbook.Sheets[sheetName];
+        const jsonData = XLSX.utils.sheet_to_json(sheet);
+
+        // Procesar jsonData para obtener el top de ventas
+        const topVendors = getTopVendors(jsonData);
+        
+        // Mostrar el top de ventas en la salida
+        outputDiv.innerHTML = '<h2>Top de Ventas</h2><ul>' +
+          topVendors.map(item => `<li>${item.vendedor}: ${item.ventas}</li>`).join('') +
+          '</ul>';
+
+        // Mostrar el podio con el top 3
+        firstVendorDiv.innerHTML = topVendors[0] ? `<div class="vendor-name">${topVendors[0].vendedor}</div>` : '';
+        secondVendorDiv.innerHTML = topVendors[1] ? `<div class="vendor-name">${topVendors[1].vendedor}</div>` : '';
+        thirdVendorDiv.innerHTML = topVendors[2] ? `<div class="vendor-name">${topVendors[2].vendedor}</div>` : '';
+      };
+      
+      reader.readAsArrayBuffer(file);
+    }
+
+    function getTopVendors(data) {
+      // Inicializar el objeto para almacenar las ventas de cada vendedor
+      const vendorSales = {};
+      
+      // Iterar sobre los datos para sumar las ventas de cada vendedor
+      for (let item of data) {
+        const vendor = item['Vendedores'];
+        const sales = parseInt(item['Ventas']);
+        if (!isNaN(sales)) {
+          vendorSales[vendor] = (vendorSales[vendor] || 0) + sales;
+        }
+      }
+      
+      // Convertir el objeto en una matriz de vendedores ordenados por ventas
+      const sortedVendors = Object.keys(vendorSales).sort((a, b) => vendorSales[b] - vendorSales[a]);
+      
+      // Crear la lista de los mejores vendedores
+      const topVendors = sortedVendors.map(vendor => ({ vendedor: vendor, ventas: vendorSales[vendor] })).slice(0, 10);
+      
+      return topVendors;
+    }
+  </script>
+</body>
+</html>
