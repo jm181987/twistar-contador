@@ -6,7 +6,7 @@
   <title>Top de Ventas</title>
   <style>
     body {
-        font-family: Arial, sans-serif;
+      font-family: Arial, sans-serif;
       background-image: url('https://wallpaperboat.com/wp-content/uploads/2020/11/03/59121/forex-11.jpg'); /* Ruta de la imagen de fondo */
       background-size: cover;
       background-repeat: no-repeat;
@@ -14,7 +14,6 @@
       background-position: center;
       margin: 0;
       padding: 0;
-
     }
     .container {
       max-width: 800px;
@@ -31,18 +30,20 @@
       margin-bottom: 20px;
     }
     #output {
-      margin-top: 20px;
+      margin-top: 60px;
     }
     .podium {
       display: flex;
       justify-content: space-around;
       margin-top: 20px;
-      width: 100%;
+      width: calc(100% + 20px); /* Agregando espacio entre los elementos */
+      margin-left: -10px; /* Ajuste del espacio */
     }
     .podium-item {
       width: 100px;
       text-align: center;
       position: relative;
+      margin: 0 10px; /* Agregando espacio entre los elementos */
     }
     .trophy {
       font-size: 35px;
@@ -86,29 +87,32 @@
         transform: translateY(-10px);
       }
     }
+    .top-ten {
+      margin-top: 50px; /* Ajuste del margen superior para separar el top 10 del top 3 */
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Subir Archivo Excel</h2>
+    <h2></h2>
     <input type="file" id="excel-file" accept=".xlsx,.xls" onchange="processExcel()">
     <div class="output-container">
-      <h2>Top de Ventas</h2>
-      <div id="output"></div>
-    </div>
-    <div class="podium" id="podium">
-      <div class="podium-item" id="first">
-        <div class="vendor-name" id="first-vendor"></div>
-        <div class="trophy">🏆</div>
+      <h2></h2>
+      <div class="podium" id="podium">
+        <div class="podium-item" id="first">
+          <div class="vendor-name" id="first-vendor"></div>
+          <div class="trophy">🏆</div>
+        </div>
+        <div class="podium-item" id="second">
+          <div class="vendor-name" id="second-vendor"></div>
+          <div class="trophy">🏆</div>
+        </div>
+        <div class="podium-item" id="third">
+          <div class="vendor-name" id="third-vendor"></div>
+          <div class="trophy">🏆</div>
+        </div>
       </div>
-      <div class="podium-item" id="second">
-        <div class="vendor-name" id="second-vendor"></div>
-        <div class="trophy">🏆</div>
-      </div>
-      <div class="podium-item" id="third">
-        <div class="vendor-name" id="third-vendor"></div>
-        <div class="trophy">🏆</div>
-      </div>
+      <div id="output" class="top-ten"></div> <!-- Agregamos la clase top-ten al div de salida para aplicar el margen superior -->
     </div>
   </div>
 
