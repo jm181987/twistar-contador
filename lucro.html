@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Lucro Diário</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .logo {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 90px; /* Ajusta o tamanho conforme necessário */
+            height: auto; /* Autoajuste da altura */
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #resultado, #total {
+            margin-top: 20px;
+        }
+
+        #resultado ul {
+            list-style-type: none;
+            padding-left: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        #resultado ul li {
+            width: calc(50% - 10px); /* Ajuste para duas colunas */
+            margin-bottom: 5px;
+        }
+
+        #total {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #btnImprimirPDF {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+        <img class="logo" src="https://eimgjys.fxeyee.com/logo/2934231882/FXT2934231882_335300.png_wiki-template-global" alt="Logo">
+        <h1>Calculadora de Lucro Diário</h1>
+        <label for="inversionInicial">Investimento Inicial:</label>
+        <input type="number" id="inversionInicial" min="0">
+        <label for="bonusPercentual">Bônus Percentual (%):</label>
+        <input type="number" id="bonusPercentual" min="0">
+        <label for="porcentajeDiario">Porcentagem Diária (%):</label>
+        <input type="number" id="porcentajeDiario" min="0" max="100" step="0.01">
+        <button onclick="calcularLucroDiario()">Calcular</button>
+        <button id="btnImprimirPDF" onclick="window.print()">Imprimir em PDF</button>
+        <div id="resultado"></div>
+        <div id="total"></div>
+    </div>
+
+    <script>
+        function calcularLucroDiario() {
+            var inversionInicial = parseFloat(document.getElementById('inversionInicial').value);
+            var bonusPercentual = parseFloat(document.getElementById('bonusPercentual').value) || 0; // Valor padrão é 0 se o campo estiver vazio
+            var porcentajeDiario = parseFloat(document.getElementById('porcentajeDiario').value);
+
+            if (isNaN(inversionInicial) || isNaN(bonusPercentual) || isNaN(porcentajeDiario)) {
+                alert("Por favor, insira números válidos.");
+                return;
+            }
+
+            var bonusAbsoluto = (inversionInicial * bonusPercentual) / 100;
+            inversionInicial += bonusAbsoluto; // Adiciona o bônus ao capital inicial
+
+            var inversionAtual = inversionInicial;
+            var ganhos = [];
+
+            for (var dia = 1; dia <= 20; dia++) {
+                var ganhoDia = inversionAtual * (porcentajeDiario / 100);
+                ganhos.push(ganhoDia);
+                inversionAtual += ganhoDia;
+            }
+
+            var resultadoHTML = "<h2>Ganhos Diários:</h2><ul>";
+            for (var i = 0; i < ganhos.length; i++) {
+                resultadoHTML += "<li>Dia " + (i + 1) + ": $" + ganhos[i].toFixed(2) + "</li>";
+            }
+            resultadoHTML += "</ul>";
+
+            var totalGanhos = ganhos.reduce((total, ganho) => total + ganho, 0);
+
+            resultadoHTML += "<h2>Total de Ganhos em 20 Dias: $" + totalGanhos.toFixed(2) + "</h2>";
+
+            document.getElementById('resultado').innerHTML = resultadoHTML;
+
+            // Ajusta o tamanho do contêiner após o cálculo
+            document.querySelector('.container').style.height = 'auto';
+
+            // Exibe o botão de imprimir em PDF
+            document.getElementById('btnImprimirPDF').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
