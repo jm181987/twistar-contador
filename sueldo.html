@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/ico" href="logo.jpg">
+
+    <title>Calculadora de Salario Líquido</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('/mnt/data/A_professional_web_interface_for_a_salary_calculat.png'); /* Fondo relacionado a dinero */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding: 20px;
+            margin: 0;
+            color: #333;
+        }
+
+        h1, h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        form {
+            background-color: rgba(255, 255, 255, 0.9); /* Fondo semitransparente */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            margin: auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        #resultado {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .desglose p {
+            font-size: 16px;
+            color: #555;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Calculadora de Salario Twistar Uruguay</h1>
+    <form id="salaryForm">
+        <label for="inputSalario">Salario Nominal:</label>
+        <input type="number" id="inputSalario" name="inputSalario" required><br><br>
+
+        <label for="inputHijos">¿Tiene hijos?</label>
+        <select id="inputHijos">
+            <option value="no">No</option>
+            <option value="si">Sí</option>
+        </select><br><br>
+
+        <label for="inputConyuge">¿Tiene cónyuge o concubino?</label>
+        <select id="inputConyuge">
+            <option value="no">No</option>
+            <option value="si">Sí</option>
+        </select><br><br>
+
+        <button type="button" onclick="calcular()">Calcular Salario Líquido</button>
+    </form>
+
+    <h2 id="resultado"></h2>
+    <div class="desglose">
+        <p id="descuentoBPS"></p>
+        <p id="descuentoFONASA"></p>
+        <p id="descuentoFRL"></p>
+        <p id="descuentoIRPF"></p>
+        <p id="totalDescuentos"></p>
+    </div>
+
+    <script>
+        const BPC = 6177; // Valor BPC (Base de Prestaciones y Contribuciones)
+        const LIMITE_BPC = 2.5 * BPC; // Límite de 2.5 BPC
+
+        const DESCUENTO_BPS = 0.15; // Descuento del 15% para BPS
+        const DESCUENTO_FRL = 0.001; // Descuento del 0.1% para FRL
+
+        const IRPF_FRANJAS = [
+          { desde: 0, hasta: 7 * BPC, tasa: 0 }, 
+          { desde: 7 * BPC, hasta: 10 * BPC, tasa: 10 },
+          { desde: 10 * BPC, hasta: 15 * BPC, tasa: 15 },
+          { desde: 15 * BPC, hasta: 30 * BPC, tasa: 24 },
+          { desde: 30 * BPC, hasta: 50 * BPC, tasa: 25 },
+          { desde: 50 * BPC, hasta: 75 * BPC, tasa: 27 },
+          { desde: 75 * BPC, hasta: 115 * BPC, tasa: 31 },
+          { desde: 115 * BPC, hasta: Infinity, tasa: 36 }
+        ];
+
+        function calcularIRPF(salarioImponible) {
+          let impuesto = 0;
+          for (let franja of IRPF_FRANJAS) {
+            if (salarioImponible > franja.desde) {
+              let montoGravado = Math.min(salarioImponible, franja.hasta) - franja.desde;
+              impuesto += montoGravado * (franja.tasa / 100);
+            }
+          }
+          return impuesto;
+        }
+
+        function calcularFONASA(salario, tieneHijos, tieneConyuge) {
+          if (salario <= LIMITE_BPC) {
+            if (tieneConyuge) {
+              return tieneHijos ? 0.05 : 0.03; 
+            } else {
+              return tieneHijos ? 0.06 : 0.03; 
+            }
+          } else {
+            if (tieneConyuge) {
+              return tieneHijos ? 0.08 : 0.065; 
+            } else {
+              return tieneHijos ? 0.06 : 0.045;
+            }
+          }
+        }
+
+        function calcular() {
+          const salario = parseFloat(document.getElementById('inputSalario').value);
+          const tieneHijos = document.getElementById('inputHijos').value === 'si';
+          const tieneConyuge = document.getElementById('inputConyuge').value === 'si';
+
+          if (salario <= 0) {
+            alert("El salario nominal es requerido y debe ser mayor que 0.");
+            return;
+          }
+
+          const descuentoBPS = salario * DESCUENTO_BPS;
+          const porcentajeFONASA = calcularFONASA(salario, tieneHijos, tieneConyuge);
+          const descuentoFONASA = salario * porcentajeFONASA;
+          const descuentoFRL = salario * DESCUENTO_FRL;
+          const impuestoIRPF = calcularIRPF(salario);
+
+          // Calcular el total de descuentos
+          const totalDescuentos = descuentoBPS + descuentoFONASA + descuentoFRL + impuestoIRPF;
+
+          const salarioFinal = salario - totalDescuentos;
+
+          document.getElementById('resultado').textContent = `El salario final después de impuestos y deducciones es: ${salarioFinal.toFixed(2)} pesos`;
+
+          document.getElementById('descuentoBPS').textContent = `Descuento BPS (15%): ${descuentoBPS.toFixed(2)} pesos`;
+          document.getElementById('descuentoFONASA').textContent = `Descuento FONASA (${(porcentajeFONASA * 100).toFixed(1)}%): ${descuentoFONASA.toFixed(2)} pesos`;
+          document.getElementById('descuentoFRL').textContent = `Descuento FRL (0.1%): ${descuentoFRL.toFixed(2)} pesos`;
+          document.getElementById('descuentoIRPF').textContent = `Descuento IRPF: ${impuestoIRPF.toFixed(2)} pesos`;
+
+          // Mostrar el total de descuentos
+          document.getElementById('totalDescuentos').textContent = `Total de Descuentos: ${totalDescuentos.toFixed(2)} pesos`;
+        }
+    </script>
+
+</body>
+</html>
