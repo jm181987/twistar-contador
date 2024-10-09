@@ -75,119 +75,185 @@
             color: #555;
             text-align: center;
         }
+
+        .calculator {
+            background-color: rgba(255, 255, 255, 0.9); /* Fondo semitransparente */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            margin: auto;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        input[type="number"] {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
+  <div class="calculator">
+    <h1>Paso 1:   Suma tu salario nominal + tus comisiones</h1>
+    <input type="number" id="salario" placeholder="Ingresa tu salario nominal" />
+    <input type="number" id="comisiones" placeholder="Ingresa tus comisiones" />
+    <button onclick="calcularTotal()">Calcular</button>
+    <div class="result" id="resultado"></div>
+</div>
 
-    <h1>Calculadora de Salario Twistar Uruguay</h1>
-    <form id="salaryForm">
-        <label for="inputSalario">Salario Nominal:</label>
-        <input type="number" id="inputSalario" name="inputSalario" required><br><br>
+<script>
+    function calcularTotal() {
+        const salario = parseFloat(document.getElementById('salario').value);
+        const comisiones = parseFloat(document.getElementById('comisiones').value);
 
-        <label for="inputHijos">¿Tiene hijos?</label>
-        <select id="inputHijos">
-            <option value="no">No</option>
-            <option value="si">Sí</option>
-        </select><br><br>
-
-        <label for="inputConyuge">¿Tiene cónyuge o concubino?</label>
-        <select id="inputConyuge">
-            <option value="no">No</option>
-            <option value="si">Sí</option>
-        </select><br><br>
-
-        <button type="button" onclick="calcular()">Calcular Salario Líquido</button>
-    </form>
-
-    <h2 id="resultado"></h2>
-    <div class="desglose">
-        <p id="descuentoBPS"></p>
-        <p id="descuentoFONASA"></p>
-        <p id="descuentoFRL"></p>
-        <p id="descuentoIRPF"></p>
-        <p id="totalDescuentos"></p>
-    </div>
-
-    <script>
-        const BPC = 6177; // Valor BPC (Base de Prestaciones y Contribuciones)
-        const LIMITE_BPC = 2.5 * BPC; // Límite de 2.5 BPC
-
-        const DESCUENTO_BPS = 0.15; // Descuento del 15% para BPS
-        const DESCUENTO_FRL = 0.001; // Descuento del 0.1% para FRL
-
-        const IRPF_FRANJAS = [
-          { desde: 0, hasta: 7 * BPC, tasa: 0 }, 
-          { desde: 7 * BPC, hasta: 10 * BPC, tasa: 10 },
-          { desde: 10 * BPC, hasta: 15 * BPC, tasa: 15 },
-          { desde: 15 * BPC, hasta: 30 * BPC, tasa: 24 },
-          { desde: 30 * BPC, hasta: 50 * BPC, tasa: 25 },
-          { desde: 50 * BPC, hasta: 75 * BPC, tasa: 27 },
-          { desde: 75 * BPC, hasta: 115 * BPC, tasa: 31 },
-          { desde: 115 * BPC, hasta: Infinity, tasa: 36 }
-        ];
-
-        function calcularIRPF(salarioImponible) {
-          let impuesto = 0;
-          for (let franja of IRPF_FRANJAS) {
-            if (salarioImponible > franja.desde) {
-              let montoGravado = Math.min(salarioImponible, franja.hasta) - franja.desde;
-              impuesto += montoGravado * (franja.tasa / 100);
-            }
-          }
-          return impuesto;
+        if (!isNaN(salario) && !isNaN(comisiones)) {
+            const total = salario + comisiones;
+            document.getElementById('resultado').textContent = "Total: $" + total.toFixed(2);
+        } else {
+            document.getElementById('resultado').textContent = "Por favor, ingresa números válidos.";
         }
+    }
+</script>
 
-        function calcularFONASA(salario, tieneHijos, tieneConyuge) {
-          if (salario <= LIMITE_BPC) {
-            if (tieneConyuge) {
-              return tieneHijos ? 0.05 : 0.03; 
-            } else {
-              return tieneHijos ? 0.06 : 0.03; 
-            }
-          } else {
-            if (tieneConyuge) {
-              return tieneHijos ? 0.08 : 0.065; 
-            } else {
-              return tieneHijos ? 0.06 : 0.045;
-            }
-          }
+<h1>Paso 2: Calcula tu Salario En mano</h1>
+<form id="salaryForm">
+    <label for="inputSalario">Salario Nominal:</label>
+    <input type="number" placeholder="Ingresa El resultado de paso 1" id="inputSalario" name="inputSalario" required ><br><br>
+
+    <label for="inputHijos">¿Tiene hijos?</label>
+    <select id="inputHijos">
+        <option value="no">No</option>
+        <option value="si">Sí</option>
+    </select><br><br>
+
+    <label for="inputConyuge">¿Tiene cónyuge o concubino?</label>
+    <select id="inputConyuge">
+        <option value="no">No</option>
+        <option value="si">Sí</option>
+    </select><br><br>
+
+    <button type="button" onclick="calcular()">Calcular Salario Líquido (en mano)</button>
+</form>
+
+<h2 id="resultado2"></h2> <!-- Cambié el id a "resultado2" para el segundo cálculo -->
+<div class="desglose">
+    <p id="descuentoBPS"></p>
+    <p id="descuentoFONASA"></p>
+    <p id="descuentoFRL"></p>
+    <p id="descuentoIRPF"></p>
+    <p id="totalDescuentos"></p>
+</div>
+
+<script>
+    const BPC = 6177; // Valor BPC (Base de Prestaciones y Contribuciones)
+    const LIMITE_BPC = 2.5 * BPC; // Límite de 2.5 BPC
+
+    const DESCUENTO_BPS = 0.15; // Descuento del 15% para BPS
+    const DESCUENTO_FRL = 0.001; // Descuento del 0.1% para FRL
+
+    const IRPF_FRANJAS = [
+      { desde: 0, hasta: 7 * BPC, tasa: 0 }, 
+      { desde: 7 * BPC, hasta: 10 * BPC, tasa: 10 },
+      { desde: 10 * BPC, hasta: 15 * BPC, tasa: 15 },
+      { desde: 15 * BPC, hasta: 30 * BPC, tasa: 24 },
+      { desde: 30 * BPC, hasta: 50 * BPC, tasa: 25 },
+      { desde: 50 * BPC, hasta: 75 * BPC, tasa: 27 },
+      { desde: 75 * BPC, hasta: 115 * BPC, tasa: 31 },
+      { desde: 115 * BPC, hasta: Infinity, tasa: 36 }
+    ];
+
+    function calcularIRPF(salarioImponible) {
+      let impuesto = 0;
+      for (let franja of IRPF_FRANJAS) {
+        if (salarioImponible > franja.desde) {
+          let montoGravado = Math.min(salarioImponible, franja.hasta) - franja.desde;
+          impuesto += montoGravado * (franja.tasa / 100);
         }
+      }
+      return impuesto;
+    }
 
-        function calcular() {
-          const salario = parseFloat(document.getElementById('inputSalario').value);
-          const tieneHijos = document.getElementById('inputHijos').value === 'si';
-          const tieneConyuge = document.getElementById('inputConyuge').value === 'si';
-
-          if (salario <= 0) {
-            alert("El salario nominal es requerido y debe ser mayor que 0.");
-            return;
-          }
-
-          const descuentoBPS = salario * DESCUENTO_BPS;
-          const porcentajeFONASA = calcularFONASA(salario, tieneHijos, tieneConyuge);
-          const descuentoFONASA = salario * porcentajeFONASA;
-          const descuentoFRL = salario * DESCUENTO_FRL;
-          const impuestoIRPF = calcularIRPF(salario);
-
-          // Calcular el total de descuentos
-          const totalDescuentos = descuentoBPS + descuentoFONASA + descuentoFRL + impuestoIRPF;
-
-          const salarioFinal = salario - totalDescuentos;
-
-          document.getElementById('resultado').textContent = `El salario final después de impuestos y deducciones es: ${salarioFinal.toFixed(2)} pesos`;
-
-          document.getElementById('descuentoBPS').textContent = `Descuento BPS (15%): ${descuentoBPS.toFixed(2)} pesos`;
-          document.getElementById('descuentoFONASA').textContent = `Descuento FONASA (${(porcentajeFONASA * 100).toFixed(1)}%): ${descuentoFONASA.toFixed(2)} pesos`;
-          document.getElementById('descuentoFRL').textContent = `Descuento FRL (0.1%): ${descuentoFRL.toFixed(2)} pesos`;
-          document.getElementById('descuentoIRPF').textContent = `Descuento IRPF: ${impuestoIRPF.toFixed(2)} pesos`;
-
-          // Mostrar el total de descuentos
-          document.getElementById('totalDescuentos').textContent = `Total de Descuentos: ${totalDescuentos.toFixed(2)} pesos`;
+    function calcularFONASA(salario, tieneHijos, tieneConyuge) {
+      if (salario <= LIMITE_BPC) {
+        if (tieneConyuge) {
+          return tieneHijos ? 0.05 : 0.03; 
+        } else {
+          return tieneHijos ? 0.06 : 0.03; 
         }
-    </script>
-    <footer>
-        Desenvolvido por <a href="https://wa.me/59893867429">Jorge Marquez</a>
-      </footer>
+      } else {
+        if (tieneConyuge) {
+          return tieneHijos ? 0.08 : 0.065; 
+        } else {
+          return tieneHijos ? 0.06 : 0.045;
+        }
+      }
+    }
+
+    function calcular() {
+      const salario = parseFloat(document.getElementById('inputSalario').value);
+      const tieneHijos = document.getElementById('inputHijos').value === 'si';
+      const tieneConyuge = document.getElementById('inputConyuge').value === 'si';
+
+      if (salario <= 0) {
+        alert("El salario nominal es requerido y debe ser mayor que 0.");
+        return;
+      }
+
+      const descuentoBPS = salario * DESCUENTO_BPS;
+      const porcentajeFONASA = calcularFONASA(salario, tieneHijos, tieneConyuge);
+      const descuentoFONASA = salario * porcentajeFONASA;
+      const descuentoFRL = salario * DESCUENTO_FRL;
+      const impuestoIRPF = calcularIRPF(salario);
+
+      // Calcular el total de descuentos
+      const totalDescuentos = descuentoBPS + descuentoFONASA + descuentoFRL + impuestoIRPF;
+
+      const salarioFinal = salario - totalDescuentos;
+
+      document.getElementById('resultado2').textContent = `El salario final después de impuestos y deducciones es: ${salarioFinal.toFixed(2)} pesos`;
+
+      document.getElementById('descuentoBPS').textContent = `Descuento BPS (15%): ${descuentoBPS.toFixed(2)} pesos`;
+      document.getElementById('descuentoFONASA').textContent = `Descuento FONASA (${(porcentajeFONASA * 100).toFixed(1)}%): ${descuentoFONASA.toFixed(2)} pesos`;
+      document.getElementById('descuentoFRL').textContent = `Descuento FRL (0.1%): ${descuentoFRL.toFixed(2)} pesos`;
+      document.getElementById('descuentoIRPF').textContent = `Descuento IRPF: ${impuestoIRPF.toFixed(2)} pesos`;
+
+      // Mostrar el total de descuentos
+      document.getElementById('totalDescuentos').textContent = `Total de Descuentos: ${totalDescuentos.toFixed(2)} pesos`;
+    }
+</script>
+
+<footer>
+    Desenvolvido por <a href="https://wa.me/59893867429">Jorge Marquez</a>
+</footer>
 
 </body>
 </html>
