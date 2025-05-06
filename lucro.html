@@ -94,12 +94,12 @@
 </head>
 <body>
     <div class="container" id="container">
-        <h1>Calculadora de Lucro Diário</h1>
-        <label for="inversionInicial">Investimento Inicial:</label>
+        <h1>Calculadora de ganancias Diarias</h1>
+        <label for="inversionInicial">Invercion Inicial:</label>
         <input type="number" id="inversionInicial" min="0">
-        <label for="bonusPercentual">Bônus Percentual (%):</label>
+        <label for="bonusPercentual">Bônus Porcentual (%):</label>
         <input type="number" id="bonusPercentual" min="0">
-        <label for="porcentajeDiario">Porcentagem Diária (%):</label>
+        <label for="porcentajeDiario">Porcentage Diário (%):</label>
         <input type="number" id="porcentajeDiario" min="0" max="100" step="0.01">
         <button onclick="calcularLucroDiario()">Calcular</button>
         <button id="btnImprimirPDF" onclick="window.print()">Imprimir em PDF</button>
@@ -130,7 +130,7 @@
                 inversionAtual += ganhoDia;
             }
 
-            var resultadoHTML = "<h2>Ganhos Diários:</h2><ul>";
+            var resultadoHTML = "<h2>Ganancias Diarias:</h2><ul>";
             for (var i = 0; i < ganhos.length; i++) {
                 resultadoHTML += "<li>Dia " + (i + 1) + ": $" + ganhos[i].toFixed(2) + "</li>";
             }
@@ -138,7 +138,7 @@
 
             var totalGanhos = ganhos.reduce((total, ganho) => total + ganho, 0);
 
-            resultadoHTML += "<h2>Total de Ganhos em 20 Dias: $" + totalGanhos.toFixed(2) + "</h2>";
+            resultadoHTML += "<h2>Total de Ganancia en 20 Dias: $" + totalGanhos.toFixed(2) + "</h2>";
 
             document.getElementById('resultado').innerHTML = resultadoHTML;
 
