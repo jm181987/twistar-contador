@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Avisador Slack Almuerzo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+  /* Reset básico */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  .container {
+    background: #1e1e2f;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    max-width: 480px;
+    width: 100%;
+    padding: 30px 25px;
+  }
+  h1 {
+    margin-top: 0;
+    font-weight: 600;
+    font-size: 1.8rem;
+    text-align: center;
+    letter-spacing: 1.2px;
+    margin-bottom: 30px;
+  }
+  label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 1rem;
+  }
+  input[type="text"] {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+    outline: none;
+    transition: box-shadow 0.3s ease;
+    color: #222;
+  }
+  input[type="text"]:focus {
+    box-shadow: 0 0 8px #2575fc;
+  }
+  button {
+    margin-top: 20px;
+    background: #2575fc;
+    border: none;
+    color: white;
+    font-weight: 600;
+    padding: 14px 0;
+    width: 100%;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 6px 15px rgba(37,117,252,0.7);
+  }
+  button:hover:not(:disabled) {
+    background-color: #1a53b8;
+    box-shadow: 0 8px 20px rgba(26,83,184,0.9);
+  }
+  button:disabled {
+    background: #555a7a;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+  #status {
+    margin-top: 25px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-align: center;
+    min-height: 24px;
+    user-select: none;
+  }
+  .footer {
+    margin-top: 35px;
+    font-size: 0.8rem;
+    text-align: center;
+    opacity: 0.6;
+    user-select: none;
+  }
+  @media (max-width: 520px) {
+    .container {
+      padding: 20px 15px;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>Avisador Slack Almuerzo</h1>
+    <label for="webhookInput">xapp-1-A090KFSUP5L-9050100274416-77afcbd965e6def1360c34630327705ba1140adf80d8b643cf4eae886868aef7</label>
+    <input type="text" id="webhookInput" placeholder="https://hooks.slack.com/services/..." autocomplete="off" />
+    <button id="startBtn">Activar Avisador</button>
+    <div id="status"></div>
+    <div class="footer">Creado para Ventury - Mantente siempre al tanto 😊</div>
+  </div>
+
+<script>
+(() => {
+  const salidasBase = {
+    "Claudia (Mercados BR)": "12:00",
+    "Ricardo (Mercados BR)": "12:30",
+    "Marjana (Mercados BR)": "13:00",
+    "Thiago Santana (Ventury BR)": "12:00",
+    "Diogo (Ventury BR)": "12:30",
+    "Alexandre Soares (Ventury BR)": "12:45",
+    "Alexandre Machado (Ventury BR)": "13:00",
+    "Alex (Mercados AR)": "12:00",
+    "Jorge (Mercados AR)": "12:30",
+    "Martin (Mercados AR)": "13:00",
+    "Emelly (Ventury AR)": "12:00",
+    "Mariana (Ventury AR)": "12:30",
+    "yu (Ventury AR)": "12:45",
+    "Vero (Ventury AR)": "13:00"
+  };
+
+  const webhookInput = document.getElementById("webhookInput");
+  const startBtn = document.getElementById("startBtn");
+  const statusDiv = document.getElementById("status");
+
+  let webhook = "";
+  let retornos = {};
+  let notificados = new Set();
+  let diaActual = new Date().toDateString();
+  let intervalId = null;
+
+  // --- LOCAL STORAGE KEYS ---
+  const LS_WEBHOOK = "avisadorSlackWebhook";
+  const LS_NOTIFICADOS = "avisadorSlackNotificados";
+  const LS_DIA = "avisadorSlackDia";
+
+  function guardarEstado() {
+    localStorage.setItem(LS_WEBHOOK, webhook);
+    localStorage.setItem(LS_DIA, diaActual);
+    localStorage.setItem(LS_NOTIFICADOS, JSON.stringify([...notificados]));
+  }
+
+  function cargarEstado() {
+    const wh = localStorage.getItem(LS_WEBHOOK);
+    const dia = localStorage.getItem(LS_DIA);
+    const notis = localStorage.getItem(LS_NOTIFICADOS);
+
+    if (wh) webhookInput.value = wh;
+    if (dia) diaActual = dia;
+    if (notis) {
+      try {
+        const arr = JSON.parse(notis);
+        if (Array.isArray(arr)) notificados = new Set(arr);
+      } catch {}
+    }
+  }
+
+  function limpiarEstado() {
+    localStorage.removeItem(LS_NOTIFICADOS);
+    localStorage.removeItem(LS_DIA);
+    notificados.clear();
+    diaActual = new Date().toDateString();
+    localStorage.setItem(LS_DIA, diaActual);
+  }
+
+  function calcularRetornos() {
+    retornos = {};
+    for (let persona in salidasBase) {
+      const [h, m] = salidasBase[persona].split(":").map(Number);
+      const date = new Date();
+      date.setHours(h);
+      date.setMinutes(m + 55);
+      date.setSeconds(0);
+      retornos[persona] = date;
+    }
+  }
+
+  function revisarCambiosDeDia() {
+    const hoy = new Date().toDateString();
+    if (hoy !== diaActual) {
+      diaActual = hoy;
+      limpiarEstado();
+      calcularRetornos();
+      statusDiv.textContent = "🔄 Nuevo día, horarios recalculados y notificaciones reiniciadas.";
+      guardarEstado();
+      console.log("🔄 Día nuevo, horarios recalculados.");
+    }
+  }
+
+  async function enviarASlack(persona) {
+    try {
+      await fetch(webhook, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          text: `🔔 *${persona}* debe estar regresando del almuerzo.`
+        })
+      });
+      console.log(`Mensaje enviado para ${persona}`);
+    } catch (error) {
+      console.error("Error enviando a Slack:", error);
+      statusDiv.textContent = "❌ Error enviando notificación a Slack. Revisa la consola.";
+    }
+  }
+
+  function iniciar() {
+    webhook = webhookInput.value.trim();
+    if (!webhook) {
+      alert("Por favor, ingresa una URL válida de webhook de Slack.");
+      return;
+    }
+    calcularRetornos();
+
+    statusDiv.textContent = "✅ Avisador Slack activado";
+
+    if (intervalId) clearInterval(intervalId);
+
+    intervalId = setInterval(() => {
+      revisarCambiosDeDia();
+      const ahora = new Date();
+      const esLaboral = ahora.getDay() >= 1 && ahora.getDay() <= 5;
+      if (!esLaboral) return;
+
+      for (let persona in retornos) {
+        const regreso = retornos[persona];
+        if (
+          ahora.getHours() === regreso.getHours() &&
+          ahora.getMinutes() === regreso.getMinutes() &&
+          !notificados.has(persona)
+        ) {
+          enviarASlack(persona);
+          notificados.add(persona);
+          guardarEstado();
+        }
+      }
+    }, 30000);
+
+    guardarEstado();
+    startBtn.disabled = true;
+    webhookInput.disabled = true;
+  }
+
+  // Cargar estado guardado al iniciar la página
+  cargarEstado();
+
+  // Si ya había un webhook guardado, iniciar automáticamente
+  if (webhookInput.value.trim()) {
+    iniciar();
+  }
+
+  startBtn.addEventListener("click", iniciar);
+
+  // Para resetear manualmente si se quiere (opcional)
+  // Puedes agregar un botón o atajo para limpiar localStorage si quieres.
+})();
+</script>
+</body>
+</html>
