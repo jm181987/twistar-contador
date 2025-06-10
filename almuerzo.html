@@ -58,16 +58,48 @@
       text-align: center;
       min-height: 24px;
     }
+    #nextLunch {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 1.1rem;
+    }
     .footer {
       margin-top: 35px;
       font-size: 0.8rem;
       text-align: center;
       opacity: 0.6;
     }
-    #nextLunch {
-      margin-top: 15px;
-      text-align: center;
-      font-size: 1.1rem;
+    /* Listas dinámicas */
+    .listas {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 25px;
+      gap: 20px;
+    }
+    .lista {
+      background: #2a2a40;
+      border-radius: 10px;
+      padding: 15px;
+      flex: 1;
+      min-height: 180px;
+      overflow-y: auto;
+    }
+    .lista h2 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      border-bottom: 1px solid #444;
+      padding-bottom: 5px;
+      margin-bottom: 10px;
+    }
+    .lista ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+    .lista li {
+      padding: 6px 0;
+      border-bottom: 1px solid #444;
+      font-weight: 500;
     }
   </style>
 </head>
@@ -77,6 +109,18 @@
     <button id="startBtn">Activar Avisador</button>
     <div id="status"></div>
     <div id="nextLunch"></div>
+
+    <div class="listas">
+      <div class="lista">
+        <h2>🖥️ Trabajando</h2>
+        <ul id="trabajandoList"></ul>
+      </div>
+      <div class="lista">
+        <h2>🍽️ Almorzando</h2>
+        <ul id="almorzandoList"></ul>
+      </div>
+    </div>
+
     <div class="footer">Versión local Ventury 🍽️ by Jorge Marquez</div>
   </div>
 
@@ -102,6 +146,8 @@
   const statusDiv = document.getElementById("status");
   const nextLunchDiv = document.getElementById("nextLunch");
   const startBtn = document.getElementById("startBtn");
+  const trabajandoList = document.getElementById("trabajandoList");
+  const almorzandoList = document.getElementById("almorzandoList");
 
   let retornos = {};
   let notificados = new Set();
@@ -112,9 +158,11 @@
   const LS_NOTIFICADOS = "almuerzoNotificados";
   const LS_DIA = "almuerzoDia";
 
+  // Duración del almuerzo en minutos
+  const duracionAlmuerzo = 55;
+
   // Sonido para la notificación
-  const sonido = new Audio("data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAgD4AAIA+AAABAAgAZGF0YQAAAAA="); 
-  // Nota: la cadena base64 es un WAV vacío muy corto para evitar problemas (puedes cambiar por un sonido real)
+  const sonido = new Audio("data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAgD4AAIA+AAABAAgAZGF0YQAAAAA=");
 
   function guardarEstado() {
     localStorage.setItem(LS_DIA, diaActual);
@@ -142,15 +190,21 @@
     guardarEstado();
   }
 
+  // Calcular el horario de regreso sumando duracionAlmuerzo a la hora de salida
   function calcularRetornos() {
     retornos = {};
     for (let persona in salidasBase) {
       const [h, m] = salidasBase[persona].split(":").map(Number);
-      const date = new Date();
-      date.setHours(h);
-      date.setMinutes(m + 55);
-      date.setSeconds(0);
-      retornos[persona] = date;
+      const dateSalida = new Date();
+      dateSalida.setHours(h);
+      dateSalida.setMinutes(m);
+      dateSalida.setSeconds(0);
+      // Regreso = salida + duracionAlmuerzo minutos
+      const dateRegreso = new Date(dateSalida.getTime() + duracionAlmuerzo * 60000);
+      retornos[persona] = {
+        salida: dateSalida,
+        regreso: dateRegreso
+      };
     }
   }
 
@@ -169,23 +223,52 @@
     console.log(mensaje);
     statusDiv.textContent = mensaje;
 
-    // Mostrar notificación si está permitido
     if ("Notification" in window) {
       if (Notification.permission === "granted") {
         const notif = new Notification("Aviso de Almuerzo", {
           body: mensaje,
-          icon: "https://cdn-icons-png.flaticon.com/512/1827/1827504.png", // icono genérico
+          icon: "https://cdn-icons-png.flaticon.com/512/1827/1827504.png",
           silent: false
         });
-        // Reproducir sonido
         sonido.play().catch(() => {});
       } else if (Notification.permission !== "denied") {
-        // Pedir permiso si aún no se pidió
         Notification.requestPermission().then(permission => {
           if (permission === "granted") {
-            mostrarAviso(persona); // Reintentar mostrar notificación
+            mostrarAviso(persona);
           }
         });
+      }
+    }
+  }
+
+  // Actualizar las listas visuales de trabajando y almorzando
+  function actualizarListas() {
+    const ahora = new Date();
+
+    // Vaciar listas
+    trabajandoList.innerHTML = "";
+    almorzandoList.innerHTML = "";
+
+    for (let persona in retornos) {
+      const { salida, regreso } = retornos[persona];
+
+      if (ahora < salida) {
+        // Antes de salir: trabajando
+        const li = document.createElement("li");
+        li.textContent = persona;
+        trabajandoList.appendChild(li);
+      } else if (ahora >= salida && ahora < regreso) {
+        // Está almorzando
+        const li = document.createElement("li");
+        li.textContent = persona;
+        almorzandoList.appendChild(li);
+      } else {
+        // Regresó, trabaja
+        // Solo mostrar si NO ha sido notificado (aún no confirmado que está de vuelta)
+        // Pero para esta vista se muestra en trabajando
+        const li = document.createElement("li");
+        li.textContent = persona;
+        trabajandoList.appendChild(li);
       }
     }
   }
@@ -193,22 +276,23 @@
   function actualizarCuentaRegresiva() {
     const ahora = new Date();
     const pendientes = Object.entries(retornos)
-      .filter(([persona, hora]) => hora > ahora && !notificados.has(persona))
-      .sort((a, b) => a[1] - b[1]);
+      .filter(([persona, tiempos]) => tiempos.regreso > ahora && !notificados.has(persona))
+      .sort((a, b) => a[1].regreso - b[1].regreso);
 
     if (pendientes.length > 0) {
-      const [persona, tiempo] = pendientes[0];
-      const diff = Math.floor((tiempo - ahora) / 1000);
+      const [persona, tiempos] = pendientes[0];
+      const diff = Math.floor((tiempos.regreso - ahora) / 1000);
       const min = Math.floor(diff / 60);
       const seg = diff % 60;
       nextLunchDiv.textContent = `⏳ Próximo regreso: ${persona} en ${min}m ${seg}s`;
     } else {
       nextLunchDiv.textContent = "✅ Todos han regresado o están en camino.";
     }
+
+    actualizarListas();
   }
 
   function iniciar() {
-    // Pedir permiso para notificaciones al iniciar
     if ("Notification" in window && Notification.permission !== "granted" && Notification.permission !== "denied") {
       Notification.requestPermission();
     }
@@ -226,7 +310,7 @@
       if (!esLaboral) return;
 
       for (let persona in retornos) {
-        const regreso = retornos[persona];
+        const { regreso } = retornos[persona];
         if (
           ahora.getHours() === regreso.getHours() &&
           ahora.getMinutes() === regreso.getMinutes() &&
