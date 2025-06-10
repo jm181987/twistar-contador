@@ -173,6 +173,9 @@
   const duracionAlmuerzo = 55;
   const sonido = new Audio("data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAgD4AAIA+AAABAAgAZGF0YQAAAAA=");
 
+  // Hora para comenzar la cuenta regresiva: 11:55 AM
+  const horaInicioCuenta = { h: 11, m: 55 };
+
   function guardarEstado() {
     localStorage.setItem(LS_DIA, diaActual);
     localStorage.setItem(LS_NOTIFICADOS, JSON.stringify([...notificados]));
@@ -266,8 +269,43 @@
     }
   }
 
+  // Devuelve true si ahora >= horaInicioCuenta (11:55)
+  function pasoHoraInicioCuenta(ahora) {
+    if (ahora.getHours() > horaInicioCuenta.h) return true;
+    if (ahora.getHours() === horaInicioCuenta.h && ahora.getMinutes() >= horaInicioCuenta.m) return true;
+    return false;
+  }
+
+  // Devuelve el Date del último regreso de almuerzo calculado
+  function obtenerUltimoRegreso() {
+    let ultimo = null;
+    for (let persona in retornos) {
+      const r = retornos[persona].regreso;
+      if (!ultimo || r > ultimo) ultimo = r;
+    }
+    return ultimo;
+  }
+
   function actualizarCuentaRegresiva() {
     const ahora = new Date();
+
+    // Validamos si aún no es la hora de iniciar la cuenta
+    if (!pasoHoraInicioCuenta(ahora)) {
+      nextLunchDiv.textContent = "⏳ Aún no comienzan los horarios de almuerzo.";
+      statusDiv.textContent = "";
+      actualizarListas();
+      return;
+    }
+
+    // Obtenemos el último regreso para saber el rango válido
+    const ultimoRegreso = obtenerUltimoRegreso();
+
+    if (ahora > ultimoRegreso) {
+      nextLunchDiv.textContent = "✅ Todos han regresado o están en camino.";
+      statusDiv.textContent = "";
+      actualizarListas();
+      return;
+    }
 
     // Filtrar personas que aún no han sido notificadas y su regreso es futuro
     const pendientes = Object.entries(retornos)
