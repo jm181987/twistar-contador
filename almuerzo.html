@@ -64,6 +64,11 @@
       text-align: center;
       opacity: 0.6;
     }
+    #nextLunch {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 1.1rem;
+    }
   </style>
 </head>
 <body>
@@ -71,7 +76,8 @@
     <h1>Avisador de Almuerzo</h1>
     <button id="startBtn">Activar Avisador</button>
     <div id="status"></div>
-    <div class="footer">Versión local para Ventury 🍽️ by Jorge Marquez</div>
+    <div id="nextLunch"></div>
+    <div class="footer">Versión local sin Slack – Ventury 🍽️</div>
   </div>
 
 <script>
@@ -94,14 +100,15 @@
   };
 
   const statusDiv = document.getElementById("status");
+  const nextLunchDiv = document.getElementById("nextLunch");
   const startBtn = document.getElementById("startBtn");
 
   let retornos = {};
   let notificados = new Set();
   let diaActual = new Date().toDateString();
   let intervalId = null;
+  let cuentaRegresivaId = null;
 
-  // LocalStorage Keys
   const LS_NOTIFICADOS = "almuerzoNotificados";
   const LS_DIA = "almuerzoDia";
 
@@ -159,11 +166,29 @@
     statusDiv.textContent = mensaje;
   }
 
+  function actualizarCuentaRegresiva() {
+    const ahora = new Date();
+    const pendientes = Object.entries(retornos)
+      .filter(([persona, hora]) => hora > ahora && !notificados.has(persona))
+      .sort((a, b) => a[1] - b[1]);
+
+    if (pendientes.length > 0) {
+      const [persona, tiempo] = pendientes[0];
+      const diff = Math.floor((tiempo - ahora) / 1000);
+      const min = Math.floor(diff / 60);
+      const seg = diff % 60;
+      nextLunchDiv.textContent = `⏳ Próximo regreso: ${persona} en ${min}m ${seg}s`;
+    } else {
+      nextLunchDiv.textContent = "✅ Todos han regresado o están en camino.";
+    }
+  }
+
   function iniciar() {
     calcularRetornos();
     statusDiv.textContent = "✅ Avisador activado";
 
     if (intervalId) clearInterval(intervalId);
+    if (cuentaRegresivaId) clearInterval(cuentaRegresivaId);
 
     intervalId = setInterval(() => {
       revisarCambiosDeDia();
@@ -185,13 +210,13 @@
       }
     }, 30000);
 
+    cuentaRegresivaId = setInterval(actualizarCuentaRegresiva, 1000);
+
     guardarEstado();
     startBtn.disabled = true;
   }
 
-  // Cargar estado guardado
   cargarEstado();
-
   startBtn.addEventListener("click", iniciar);
 })();
 </script>
