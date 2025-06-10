@@ -63,6 +63,18 @@
       text-align: center;
       font-size: 1.1rem;
     }
+    #nextLunch ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 5px auto 0;
+      max-width: 300px;
+      text-align: left;
+    }
+    #nextLunch li {
+      font-weight: 500;
+      border-bottom: 1px solid #444;
+      padding: 3px 0;
+    }
     .footer {
       margin-top: 35px;
       font-size: 0.8rem;
@@ -158,10 +170,7 @@
   const LS_NOTIFICADOS = "almuerzoNotificados";
   const LS_DIA = "almuerzoDia";
 
-  // Duración del almuerzo en minutos
   const duracionAlmuerzo = 55;
-
-  // Sonido para la notificación
   const sonido = new Audio("data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAgD4AAIA+AAABAAgAZGF0YQAAAAA=");
 
   function guardarEstado() {
@@ -172,7 +181,6 @@
   function cargarEstado() {
     const dia = localStorage.getItem(LS_DIA);
     const notis = localStorage.getItem(LS_NOTIFICADOS);
-
     if (dia) diaActual = dia;
     if (notis) {
       try {
@@ -190,21 +198,14 @@
     guardarEstado();
   }
 
-  // Calcular el horario de regreso sumando duracionAlmuerzo a la hora de salida
   function calcularRetornos() {
     retornos = {};
     for (let persona in salidasBase) {
       const [h, m] = salidasBase[persona].split(":").map(Number);
       const dateSalida = new Date();
-      dateSalida.setHours(h);
-      dateSalida.setMinutes(m);
-      dateSalida.setSeconds(0);
-      // Regreso = salida + duracionAlmuerzo minutos
+      dateSalida.setHours(h, m, 0, 0);
       const dateRegreso = new Date(dateSalida.getTime() + duracionAlmuerzo * 60000);
-      retornos[persona] = {
-        salida: dateSalida,
-        regreso: dateRegreso
-      };
+      retornos[persona] = { salida: dateSalida, regreso: dateRegreso };
     }
   }
 
@@ -225,7 +226,7 @@
 
     if ("Notification" in window) {
       if (Notification.permission === "granted") {
-        const notif = new Notification("Aviso de Almuerzo", {
+        new Notification("Aviso de Almuerzo", {
           body: mensaje,
           icon: "https://cdn-icons-png.flaticon.com/512/1827/1827504.png",
           silent: false
@@ -233,39 +234,31 @@
         sonido.play().catch(() => {});
       } else if (Notification.permission !== "denied") {
         Notification.requestPermission().then(permission => {
-          if (permission === "granted") {
-            mostrarAviso(persona);
-          }
+          if (permission === "granted") mostrarAviso(persona);
         });
       }
     }
   }
 
-  // Actualizar las listas visuales de trabajando y almorzando
   function actualizarListas() {
     const ahora = new Date();
-
-    // Vaciar listas
     trabajandoList.innerHTML = "";
     almorzandoList.innerHTML = "";
 
     for (let persona in retornos) {
       const { salida, regreso } = retornos[persona];
-
       if (ahora < salida) {
         // Antes de salir: trabajando
         const li = document.createElement("li");
         li.textContent = persona;
         trabajandoList.appendChild(li);
       } else if (ahora >= salida && ahora < regreso) {
-        // Está almorzando
+        // Almorzando
         const li = document.createElement("li");
         li.textContent = persona;
         almorzandoList.appendChild(li);
       } else {
-        // Regresó, trabaja
-        // Solo mostrar si NO ha sido notificado (aún no confirmado que está de vuelta)
-        // Pero para esta vista se muestra en trabajando
+        // Regresó
         const li = document.createElement("li");
         li.textContent = persona;
         trabajandoList.appendChild(li);
@@ -275,16 +268,31 @@
 
   function actualizarCuentaRegresiva() {
     const ahora = new Date();
+
+    // Filtrar personas que aún no han sido notificadas y su regreso es futuro
     const pendientes = Object.entries(retornos)
       .filter(([persona, tiempos]) => tiempos.regreso > ahora && !notificados.has(persona))
       .sort((a, b) => a[1].regreso - b[1].regreso);
 
     if (pendientes.length > 0) {
-      const [persona, tiempos] = pendientes[0];
-      const diff = Math.floor((tiempos.regreso - ahora) / 1000);
+      // Tomamos el regreso más cercano
+      const primerRegreso = pendientes[0][1].regreso;
+
+      // Buscamos todos los que regresan en ese mismo minuto
+      const mismosHorario = pendientes.filter(([_, t]) => {
+        return t.regreso.getHours() === primerRegreso.getHours() &&
+               t.regreso.getMinutes() === primerRegreso.getMinutes();
+      }).map(([persona]) => persona);
+
+      const diff = Math.floor((primerRegreso - ahora) / 1000);
       const min = Math.floor(diff / 60);
       const seg = diff % 60;
-      nextLunchDiv.textContent = `⏳ Próximo regreso: ${persona} en ${min}m ${seg}s`;
+
+      // Mostrar lista con todos los que regresan juntos
+      nextLunchDiv.innerHTML = `
+        ⏳ Próximo regreso en ${min}m ${seg}s:<br/>
+        <ul>${mismosHorario.map(p => `<li>${p}</li>`).join('')}</ul>
+      `;
     } else {
       nextLunchDiv.textContent = "✅ Todos han regresado o están en camino.";
     }
