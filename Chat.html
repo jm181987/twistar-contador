@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Interno - Oficina</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --success-color: #2ecc71;
+            --warning-color: #e67e22;
+            --error-color: #e74c3c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .chat-container {
+            max-width: 1000px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 100px);
+        }
+        
+        .chat-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        
+        .chat-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .user-status {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--success-color);
+            margin-right: 8px;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            max-width: 70%;
+            position: relative;
+        }
+        
+        .message.received {
+            align-items: flex-start;
+        }
+        
+        .message.sent {
+            align-items: flex-end;
+            margin-left: auto;
+        }
+        
+        .message-content {
+            padding: 10px 15px;
+            border-radius: 18px;
+            margin-top: 5px;
+            position: relative;
+            word-wrap: break-word;
+        }
+        
+        .message.received .message-content {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            border-top-left-radius: 5px;
+        }
+        
+        .message.sent .message-content {
+            background-color: var(--secondary-color);
+            color: white;
+            border-top-right-radius: 5px;
+        }
+        
+        .message-info {
+            display: flex;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #7f8c8d;
+        }
+        
+        .message-time {
+            margin-left: 10px;
+            font-size: 0.7rem;
+        }
+        
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            background-color: white;
+            border-top: 1px solid #eee;
+            align-items: center;
+        }
+        
+        #message-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+            font-size: 1rem;
+        }
+        
+        #message-input:focus {
+            border-color: var(--secondary-color);
+        }
+        
+        #send-button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            margin-left: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        #send-button:hover {
+            background-color: #2980b9;
+        }
+        
+        #send-button:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+        
+        .user-name {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 20px;
+            background-color: var(--primary-color);
+        }
+        
+        .login-box {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .login-title {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        .login-input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .login-button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .login-button:hover {
+            background-color: #2980b9;
+        }
+        
+        .error-message {
+            color: var(--error-color);
+            margin-top: 10px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        .message-status {
+            position: absolute;
+            right: 5px;
+            bottom: -15px;
+            font-size: 0.7rem;
+        }
+        
+        .message-status.pending {
+            color: var(--warning-color);
+        }
+        
+        .message-status.error {
+            color: var(--error-color);
+        }
+        
+        /* Nuevos estilos para funcionalidades adicionales */
+        .profile-menu {
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            padding: 10px;
+            z-index: 100;
+            display: none;
+        }
+        
+        .profile-menu.active {
+            display: block;
+        }
+        
+        .profile-menu-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        
+        .profile-menu-item:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .file-input-container {
+            position: relative;
+            margin-right: 10px;
+        }
+        
+        .file-input-label {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        
+        .file-input {
+            position: absolute;
+            opacity: 0;
+            width: 0.1px;
+            height: 0.1px;
+            overflow: hidden;
+        }
+        
+        .file-icon {
+            margin-right: 5px;
+        }
+        
+        .file-message {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 4px;
+            margin-top: 5px;
+        }
+        
+        .file-link {
+            color: inherit;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .file-link:hover {
+            text-decoration: underline;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+        }
+        
+        .modal-title {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+        
+        .modal-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .modal-button {
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .modal-button.primary {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+        }
+        
+        .modal-button.secondary {
+            background-color: #ecf0f1;
+            border: 1px solid #bdc3c7;
+        }
+        
+        @media (max-width: 768px) {
+            .chat-container {
+                margin: 0;
+                height: 100vh;
+                border-radius: 0;
+            }
+            
+            .message {
+                max-width: 85%;
+            }
+            
+            .profile-menu {
+                right: 10px;
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="login-screen" class="login-container">
+        <div class="login-box">
+            <h2 class="login-title">Chat de Oficina</h2>
+            <input type="text" id="username-input" class="login-input" placeholder="Tu nombre" autocomplete="off" autofocus>
+            <input type="password" id="password-input" class="login-input" placeholder="Contraseña (opcional)">
+            <button id="login-button" class="login-button">Ingresar al chat</button>
+            <div id="error-message" class="error-message"></div>
+        </div>
+    </div>
+    
+    <div id="chat-screen" class="chat-container" style="display: none;">
+        <div class="chat-header">
+            <div class="chat-title">Chat Interno - Oficina</div>
+            <div class="user-status" id="user-profile">
+                <div class="status-indicator"></div>
+                <span id="current-user">Usuario</span>
+            </div>
+            <div class="profile-menu" id="profile-menu">
+                <div class="profile-menu-item" id="edit-profile-btn">Editar perfil</div>
+                <div class="profile-menu-item" id="change-password-btn">Cambiar contraseña</div>
+                <div class="profile-menu-item" id="logout-btn">Cerrar sesión</div>
+            </div>
+        </div>
+        
+        <div class="chat-messages" id="chat-messages">
+            <!-- Los mensajes se insertarán aquí dinámicamente -->
+        </div>
+        
+        <div class="chat-input">
+            <div class="file-input-container">
+                <label for="file-input" class="file-input-label">
+                    <span class="file-icon">📎</span>
+                </label>
+                <input type="file" id="file-input" class="file-input">
+            </div>
+            <input type="text" id="message-input" placeholder="Escribe un mensaje..." autocomplete="off">
+            <button id="send-button" disabled>Enviar</button>
+        </div>
+    </div>
+
+    <!-- Modal para editar perfil -->
+    <div class="modal" id="profile-modal">
+        <div class="modal-content">
+            <h3 class="modal-title">Editar perfil</h3>
+            <input type="text" id="profile-name-input" class="modal-input" placeholder="Nuevo nombre">
+            <input type="text" id="profile-status-input" class="modal-input" placeholder="Estado (ej. Disponible)">
+            <div class="modal-buttons">
+                <button class="modal-button secondary" id="cancel-profile-btn">Cancelar</button>
+                <button class="modal-button primary" id="save-profile-btn">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para cambiar contraseña -->
+    <div class="modal" id="password-modal">
+        <div class="modal-content">
+            <h3 class="modal-title">Cambiar contraseña</h3>
+            <input type="password" id="current-password-input" class="modal-input" placeholder="Contraseña actual">
+            <input type="password" id="new-password-input" class="modal-input" placeholder="Nueva contraseña">
+            <input type="password" id="confirm-password-input" class="modal-input" placeholder="Confirmar nueva contraseña">
+            <div class="modal-buttons">
+                <button class="modal-button secondary" id="cancel-password-btn">Cancelar</button>
+                <button class="modal-button primary" id="save-password-btn">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+    <script>
+        // Configuración de Firebase (REEMPLAZA CON TUS DATOS)
+      const firebaseConfig = {
+            apiKey: "AIzaSyDiZLFcgVHkPmWRlcMJlv-RTcSQV8t_G-8",
+            authDomain: "chat-icons-a2f45-default-rtdb.firebaseio.com",
+            databaseURL: "https://chat-icons-a2f45-default-rtdb.firebaseio.com",
+            projectId: "chat-icons-a2f45",
+            storageBucket: "chat-icons-a2f45.firebasestorage.app",
+            messagingSenderId: "87580428904",
+            appId: "1:87580428904:web:4f684b45a47861daf609dd"
+        };
+        
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const auth = firebase.auth();
+        const storage = firebase.storage();
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elementos del DOM
+            const loginScreen = document.getElementById('login-screen');
+            const chatScreen = document.getElementById('chat-screen');
+            const usernameInput = document.getElementById('username-input');
+            const passwordInput = document.getElementById('password-input');
+            const loginButton = document.getElementById('login-button');
+            const errorMessage = document.getElementById('error-message');
+            
+            const chatMessages = document.getElementById('chat-messages');
+            const messageInput = document.getElementById('message-input');
+            const sendButton = document.getElementById('send-button');
+            const currentUserElement = document.getElementById('current-user');
+            const fileInput = document.getElementById('file-input');
+            
+            // Elementos del perfil
+            const userProfile = document.getElementById('user-profile');
+            const profileMenu = document.getElementById('profile-menu');
+            const editProfileBtn = document.getElementById('edit-profile-btn');
+            const changePasswordBtn = document.getElementById('change-password-btn');
+            const logoutBtn = document.getElementById('logout-btn');
+            
+            // Modales
+            const profileModal = document.getElementById('profile-modal');
+            const passwordModal = document.getElementById('password-modal');
+            const profileNameInput = document.getElementById('profile-name-input');
+            const profileStatusInput = document.getElementById('profile-status-input');
+            const currentPasswordInput = document.getElementById('current-password-input');
+            const newPasswordInput = document.getElementById('new-password-input');
+            const confirmPasswordInput = document.getElementById('confirm-password-input');
+            const saveProfileBtn = document.getElementById('save-profile-btn');
+            const savePasswordBtn = document.getElementById('save-password-btn');
+            const cancelProfileBtn = document.getElementById('cancel-profile-btn');
+            const cancelPasswordBtn = document.getElementById('cancel-password-btn');
+            
+            // Variables de estado
+            let currentUser = null;
+            let currentUserId = null;
+            let messageCount = 0;
+            const pendingMessages = {};
+            let userProfileData = {
+                name: '',
+                status: 'Disponible',
+                photoURL: ''
+            };
+            
+            // Función para mostrar el chat después del login
+            function showChat(user) {
+                currentUser = user.displayName || user.email;
+                currentUserId = user.uid;
+                userProfileData.name = currentUser;
+                
+                currentUserElement.textContent = currentUser;
+                
+                loginScreen.style.display = 'none';
+                chatScreen.style.display = 'flex';
+                
+                // Cargar datos del perfil
+                loadProfileData();
+                
+                // Cargar mensajes existentes
+                loadMessages();
+                
+                // Escuchar nuevos mensajes
+                listenForNewMessages();
+                
+                // Enfocar el input de mensaje
+                messageInput.focus();
+            }
+            
+            // Función para cargar datos del perfil
+            function loadProfileData() {
+                database.ref('users/' + currentUserId).once('value')
+                    .then((snapshot) => {
+                        const data = snapshot.val();
+                        if (data) {
+                            userProfileData = {...userProfileData, ...data};
+                            currentUserElement.textContent = userProfileData.name;
+                        }
+                    });
+            }
+            
+            // Función para manejar el login
+            function handleLogin() {
+                const username = usernameInput.value.trim();
+                const password = passwordInput.value.trim();
+                
+                if (!username) {
+                    showError('Por favor ingresa un nombre de usuario');
+                    return;
+                }
+                
+                loginButton.disabled = true;
+                loginButton.textContent = 'Conectando...';
+                
+                // Autenticación anónima si no hay contraseña
+                if (!password) {
+                    auth.signInAnonymously()
+                        .then((userCredential) => {
+                            return userCredential.user.updateProfile({
+                                displayName: username
+                            });
+                        })
+                        .then(() => {
+                            showChat(auth.currentUser);
+                        })
+                        .catch((error) => {
+                            showError('Error al iniciar sesión: ' + error.message);
+                            loginButton.disabled = false;
+                            loginButton.textContent = 'Ingresar al chat';
+                        });
+                } else {
+                    // Autenticación con email/contraseña
+                    const email = `${username.replace(/\s+/g, '').toLowerCase()}@oficina.com`;
+                    auth.signInWithEmailAndPassword(email, password)
+                        .then((userCredential) => {
+                            showChat(userCredential.user);
+                        })
+                        .catch((error) => {
+                            if (error.code === 'auth/user-not-found') {
+                                auth.createUserWithEmailAndPassword(email, password)
+                                    .then((userCredential) => {
+                                        return userCredential.user.updateProfile({
+                                            displayName: username
+                                        });
+                                    })
+                                    .then(() => {
+                                        showChat(auth.currentUser);
+                                    })
+                                    .catch((error) => {
+                                        showError('Error al crear usuario: ' + error.message);
+                                        loginButton.disabled = false;
+                                        loginButton.textContent = 'Ingresar al chat';
+                                    });
+                            } else {
+                                showError('Error al iniciar sesión: ' + error.message);
+                                loginButton.disabled = false;
+                                loginButton.textContent = 'Ingresar al chat';
+                            }
+                        });
+                }
+            }
+            
+            // Función para mostrar errores
+            function showError(message, element = errorMessage) {
+                element.textContent = message;
+                setTimeout(() => {
+                    element.textContent = '';
+                }, 5000);
+            }
+            
+            // Función para cargar mensajes existentes
+            function loadMessages() {
+                database.ref('messages').limitToLast(100).once('value')
+                    .then((snapshot) => {
+                        const messages = snapshot.val();
+                        if (messages) {
+                            Object.entries(messages).forEach(([key, msg]) => {
+                                displayMessage(msg, key);
+                            });
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error al cargar mensajes:", error);
+                    });
+            }
+            
+            // Función para escuchar nuevos mensajes
+            function listenForNewMessages() {
+                database.ref('messages').limitToLast(100).on('child_added', (snapshot) => {
+                    const msg = snapshot.val();
+                    const messageId = snapshot.key;
+                    
+                    // Verificar si es un mensaje pendiente nuestro
+                    const isPendingMessage = Object.keys(pendingMessages).some(tempId => {
+                        const pendingMsg = pendingMessages[tempId];
+                        return pendingMsg && 
+                               pendingMsg.text === msg.text && 
+                               Math.abs(pendingMsg.timestamp - msg.timestamp) < 1000 && // Margen de 1 segundo
+                               pendingMsg.userId === msg.userId;
+                    });
+                    
+                    // Si no es un mensaje pendiente y no existe ya en el chat
+                    if (!isPendingMessage && !document.querySelector(`[data-message-id="${messageId}"]`)) {
+                        displayMessage(msg, messageId);
+                    }
+                    
+                    // Si es un mensaje pendiente nuestro, actualizamos su estado
+                    if (isPendingMessage) {
+                        const tempId = Object.keys(pendingMessages).find(tempId => {
+                            const pendingMsg = pendingMessages[tempId];
+                            return pendingMsg && 
+                                   pendingMsg.text === msg.text && 
+                                   Math.abs(pendingMsg.timestamp - msg.timestamp) < 1000 &&
+                                   pendingMsg.userId === msg.userId;
+                        });
+                        
+                        if (tempId) {
+                            const messageDiv = document.querySelector(`[data-message-id="${tempId}"]`);
+                            if (messageDiv) {
+                                messageDiv.setAttribute('data-message-id', messageId);
+                                updateMessageStatus(messageId, 'delivered');
+                                delete pendingMessages[tempId];
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Función para mostrar un mensaje en el chat
+            function displayMessage(msg, messageId) {
+                const isCurrentUser = msg.userId === currentUserId;
+                
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${isCurrentUser ? 'sent' : 'received'}`;
+                if (messageId) {
+                    messageDiv.setAttribute('data-message-id', messageId);
+                }
+                
+                const messageInfo = document.createElement('div');
+                messageInfo.className = 'message-info';
+                
+                if (!isCurrentUser) {
+                    const userName = document.createElement('span');
+                    userName.className = 'user-name';
+                    userName.textContent = msg.sender;
+                    messageInfo.appendChild(userName);
+                }
+                
+                const messageTime = document.createElement('span');
+                messageTime.className = 'message-time';
+                messageTime.textContent = formatTime(msg.timestamp);
+                messageInfo.appendChild(messageTime);
+                
+                const messageContent = document.createElement('div');
+                messageContent.className = 'message-content';
+                
+                if (msg.fileUrl) {
+                    const fileLink = document.createElement('a');
+                    fileLink.href = msg.fileUrl;
+                    fileLink.target = '_blank';
+                    fileLink.className = 'file-link';
+                    
+                    const fileIcon = document.createElement('span');
+                    fileIcon.className = 'file-icon';
+                    fileIcon.textContent = '📄';
+                    fileLink.appendChild(fileIcon);
+                    
+                    const fileName = document.createElement('span');
+                    fileName.textContent = msg.fileName || 'Archivo compartido';
+                    fileLink.appendChild(fileName);
+                    
+                    messageContent.appendChild(fileLink);
+                }
+                
+                if (msg.text) {
+                    const textElement = document.createElement('div');
+                    textElement.textContent = msg.text;
+                    messageContent.appendChild(textElement);
+                }
+                
+                messageDiv.appendChild(messageInfo);
+                messageDiv.appendChild(messageContent);
+                
+                // Solo añadir estado para nuestros mensajes
+                if (isCurrentUser && messageId) {
+                    const messageStatus = document.createElement('div');
+                    messageStatus.className = 'message-status';
+                    messageStatus.textContent = '✓';
+                    messageDiv.appendChild(messageStatus);
+                }
+                
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            // Función para actualizar estado de mensaje
+            function updateMessageStatus(messageId, status) {
+                const messageDiv = document.querySelector(`[data-message-id="${messageId}"]`);
+                if (messageDiv) {
+                    let statusElement = messageDiv.querySelector('.message-status');
+                    if (!statusElement) {
+                        statusElement = document.createElement('div');
+                        statusElement.className = 'message-status';
+                        messageDiv.appendChild(statusElement);
+                    }
+                    
+                    if (status === 'pending') {
+                        statusElement.textContent = '...';
+                        statusElement.className = 'message-status pending';
+                    } else if (status === 'error') {
+                        statusElement.textContent = '!';
+                        statusElement.className = 'message-status error';
+                    } else {
+                        statusElement.textContent = '✓';
+                        statusElement.className = 'message-status';
+                    }
+                }
+            }
+            
+            // Función para formatear la hora
+            function formatTime(timestamp) {
+                if (!timestamp) return '';
+                
+                const date = new Date(timestamp);
+                return `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
+            }
+            
+            // Función para enviar mensaje de texto
+            function sendTextMessage(text) {
+                if (!text.trim()) return;
+                
+                const timestamp = Date.now();
+                const tempId = 'temp_' + timestamp + '_' + (messageCount++);
+                const message = {
+                    sender: userProfileData.name,
+                    text: text,
+                    timestamp: timestamp,
+                    userId: currentUserId
+                };
+                
+                // Mostrar el mensaje localmente inmediatamente como pendiente
+                displayMessage(message, tempId);
+                updateMessageStatus(tempId, 'pending');
+                pendingMessages[tempId] = message;
+                
+                // Guardar en Firebase
+                const newMessageRef = database.ref('messages').push();
+                newMessageRef.set(message)
+                    .then(() => {
+                        // El estado se actualiza en listenForNewMessages
+                    })
+                    .catch((error) => {
+                        console.error('Error al enviar mensaje:', error);
+                        updateMessageStatus(tempId, 'error');
+                    });
+            }
+            
+            // Función para enviar archivo
+            function sendFileMessage(file) {
+                const timestamp = Date.now();
+                const tempId = 'temp_' + timestamp + '_' + (messageCount++);
+                
+                // Mostrar mensaje de carga
+                const loadingMessage = {
+                    sender: userProfileData.name,
+                    text: `Enviando ${file.name}...`,
+                    timestamp: timestamp,
+                    userId: currentUserId
+                };
+                displayMessage(loadingMessage, tempId);
+                updateMessageStatus(tempId, 'pending');
+                
+                // Subir archivo a Firebase Storage
+                const storageRef = storage.ref('chat_files/' + currentUserId + '/' + timestamp + '_' + file.name);
+                const uploadTask = storageRef.put(file);
+                
+                uploadTask.on('state_changed', 
+                    (snapshot) => {
+                        // Progreso de la carga
+                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        console.log('Progreso: ' + progress + '%');
+                    }, 
+                    (error) => {
+                        console.error('Error al subir archivo:', error);
+                        updateMessageStatus(tempId, 'error');
+                    }, 
+                    () => {
+                        // Carga completada
+                        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                            // Crear mensaje con el archivo
+                            const message = {
+                                sender: userProfileData.name,
+                                fileUrl: downloadURL,
+                                fileName: file.name,
+                                timestamp: timestamp,
+                                userId: currentUserId
+                            };
+                            
+                            // Guardar en Firebase
+                            const newMessageRef = database.ref('messages').push();
+                            newMessageRef.set(message)
+                                .then(() => {
+                                    // Eliminar el mensaje de carga
+                                    const loadingDiv = document.querySelector(`[data-message-id="${tempId}"]`);
+                                    if (loadingDiv) {
+                                        loadingDiv.remove();
+                                    }
+                                    
+                                    // Mostrar el mensaje real con el archivo
+                                    displayMessage(message, newMessageRef.key);
+                                });
+                        });
+                    }
+                );
+            }
+            
+            // Función para actualizar el perfil
+            function updateProfile() {
+                const newName = profileNameInput.value.trim();
+                const newStatus = profileStatusInput.value.trim();
+                
+                if (!newName) {
+                    showError('El nombre no puede estar vacío', profileModal.querySelector('.error-message'));
+                    return;
+                }
+                
+                userProfileData.name = newName;
+                userProfileData.status = newStatus || 'Disponible';
+                
+                // Actualizar en Firebase
+                database.ref('users/' + currentUserId).set(userProfileData)
+                    .then(() => {
+                        // Actualizar en la interfaz
+                        currentUserElement.textContent = userProfileData.name;
+                        closeModal(profileModal);
+                    })
+                    .catch((error) => {
+                        showError('Error al actualizar perfil: ' + error.message, profileModal.querySelector('.error-message'));
+                    });
+            }
+            
+            // Función para cambiar contraseña
+            function changePassword() {
+                const currentPassword = currentPasswordInput.value;
+                const newPassword = newPasswordInput.value;
+                const confirmPassword = confirmPasswordInput.value;
+                
+                if (!currentPassword || !newPassword || !confirmPassword) {
+                    showError('Todos los campos son requeridos', passwordModal.querySelector('.error-message'));
+                    return;
+                }
+                
+                if (newPassword !== confirmPassword) {
+                    showError('Las contraseñas no coinciden', passwordModal.querySelector('.error-message'));
+                    return;
+                }
+                
+                if (newPassword.length < 6) {
+                    showError('La contraseña debe tener al menos 6 caracteres', passwordModal.querySelector('.error-message'));
+                    return;
+                }
+                
+                const user = auth.currentUser;
+                const email = user.email;
+                
+                // Reautenticar al usuario
+                const credential = firebase.auth.EmailAuthProvider.credential(email, currentPassword);
+                
+                user.reauthenticateWithCredential(credential)
+                    .then(() => {
+                        // Cambiar contraseña
+                        return user.updatePassword(newPassword);
+                    })
+                    .then(() => {
+                        showError('Contraseña actualizada correctamente', passwordModal.querySelector('.error-message'));
+                        setTimeout(() => {
+                            closeModal(passwordModal);
+                            currentPasswordInput.value = '';
+                            newPasswordInput.value = '';
+                            confirmPasswordInput.value = '';
+                        }, 2000);
+                    })
+                    .catch((error) => {
+                        showError('Error al cambiar contraseña: ' + error.message, passwordModal.querySelector('.error-message'));
+                    });
+            }
+            
+            // Función para abrir modal
+            function openModal(modal) {
+                modal.style.display = 'flex';
+            }
+            
+            // Función para cerrar modal
+            function closeModal(modal) {
+                modal.style.display = 'none';
+            }
+            
+            // Función para cerrar sesión
+            function logout() {
+                auth.signOut().then(() => {
+                    window.location.reload();
+                });
+            }
+            
+            // Event listeners
+            loginButton.addEventListener('click', handleLogin);
+            
+            usernameInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    handleLogin();
+                }
+            });
+            
+            passwordInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    handleLogin();
+                }
+            });
+            
+            sendButton.addEventListener('click', function() {
+                sendTextMessage(messageInput.value);
+                messageInput.value = '';
+                sendButton.disabled = true;
+            });
+            
+            messageInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendTextMessage(messageInput.value);
+                    messageInput.value = '';
+                    sendButton.disabled = true;
+                }
+            });
+            
+            messageInput.addEventListener('input', function() {
+                sendButton.disabled = messageInput.value.trim() === '';
+            });
+            
+            // Eventos del perfil
+            userProfile.addEventListener('click', function() {
+                profileMenu.classList.toggle('active');
+            });
+            
+            editProfileBtn.addEventListener('click', function() {
+                profileNameInput.value = userProfileData.name;
+                profileStatusInput.value = userProfileData.status;
+                openModal(profileModal);
+                profileMenu.classList.remove('active');
+            });
+            
+            changePasswordBtn.addEventListener('click', function() {
+                if (auth.currentUser.isAnonymous) {
+                    showError('Usuarios anónimos no pueden cambiar contraseña', profileMenu);
+                } else {
+                    openModal(passwordModal);
+                    profileMenu.classList.remove('active');
+                }
+            });
+            
+            logoutBtn.addEventListener('click', function() {
+                logout();
+                profileMenu.classList.remove('active');
+            });
+            
+            // Eventos de los modales
+            saveProfileBtn.addEventListener('click', updateProfile);
+            savePasswordBtn.addEventListener('click', changePassword);
+            cancelProfileBtn.addEventListener('click', function() {
+                closeModal(profileModal);
+            });
+            cancelPasswordBtn.addEventListener('click', function() {
+                closeModal(passwordModal);
+            });
+            
+            // Cerrar modales haciendo clic fuera
+            window.addEventListener('click', function(event) {
+                if (event.target === profileModal) {
+                    closeModal(profileModal);
+                }
+                if (event.target === passwordModal) {
+                    closeModal(passwordModal);
+                }
+                if (!event.target.closest('.user-status') && !event.target.closest('.profile-menu')) {
+                    profileMenu.classList.remove('active');
+                }
+            });
+            
+            // Manejo de archivos
+            fileInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    sendFileMessage(file);
+                    fileInput.value = ''; // Resetear el input
+                }
+            });
+            
+            // Verificar si ya está autenticado
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    showChat(user);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
