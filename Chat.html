@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Interno - Oficina</title>
+    <title>Chat con Salas</title>
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -26,18 +26,17 @@
             background-color: #f5f5f5;
             color: #333;
             line-height: 1.6;
+            height: 100vh;
+            overflow: hidden;
         }
         
         .chat-container {
-            max-width: 1000px;
-            margin: 20px auto;
+            width: 100%;
+            height: 100vh;
+            margin: 0 auto;
             background: white;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
             display: flex;
             flex-direction: column;
-            height: calc(100vh - 100px);
         }
         
         .chat-header {
@@ -48,11 +47,16 @@
             justify-content: space-between;
             align-items: center;
             position: relative;
+            flex-shrink: 0;
         }
         
         .chat-title {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 70%;
         }
         
         .user-status {
@@ -72,7 +76,7 @@
         
         .chat-messages {
             flex: 1;
-            padding: 20px;
+            padding: 15px;
             overflow-y: auto;
             background-color: #f9f9f9;
         }
@@ -81,7 +85,7 @@
             margin-bottom: 15px;
             display: flex;
             flex-direction: column;
-            max-width: 70%;
+            max-width: 80%;
             position: relative;
         }
         
@@ -128,10 +132,11 @@
         
         .chat-input {
             display: flex;
-            padding: 15px;
+            padding: 10px;
             background-color: white;
             border-top: 1px solid #eee;
             align-items: center;
+            flex-shrink: 0;
         }
         
         #message-input {
@@ -152,11 +157,12 @@
             color: white;
             border: none;
             border-radius: 20px;
-            padding: 10px 20px;
+            padding: 10px 15px;
             margin-left: 10px;
             cursor: pointer;
             font-weight: bold;
             transition: background-color 0.3s;
+            white-space: nowrap;
         }
         
         #send-button:hover {
@@ -185,7 +191,7 @@
         
         .login-box {
             background: white;
-            padding: 30px;
+            padding: 25px;
             border-radius: 8px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
             width: 100%;
@@ -196,6 +202,7 @@
             text-align: center;
             margin-bottom: 20px;
             color: var(--primary-color);
+            font-size: 1.3rem;
         }
         
         .login-input {
@@ -228,6 +235,7 @@
             margin-top: 10px;
             text-align: center;
             font-size: 0.9rem;
+            min-height: 20px;
         }
         
         .message-status {
@@ -245,7 +253,6 @@
             color: var(--error-color);
         }
         
-        /* Nuevos estilos para funcionalidades adicionales */
         .profile-menu {
             position: absolute;
             top: 60px;
@@ -266,6 +273,7 @@
             padding: 8px 12px;
             cursor: pointer;
             border-radius: 4px;
+            font-size: 0.9rem;
         }
         
         .profile-menu-item:hover {
@@ -280,7 +288,7 @@
         .file-input-label {
             background-color: var(--light-color);
             color: var(--dark-color);
-            padding: 10px 15px;
+            padding: 10px;
             border-radius: 20px;
             cursor: pointer;
             display: flex;
@@ -337,11 +345,13 @@
             padding: 20px;
             border-radius: 8px;
             width: 90%;
-            max-width: 500px;
+            max-width: 400px;
+            max-height: 90vh;
+            overflow-y: auto;
         }
         
         .modal-title {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             font-size: 1.2rem;
             color: var(--primary-color);
         }
@@ -352,18 +362,21 @@
             margin-bottom: 15px;
             border: 1px solid #ddd;
             border-radius: 4px;
+            font-size: 1rem;
         }
         
         .modal-buttons {
             display: flex;
             justify-content: flex-end;
             gap: 10px;
+            margin-top: 15px;
         }
         
         .modal-button {
             padding: 8px 15px;
             border-radius: 4px;
             cursor: pointer;
+            font-size: 0.9rem;
         }
         
         .modal-button.primary {
@@ -376,21 +389,243 @@
             background-color: #ecf0f1;
             border: 1px solid #bdc3c7;
         }
+
+        /* Estilos para las salas de chat */
+        .chat-sidebar {
+            width: 250px;
+            background-color: var(--dark-color);
+            color: white;
+            overflow-y: auto;
+            border-right: 1px solid #2c3e50;
+            display: flex;
+            flex-direction: column;
+        }
         
+        .sidebar-content {
+            padding: 15px;
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        .chat-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .chat-layout {
+            display: flex;
+            height: calc(100vh - 60px);
+        }
+        
+        .room-list {
+            margin-top: 15px;
+        }
+        
+        .room-item {
+            padding: 8px 10px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+        
+        .room-item:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        .room-item.active {
+            background-color: var(--secondary-color);
+        }
+        
+        .room-name {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .room-users-count {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            margin-left: 8px;
+            flex-shrink: 0;
+        }
+        
+        .create-room-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin-top: 10px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 0.9rem;
+        }
+        
+        .create-room-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .invite-users-btn {
+            background-color: var(--success-color);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin-top: 10px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 0.9rem;
+            display: none;
+        }
+        
+        .invite-users-btn:hover {
+            background-color: #27ae60;
+        }
+        
+        .users-list {
+            margin-top: 15px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        
+        .user-item {
+            padding: 6px 5px;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+        
+        .user-status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+        
+        .user-status-indicator.online {
+            background-color: var(--success-color);
+        }
+        
+        .user-status-indicator.offline {
+            background-color: #95a5a6;
+        }
+        
+        .user-checkbox {
+            margin-right: 8px;
+        }
+        
+        .room-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 1001;
+            display: none;
+            max-width: 300px;
+            font-size: 0.9rem;
+        }
+        
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+        
+        /* Media queries para diseño responsivo */
         @media (max-width: 768px) {
-            .chat-container {
-                margin: 0;
-                height: 100vh;
-                border-radius: 0;
+            .chat-layout {
+                flex-direction: column;
+                height: calc(100vh - 60px);
+            }
+            
+            .chat-sidebar {
+                width: 100%;
+                max-height: 200px;
+                border-right: none;
+                border-bottom: 1px solid #2c3e50;
             }
             
             .message {
-                max-width: 85%;
+                max-width: 90%;
             }
             
             .profile-menu {
                 right: 10px;
-                width: 200px;
+                width: 180px;
+            }
+            
+            .modal-content {
+                width: 95%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .chat-header {
+                padding: 10px 15px;
+            }
+            
+            .chat-title {
+                font-size: 1rem;
+                max-width: 60%;
+            }
+            
+            .user-status {
+                font-size: 0.8rem;
+            }
+            
+            .chat-messages {
+                padding: 10px;
+            }
+            
+            .message-content {
+                padding: 8px 12px;
+            }
+            
+            .login-box {
+                padding: 20px;
+            }
+            
+            .login-title {
+                font-size: 1.1rem;
+                margin-bottom: 15px;
+            }
+            
+            .login-input, .login-button {
+                padding: 10px 12px;
             }
         }
     </style>
@@ -398,7 +633,7 @@
 <body>
     <div id="login-screen" class="login-container">
         <div class="login-box">
-            <h2 class="login-title">Chat de Oficina</h2>
+            <h2 class="login-title">Chat con Salas</h2>
             <input type="text" id="username-input" class="login-input" placeholder="Tu nombre" autocomplete="off" autofocus>
             <input type="password" id="password-input" class="login-input" placeholder="Contraseña (opcional)">
             <button id="login-button" class="login-button">Ingresar al chat</button>
@@ -408,7 +643,7 @@
     
     <div id="chat-screen" class="chat-container" style="display: none;">
         <div class="chat-header">
-            <div class="chat-title">Chat Interno - Oficina</div>
+            <div class="chat-title" id="current-room-title">Chat General</div>
             <div class="user-status" id="user-profile">
                 <div class="status-indicator"></div>
                 <span id="current-user">Usuario</span>
@@ -420,23 +655,43 @@
             </div>
         </div>
         
-        <div class="chat-messages" id="chat-messages">
-            <!-- Los mensajes se insertarán aquí dinámicamente -->
-        </div>
-        
-        <div class="chat-input">
-            <div class="file-input-container">
-                <label for="file-input" class="file-input-label">
-                    <span class="file-icon">📎</span>
-                </label>
-                <input type="file" id="file-input" class="file-input">
+        <div class="chat-layout">
+            <div class="chat-sidebar">
+                <div class="sidebar-content">
+                    <button id="create-room-btn" class="create-room-btn">Crear nueva sala</button>
+                    <button id="invite-users-btn" class="invite-users-btn">Invitar usuarios</button>
+                    
+                    <div class="room-list" id="room-list">
+                        <!-- Las salas se cargarán aquí -->
+                    </div>
+                    
+                    <h3>Usuarios en línea</h3>
+                    <div class="users-list" id="online-users">
+                        <!-- Los usuarios en línea se cargarán aquí -->
+                    </div>
+                </div>
             </div>
-            <input type="text" id="message-input" placeholder="Escribe un mensaje..." autocomplete="off">
-            <button id="send-button" disabled>Enviar</button>
+            
+            <div class="chat-main">
+                <div class="chat-messages" id="chat-messages">
+                    <!-- Los mensajes se insertarán aquí dinámicamente -->
+                </div>
+                
+                <div class="chat-input">
+                    <div class="file-input-container">
+                        <label for="file-input" class="file-input-label">
+                            <span class="file-icon">📎</span>
+                        </label>
+                        <input type="file" id="file-input" class="file-input">
+                    </div>
+                    <input type="text" id="message-input" placeholder="Escribe un mensaje..." autocomplete="off">
+                    <button id="send-button" disabled>Enviar</button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Modal para editar perfil -->
+    <!-- Modales -->
     <div class="modal" id="profile-modal">
         <div class="modal-content">
             <h3 class="modal-title">Editar perfil</h3>
@@ -446,10 +701,10 @@
                 <button class="modal-button secondary" id="cancel-profile-btn">Cancelar</button>
                 <button class="modal-button primary" id="save-profile-btn">Guardar</button>
             </div>
+            <div class="error-message" id="profile-error-message"></div>
         </div>
     </div>
 
-    <!-- Modal para cambiar contraseña -->
     <div class="modal" id="password-modal">
         <div class="modal-content">
             <h3 class="modal-title">Cambiar contraseña</h3>
@@ -460,8 +715,45 @@
                 <button class="modal-button secondary" id="cancel-password-btn">Cancelar</button>
                 <button class="modal-button primary" id="save-password-btn">Guardar</button>
             </div>
+            <div class="error-message" id="password-error-message"></div>
         </div>
     </div>
+
+    <div class="modal" id="room-modal">
+        <div class="modal-content">
+            <h3 class="modal-title">Crear nueva sala</h3>
+            <input type="text" id="room-name-input" class="modal-input" placeholder="Nombre de la sala">
+            <div class="modal-buttons">
+                <button class="modal-button secondary" id="cancel-room-btn">Cancelar</button>
+                <button class="modal-button primary" id="create-room-confirm-btn">Crear</button>
+            </div>
+            <div class="error-message" id="room-error-message"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="invite-modal">
+        <div class="modal-content">
+            <h3 class="modal-title">Invitar usuarios a la sala</h3>
+            <div id="invite-users-list" class="users-list">
+                <!-- Lista de usuarios para invitar -->
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-button secondary" id="cancel-invite-btn">Cancelar</button>
+                <button class="modal-button primary" id="send-invites-btn">Enviar invitaciones</button>
+            </div>
+            <div class="error-message" id="invite-error-message"></div>
+        </div>
+    </div>
+
+    <!-- Notificación de nueva sala -->
+    <div class="room-notification" id="room-notification">
+        ¡Has sido invitado a una nueva sala de chat!
+    </div>
+
+    <!-- Audio para notificaciones (silenciado inicialmente para evitar bloqueos del navegador) -->
+    <audio id="notification-sound" preload="auto" muted>
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-software-interface-start-2574.mp3" type="audio/mpeg">
+    </audio>
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -471,7 +763,7 @@
 
     <script>
         // Configuración de Firebase (REEMPLAZA CON TUS DATOS)
-      const firebaseConfig = {
+        const firebaseConfig = {
             apiKey: "AIzaSyDiZLFcgVHkPmWRlcMJlv-RTcSQV8t_G-8",
             authDomain: "chat-icons-a2f45-default-rtdb.firebaseio.com",
             databaseURL: "https://chat-icons-a2f45-default-rtdb.firebaseio.com",
@@ -501,6 +793,7 @@
             const sendButton = document.getElementById('send-button');
             const currentUserElement = document.getElementById('current-user');
             const fileInput = document.getElementById('file-input');
+            const currentRoomTitle = document.getElementById('current-room-title');
             
             // Elementos del perfil
             const userProfile = document.getElementById('user-profile');
@@ -509,18 +802,42 @@
             const changePasswordBtn = document.getElementById('change-password-btn');
             const logoutBtn = document.getElementById('logout-btn');
             
+            // Elementos de salas de chat
+            const roomList = document.getElementById('room-list');
+            const onlineUsersList = document.getElementById('online-users');
+            const createRoomBtn = document.getElementById('create-room-btn');
+            const inviteUsersBtn = document.getElementById('invite-users-btn');
+            const inviteUsersList = document.getElementById('invite-users-list');
+            
             // Modales
             const profileModal = document.getElementById('profile-modal');
             const passwordModal = document.getElementById('password-modal');
+            const roomModal = document.getElementById('room-modal');
+            const inviteModal = document.getElementById('invite-modal');
             const profileNameInput = document.getElementById('profile-name-input');
             const profileStatusInput = document.getElementById('profile-status-input');
             const currentPasswordInput = document.getElementById('current-password-input');
             const newPasswordInput = document.getElementById('new-password-input');
             const confirmPasswordInput = document.getElementById('confirm-password-input');
+            const roomNameInput = document.getElementById('room-name-input');
             const saveProfileBtn = document.getElementById('save-profile-btn');
             const savePasswordBtn = document.getElementById('save-password-btn');
+            const createRoomConfirmBtn = document.getElementById('create-room-confirm-btn');
+            const sendInvitesBtn = document.getElementById('send-invites-btn');
             const cancelProfileBtn = document.getElementById('cancel-profile-btn');
             const cancelPasswordBtn = document.getElementById('cancel-password-btn');
+            const cancelRoomBtn = document.getElementById('cancel-room-btn');
+            const cancelInviteBtn = document.getElementById('cancel-invite-btn');
+            
+            // Elementos de mensajes de error
+            const profileErrorMessage = document.getElementById('profile-error-message');
+            const passwordErrorMessage = document.getElementById('password-error-message');
+            const roomErrorMessage = document.getElementById('room-error-message');
+            const inviteErrorMessage = document.getElementById('invite-error-message');
+            
+            // Notificación y sonido
+            const roomNotification = document.getElementById('room-notification');
+            const notificationSound = document.getElementById('notification-sound');
             
             // Variables de estado
             let currentUser = null;
@@ -533,6 +850,13 @@
                 photoURL: ''
             };
             
+            // Variables para salas de chat
+            let currentRoomId = 'general';
+            let currentRoomName = 'Chat General';
+            let rooms = {};
+            let onlineUsers = {};
+            let userRooms = {};
+            
             // Función para mostrar el chat después del login
             function showChat(user) {
                 currentUser = user.displayName || user.email;
@@ -540,6 +864,7 @@
                 userProfileData.name = currentUser;
                 
                 currentUserElement.textContent = currentUser;
+                currentRoomTitle.textContent = currentRoomName;
                 
                 loginScreen.style.display = 'none';
                 chatScreen.style.display = 'flex';
@@ -547,14 +872,60 @@
                 // Cargar datos del perfil
                 loadProfileData();
                 
+                // Actualizar estado de conexión del usuario
+                updateUserPresence();
+                
+                // Cargar salas de chat
+                loadUserRooms();
+                
+                // Cargar usuarios en línea
+                loadOnlineUsers();
+                
                 // Cargar mensajes existentes
                 loadMessages();
                 
                 // Escuchar nuevos mensajes
                 listenForNewMessages();
                 
+                // Escuchar invitaciones a salas
+                listenForRoomInvitations();
+                
                 // Enfocar el input de mensaje
                 messageInput.focus();
+                
+                // Habilitar sonidos después de interacción del usuario
+                document.addEventListener('click', enableSounds, { once: true });
+            }
+            
+            // Función para habilitar sonidos después de interacción del usuario
+            function enableSounds() {
+                notificationSound.muted = false;
+            }
+            
+            // Función para actualizar la presencia del usuario
+            function updateUserPresence() {
+                const userStatusRef = database.ref('status/' + currentUserId);
+                
+                const isOfflineForDatabase = {
+                    state: 'offline',
+                    last_changed: firebase.database.ServerValue.TIMESTAMP,
+                };
+                
+                const isOnlineForDatabase = {
+                    state: 'online',
+                    last_changed: firebase.database.ServerValue.TIMESTAMP,
+                    name: userProfileData.name
+                };
+                
+                database.ref('.info/connected').on('value', function(snapshot) {
+                    if (snapshot.val() === false) {
+                        return;
+                    }
+                    
+                    userStatusRef.onDisconnect().set(isOfflineForDatabase).then(function() {
+                        userStatusRef.set(isOnlineForDatabase);
+                    });
+                });
             }
             
             // Función para cargar datos del perfil
@@ -567,6 +938,326 @@
                             currentUserElement.textContent = userProfileData.name;
                         }
                     });
+            }
+            
+            // Función para cargar salas de chat del usuario
+            function loadUserRooms() {
+                database.ref('userRooms/' + currentUserId).on('value', (snapshot) => {
+                    userRooms = snapshot.val() || {};
+                    
+                    // Asegurarse de que el usuario siempre esté en la sala general
+                    if (!userRooms['general']) {
+                        userRooms['general'] = {
+                            name: 'Chat General',
+                            lastAccessed: Date.now()
+                        };
+                        database.ref('userRooms/' + currentUserId).set(userRooms);
+                    }
+                    
+                    // Cargar detalles de las salas
+                    loadRoomsDetails(Object.keys(userRooms));
+                });
+            }
+            
+            // Función para cargar detalles de las salas
+            function loadRoomsDetails(roomIds) {
+                roomIds.forEach(roomId => {
+                    database.ref('rooms/' + roomId).once('value').then(snapshot => {
+                        const roomData = snapshot.val();
+                        if (roomData) {
+                            rooms[roomId] = roomData;
+                            updateRoomList();
+                        }
+                    }).catch(error => {
+                        console.error("Error al cargar detalles de la sala:", error);
+                    });
+                });
+            }
+            
+            // Función para actualizar la lista de salas en la interfaz
+            function updateRoomList() {
+                roomList.innerHTML = '';
+                
+                Object.entries(userRooms).sort((a, b) => {
+                    return (b[1].lastAccessed || 0) - (a[1].lastAccessed || 0);
+                }).forEach(([roomId, roomInfo]) => {
+                    const roomData = rooms[roomId] || {name: roomInfo.name || 'Sala sin nombre', users: {}};
+                    
+                    const roomItem = document.createElement('div');
+                    roomItem.className = `room-item ${roomId === currentRoomId ? 'active' : ''}`;
+                    roomItem.innerHTML = `
+                        <span class="room-name">${roomData.name}</span>
+                        <span class="room-users-count">${Object.keys(roomData.users || {}).length}</span>
+                    `;
+                    
+                    roomItem.addEventListener('click', () => {
+                        switchRoom(roomId, roomData.name);
+                    });
+                    
+                    roomList.appendChild(roomItem);
+                });
+                
+                // Mostrar u ocultar el botón de invitar según la sala
+                if (currentRoomId !== 'general') {
+                    inviteUsersBtn.style.display = 'block';
+                } else {
+                    inviteUsersBtn.style.display = 'none';
+                }
+            }
+            
+            // Función para cambiar de sala
+            function switchRoom(roomId, roomName) {
+                // Actualizar último acceso a la sala anterior
+                if (userRooms[currentRoomId]) {
+                    userRooms[currentRoomId].lastAccessed = Date.now();
+                    database.ref('userRooms/' + currentUserId).set(userRooms);
+                }
+                
+                // Cambiar a la nueva sala
+                currentRoomId = roomId;
+                currentRoomName = roomName;
+                currentRoomTitle.textContent = roomName;
+                
+                // Actualizar la lista de salas para reflejar la sala activa
+                updateRoomList();
+                
+                // Limpiar mensajes actuales
+                chatMessages.innerHTML = '';
+                
+                // Cargar mensajes de la nueva sala
+                loadMessages();
+            }
+            
+            // Función para crear una nueva sala
+            function createNewRoom() {
+                const roomName = roomNameInput.value.trim();
+                
+                if (!roomName) {
+                    showError('El nombre de la sala no puede estar vacío', roomErrorMessage);
+                    return;
+                }
+                
+                createRoomConfirmBtn.disabled = true;
+                createRoomConfirmBtn.textContent = 'Creando...';
+                
+                // Crear la sala en Firebase
+                const newRoomRef = database.ref('rooms').push();
+                const newRoomId = newRoomRef.key;
+                
+                const roomData = {
+                    name: roomName,
+                    createdBy: currentUserId,
+                    createdAt: Date.now(),
+                    users: {
+                        [currentUserId]: true
+                    }
+                };
+                
+                newRoomRef.set(roomData)
+                    .then(() => {
+                        // Agregar la sala al usuario
+                        if (!userRooms[newRoomId]) {
+                            userRooms[newRoomId] = {
+                                name: roomName,
+                                lastAccessed: Date.now()
+                            };
+                            
+                            return database.ref('userRooms/' + currentUserId).set(userRooms);
+                        }
+                    })
+                    .then(() => {
+                        closeModal(roomModal);
+                        roomNameInput.value = '';
+                        switchRoom(newRoomId, roomName);
+                    })
+                    .catch(error => {
+                        showError('Error al crear la sala: ' + error.message, roomErrorMessage);
+                    })
+                    .finally(() => {
+                        createRoomConfirmBtn.disabled = false;
+                        createRoomConfirmBtn.textContent = 'Crear';
+                    });
+            }
+            
+            // Función para invitar usuarios a una sala
+            function inviteUsersToRoom() {
+                inviteUsersList.innerHTML = '';
+                
+                Object.entries(onlineUsers).forEach(([userId, userData]) => {
+                    // No mostrar al usuario actual ni a usuarios ya en la sala
+                    if (userId !== currentUserId && (!rooms[currentRoomId]?.users?.[userId])) {
+                        const userItem = document.createElement('div');
+                        userItem.className = 'user-item';
+                        userItem.innerHTML = `
+                            <input type="checkbox" class="user-checkbox" id="invite-${userId}" value="${userId}">
+                            <label for="invite-${userId}">
+                                <span class="user-status-indicator online"></span>
+                                ${userData.name}
+                            </label>
+                        `;
+                        inviteUsersList.appendChild(userItem);
+                    }
+                });
+                
+                if (inviteUsersList.children.length === 0) {
+                    const noUsersItem = document.createElement('div');
+                    noUsersItem.className = 'user-item';
+                    noUsersItem.textContent = 'No hay usuarios disponibles para invitar';
+                    inviteUsersList.appendChild(noUsersItem);
+                    sendInvitesBtn.disabled = true;
+                } else {
+                    sendInvitesBtn.disabled = false;
+                }
+                
+                openModal(inviteModal);
+            }
+            
+            // Función para enviar invitaciones
+            function sendInvitations() {
+                const checkboxes = inviteUsersList.querySelectorAll('.user-checkbox:checked');
+                const invitedUsers = Array.from(checkboxes).map(cb => cb.value);
+                
+                if (invitedUsers.length === 0) {
+                    showError('Selecciona al menos un usuario', inviteErrorMessage);
+                    return;
+                }
+                
+                const roomData = rooms[currentRoomId];
+                
+                sendInvitesBtn.disabled = true;
+                sendInvitesBtn.textContent = 'Enviando...';
+                
+                // Primero agregar usuarios a la sala
+                const updates = {};
+                invitedUsers.forEach(userId => {
+                    updates[`rooms/${currentRoomId}/users/${userId}`] = true;
+                    updates[`userRooms/${userId}/${currentRoomId}`] = {
+                        name: roomData.name,
+                        lastAccessed: Date.now()
+                    };
+                });
+                
+                database.ref().update(updates)
+                    .then(() => {
+                        // Luego enviar notificaciones
+                        const notificationPromises = invitedUsers.map(userId => {
+                            return database.ref(`notifications/${userId}/roomInvites`).push({
+                                roomId: currentRoomId,
+                                roomName: roomData.name,
+                                invitedBy: currentUserId,
+                                invitedByName: userProfileData.name,
+                                timestamp: Date.now(),
+                                read: false
+                            });
+                        });
+                        
+                        return Promise.all(notificationPromises);
+                    })
+                    .then(() => {
+                        closeModal(inviteModal);
+                    })
+                    .catch(error => {
+                        showError('Error al enviar invitaciones: ' + error.message, inviteErrorMessage);
+                    })
+                    .finally(() => {
+                        sendInvitesBtn.disabled = false;
+                        sendInvitesBtn.textContent = 'Enviar invitaciones';
+                    });
+            }
+            
+            // Función para escuchar invitaciones a salas
+            function listenForRoomInvitations() {
+                database.ref(`notifications/${currentUserId}/roomInvites`).on('child_added', (snapshot) => {
+                    const invite = snapshot.val();
+                    
+                    // Solo mostrar notificación si no es del usuario actual y no ha sido leída
+                    if (invite.invitedBy !== currentUserId && !invite.read) {
+                        // Marcar como leída
+                        database.ref(`notifications/${currentUserId}/roomInvites/${snapshot.key}/read`).set(true);
+                        
+                        // Mostrar notificación
+                        showRoomNotification(invite);
+                    }
+                });
+            }
+            
+            // Función para mostrar notificación de nueva sala
+            function showRoomNotification(invite) {
+                // Reproducir sonido de notificación
+                playNotificationSound();
+                
+                roomNotification.textContent = `${invite.invitedByName} te ha invitado a la sala "${invite.roomName}"`;
+                roomNotification.style.display = 'block';
+                
+                roomNotification.onclick = () => {
+                    // Aceptar la invitación automáticamente
+                    if (!userRooms[invite.roomId]) {
+                        userRooms[invite.roomId] = {
+                            name: invite.roomName,
+                            lastAccessed: Date.now()
+                        };
+                        
+                        database.ref('userRooms/' + currentUserId).set(userRooms)
+                            .then(() => {
+                                // Cambiar a la nueva sala
+                                switchRoom(invite.roomId, invite.roomName);
+                                roomNotification.style.display = 'none';
+                            });
+                    }
+                };
+                
+                // Ocultar notificación después de 10 segundos
+                setTimeout(() => {
+                    roomNotification.style.display = 'none';
+                }, 10000);
+            }
+            
+            // Función para reproducir sonido de notificación
+            function playNotificationSound() {
+                notificationSound.currentTime = 0; // Rebobinar el sonido
+                notificationSound.play().catch(e => console.log("Error al reproducir sonido:", e));
+            }
+            
+            // Función para cargar usuarios en línea
+            function loadOnlineUsers() {
+                database.ref('status').on('value', (snapshot) => {
+                    onlineUsers = {};
+                    const statusData = snapshot.val() || {};
+                    
+                    Object.entries(statusData).forEach(([userId, userStatus]) => {
+                        if (userStatus.state === 'online') {
+                            onlineUsers[userId] = {
+                                name: userStatus.name || 'Usuario',
+                                lastChanged: userStatus.last_changed
+                            };
+                        }
+                    });
+                    
+                    updateOnlineUsersList();
+                });
+            }
+            
+            // Función para actualizar la lista de usuarios en línea
+            function updateOnlineUsersList() {
+                onlineUsersList.innerHTML = '';
+                
+                Object.entries(onlineUsers).sort((a, b) => {
+                    return a[1].name.localeCompare(b[1].name);
+                }).forEach(([userId, userData]) => {
+                    const userItem = document.createElement('div');
+                    userItem.className = 'user-item';
+                    userItem.innerHTML = `
+                        <span class="user-status-indicator online"></span>
+                        ${userData.name}
+                    `;
+                    
+                    // Resaltar al usuario actual
+                    if (userId === currentUserId) {
+                        userItem.style.fontWeight = 'bold';
+                    }
+                    
+                    onlineUsersList.appendChild(userItem);
+                });
             }
             
             // Función para manejar el login
@@ -600,7 +1291,7 @@
                         });
                 } else {
                     // Autenticación con email/contraseña
-                    const email = `${username.replace(/\s+/g, '').toLowerCase()}@oficina.com`;
+                    const email = `${username.replace(/\s+/g, '').toLowerCase()}@chatdejorge.com`;
                     auth.signInWithEmailAndPassword(email, password)
                         .then((userCredential) => {
                             showChat(userCredential.user);
@@ -632,6 +1323,8 @@
             
             // Función para mostrar errores
             function showError(message, element = errorMessage) {
+                if (!element) return;
+                
                 element.textContent = message;
                 setTimeout(() => {
                     element.textContent = '';
@@ -640,13 +1333,14 @@
             
             // Función para cargar mensajes existentes
             function loadMessages() {
-                database.ref('messages').limitToLast(100).once('value')
+                database.ref('messages/' + currentRoomId).limitToLast(100).once('value')
                     .then((snapshot) => {
                         const messages = snapshot.val();
                         if (messages) {
                             Object.entries(messages).forEach(([key, msg]) => {
                                 displayMessage(msg, key);
                             });
+                            scrollToBottom();
                         }
                     })
                     .catch((error) => {
@@ -656,7 +1350,7 @@
             
             // Función para escuchar nuevos mensajes
             function listenForNewMessages() {
-                database.ref('messages').limitToLast(100).on('child_added', (snapshot) => {
+                database.ref('messages/' + currentRoomId).limitToLast(100).on('child_added', (snapshot) => {
                     const msg = snapshot.val();
                     const messageId = snapshot.key;
                     
@@ -672,6 +1366,12 @@
                     // Si no es un mensaje pendiente y no existe ya en el chat
                     if (!isPendingMessage && !document.querySelector(`[data-message-id="${messageId}"]`)) {
                         displayMessage(msg, messageId);
+                        scrollToBottom();
+                        
+                        // Reproducir sonido si el mensaje no es del usuario actual
+                        if (msg.userId !== currentUserId) {
+                            playNotificationSound();
+                        }
                     }
                     
                     // Si es un mensaje pendiente nuestro, actualizamos su estado
@@ -694,6 +1394,11 @@
                         }
                     }
                 });
+            }
+            
+            // Función para desplazarse al final del chat
+            function scrollToBottom() {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
             }
             
             // Función para mostrar un mensaje en el chat
@@ -760,7 +1465,6 @@
                 }
                 
                 chatMessages.appendChild(messageDiv);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
             }
             
             // Función para actualizar estado de mensaje
@@ -805,16 +1509,18 @@
                     sender: userProfileData.name,
                     text: text,
                     timestamp: timestamp,
-                    userId: currentUserId
+                    userId: currentUserId,
+                    roomId: currentRoomId
                 };
                 
                 // Mostrar el mensaje localmente inmediatamente como pendiente
                 displayMessage(message, tempId);
                 updateMessageStatus(tempId, 'pending');
                 pendingMessages[tempId] = message;
+                scrollToBottom();
                 
                 // Guardar en Firebase
-                const newMessageRef = database.ref('messages').push();
+                const newMessageRef = database.ref('messages/' + currentRoomId).push();
                 newMessageRef.set(message)
                     .then(() => {
                         // El estado se actualiza en listenForNewMessages
@@ -823,6 +1529,9 @@
                         console.error('Error al enviar mensaje:', error);
                         updateMessageStatus(tempId, 'error');
                     });
+                
+                messageInput.value = '';
+                sendButton.disabled = true;
             }
             
             // Función para enviar archivo
@@ -835,10 +1544,12 @@
                     sender: userProfileData.name,
                     text: `Enviando ${file.name}...`,
                     timestamp: timestamp,
-                    userId: currentUserId
+                    userId: currentUserId,
+                    roomId: currentRoomId
                 };
                 displayMessage(loadingMessage, tempId);
                 updateMessageStatus(tempId, 'pending');
+                scrollToBottom();
                 
                 // Subir archivo a Firebase Storage
                 const storageRef = storage.ref('chat_files/' + currentUserId + '/' + timestamp + '_' + file.name);
@@ -863,11 +1574,12 @@
                                 fileUrl: downloadURL,
                                 fileName: file.name,
                                 timestamp: timestamp,
-                                userId: currentUserId
+                                userId: currentUserId,
+                                roomId: currentRoomId
                             };
                             
                             // Guardar en Firebase
-                            const newMessageRef = database.ref('messages').push();
+                            const newMessageRef = database.ref('messages/' + currentRoomId).push();
                             newMessageRef.set(message)
                                 .then(() => {
                                     // Eliminar el mensaje de carga
@@ -878,6 +1590,7 @@
                                     
                                     // Mostrar el mensaje real con el archivo
                                     displayMessage(message, newMessageRef.key);
+                                    scrollToBottom();
                                 });
                         });
                     }
@@ -890,9 +1603,12 @@
                 const newStatus = profileStatusInput.value.trim();
                 
                 if (!newName) {
-                    showError('El nombre no puede estar vacío', profileModal.querySelector('.error-message'));
+                    showError('El nombre no puede estar vacío', profileErrorMessage);
                     return;
                 }
+                
+                saveProfileBtn.disabled = true;
+                saveProfileBtn.textContent = 'Guardando...';
                 
                 userProfileData.name = newName;
                 userProfileData.status = newStatus || 'Disponible';
@@ -902,10 +1618,18 @@
                     .then(() => {
                         // Actualizar en la interfaz
                         currentUserElement.textContent = userProfileData.name;
+                        
+                        // Actualizar estado en línea
+                        database.ref('status/' + currentUserId + '/name').set(userProfileData.name);
+                        
                         closeModal(profileModal);
                     })
                     .catch((error) => {
-                        showError('Error al actualizar perfil: ' + error.message, profileModal.querySelector('.error-message'));
+                        showError('Error al actualizar perfil: ' + error.message, profileErrorMessage);
+                    })
+                    .finally(() => {
+                        saveProfileBtn.disabled = false;
+                        saveProfileBtn.textContent = 'Guardar';
                     });
             }
             
@@ -916,22 +1640,25 @@
                 const confirmPassword = confirmPasswordInput.value;
                 
                 if (!currentPassword || !newPassword || !confirmPassword) {
-                    showError('Todos los campos son requeridos', passwordModal.querySelector('.error-message'));
+                    showError('Todos los campos son requeridos', passwordErrorMessage);
                     return;
                 }
                 
                 if (newPassword !== confirmPassword) {
-                    showError('Las contraseñas no coinciden', passwordModal.querySelector('.error-message'));
+                    showError('Las contraseñas no coinciden', passwordErrorMessage);
                     return;
                 }
                 
                 if (newPassword.length < 6) {
-                    showError('La contraseña debe tener al menos 6 caracteres', passwordModal.querySelector('.error-message'));
+                    showError('La contraseña debe tener al menos 6 caracteres', passwordErrorMessage);
                     return;
                 }
                 
                 const user = auth.currentUser;
                 const email = user.email;
+                
+                savePasswordBtn.disabled = true;
+                savePasswordBtn.textContent = 'Guardando...';
                 
                 // Reautenticar al usuario
                 const credential = firebase.auth.EmailAuthProvider.credential(email, currentPassword);
@@ -942,7 +1669,7 @@
                         return user.updatePassword(newPassword);
                     })
                     .then(() => {
-                        showError('Contraseña actualizada correctamente', passwordModal.querySelector('.error-message'));
+                        showError('Contraseña actualizada correctamente', passwordErrorMessage);
                         setTimeout(() => {
                             closeModal(passwordModal);
                             currentPasswordInput.value = '';
@@ -951,18 +1678,33 @@
                         }, 2000);
                     })
                     .catch((error) => {
-                        showError('Error al cambiar contraseña: ' + error.message, passwordModal.querySelector('.error-message'));
+                        showError('Error al cambiar contraseña: ' + error.message, passwordErrorMessage);
+                    })
+                    .finally(() => {
+                        savePasswordBtn.disabled = false;
+                        savePasswordBtn.textContent = 'Guardar';
                     });
             }
             
             // Función para abrir modal
             function openModal(modal) {
                 modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
             }
             
             // Función para cerrar modal
             function closeModal(modal) {
                 modal.style.display = 'none';
+                document.body.style.overflow = '';
+                
+                // Limpiar errores y campos
+                const errorElement = modal.querySelector('.error-message');
+                if (errorElement) errorElement.textContent = '';
+                
+                const inputs = modal.querySelectorAll('input');
+                inputs.forEach(input => {
+                    if (input.type !== 'checkbox') input.value = '';
+                });
             }
             
             // Función para cerrar sesión
@@ -989,15 +1731,11 @@
             
             sendButton.addEventListener('click', function() {
                 sendTextMessage(messageInput.value);
-                messageInput.value = '';
-                sendButton.disabled = true;
             });
             
             messageInput.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     sendTextMessage(messageInput.value);
-                    messageInput.value = '';
-                    sendButton.disabled = true;
                 }
             });
             
@@ -1041,6 +1779,22 @@
                 closeModal(passwordModal);
             });
             
+            // Eventos de salas de chat
+            createRoomBtn.addEventListener('click', function() {
+                openModal(roomModal);
+            });
+            
+            createRoomConfirmBtn.addEventListener('click', createNewRoom);
+            cancelRoomBtn.addEventListener('click', function() {
+                closeModal(roomModal);
+            });
+            
+            inviteUsersBtn.addEventListener('click', inviteUsersToRoom);
+            sendInvitesBtn.addEventListener('click', sendInvitations);
+            cancelInviteBtn.addEventListener('click', function() {
+                closeModal(inviteModal);
+            });
+            
             // Cerrar modales haciendo clic fuera
             window.addEventListener('click', function(event) {
                 if (event.target === profileModal) {
@@ -1048,6 +1802,12 @@
                 }
                 if (event.target === passwordModal) {
                     closeModal(passwordModal);
+                }
+                if (event.target === roomModal) {
+                    closeModal(roomModal);
+                }
+                if (event.target === inviteModal) {
+                    closeModal(inviteModal);
                 }
                 if (!event.target.closest('.user-status') && !event.target.closest('.profile-menu')) {
                     profileMenu.classList.remove('active');
