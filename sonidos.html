@@ -3,157 +3,490 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reproductor de Audios - Jorge</title>
-  <link rel= stylesheet" href="styles.css">
-</head>
-<style>
-/* Estilos CSS */
-/* Estilos CSS */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f3f3f3;
-}
+  <title>SoundBoard by Jorge</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #FF6B35;
+      --secondary: #004E89;
+      --accent: #FFD166;
+      --dark: #1A1A2E;
+      --light: #F8F9FA;
+      --success: #06D6A0;
+    }
 
-.container {
-  max-width: 800px;
-  margin: 50px auto;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-h1 {
-  text-align: center;
-  color: #333;
-}
+    body {
+      font-family: 'Poppins', Arial, sans-serif;
+      background: linear-gradient(135deg, var(--dark), #16213E);
+      color: var(--light);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-#buttons-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
 
-.audio-button {
-  margin: 10px;
-  padding: 15px 30px;
-  font-size: 16px;
-  background-color: #333;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); /* Agrega una sombra para un efecto tridimensional */
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.1s ease; /* Agrega transición al color de fondo y transformación */
-}
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 107, 53, 0.6);
+      border-radius: 50%;
+      animation: float 15s infinite linear;
+    }
 
-.audio-button:hover {
-  background-color: #555;
-}
+    @keyframes float {
+      0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-20vh) translateX(100px); opacity: 0; }
+    }
 
-.audio-button:active {
-  transform: translateY(2px); /* Desplaza ligeramente el botón hacia abajo al hacer clic */
-  box-shadow: none; /* Quita la sombra al hacer clic */
-}
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 30px;
+      background: rgba(26, 26, 46, 0.8);
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
 
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
 
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+      background: linear-gradient(45deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .subtitle {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 1.1rem;
+    }
+
+    #controls-container {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .control-group label {
+      color: var(--light);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .control-group label i {
+      color: var(--accent);
+      font-size: 1.2rem;
+    }
+
+    input[type="range"] {
+      width: 180px;
+      height: 8px;
+      -webkit-appearance: none;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--primary);
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+      transition: all 0.3s;
+    }
+
+    .value-display {
+      min-width: 50px;
+      text-align: center;
+      font-weight: bold;
+      color: var(--accent);
+      background: rgba(0, 0, 0, 0.3);
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+
+    #buttons-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .audio-button {
+      position: relative;
+      padding: 15px;
+      font-size: 1rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, rgba(0, 78, 137, 0.8), rgba(255, 107, 53, 0.8));
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 70px;
+    }
+
+    .audio-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .audio-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+    }
+
+    .audio-button:hover::before {
+      opacity: 1;
+    }
+
+    .audio-button:active {
+      transform: translateY(1px);
+    }
+
+    .audio-button i {
+      margin-right: 8px;
+      font-size: 1.1rem;
+    }
+
+    .playing {
+      animation: pulse 1.5s infinite;
+      position: relative;
+    }
+
+    .playing::after {
+      content: '';
+      position: absolute;
+      top: -3px;
+      left: -3px;
+      right: -3px;
+      bottom: -3px;
+      border: 2px solid var(--accent);
+      border-radius: 12px;
+      animation: borderPulse 1.5s infinite;
+      pointer-events: none;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.7); }
+      70% { box-shadow: 0 0 0 15px rgba(255, 107, 53, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 107, 53, 0); }
+    }
+
+    @keyframes borderPulse {
+      0% { opacity: 1; transform: scale(1); }
+      70% { opacity: 0; transform: scale(1.05); }
+      100% { opacity: 0; transform: scale(1.1); }
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.9rem;
+      margin-top: 40px;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    footer a:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    .status-bar {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 12px 20px;
+      border-radius: 10px;
+      margin-top: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+
+    .now-playing {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .now-playing i {
+      color: var(--primary);
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+        margin: 20px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      #buttons-container {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      }
+      
+      .control-group {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
   </style>
+</head>
 
 <body>
-
-    <div id="controls-container">
-        <label for="volume">Volumen:</label>
-        <input type="range" id="volume" min="0" max="1" step="0.01" value="1" onchange="changeVolume(this.value)">
-  
-        <label for="pitch">Pitch:</label>
-        <input type="range" id="pitch" min="0.5" max="2" step="0.1" value="1" onchange="changePitch(this.value)">
-      </div>
+  <div class="particles" id="particles"></div>
 
   <div class="container">
-    <h1>Reproductor de Audios by Jorge</h1>
+    <header>
+      <h1>SoundBoard by Jorge</h1>
+      <p class="subtitle">Panel de efectos de sonido para transmisiones</p>
+    </header>
+
+    <div id="controls-container">
+      <div class="control-group">
+        <label for="volume"><i class="fas fa-volume-up"></i> Volumen</label>
+        <input type="range" id="volume" min="0" max="1" step="0.01" value="0.7" oninput="changeVolume(this.value)">
+        <span id="volume-value" class="value-display">70%</span>
+      </div>
+
+      <div class="control-group">
+        <label for="pitch"><i class="fas fa-tachometer-alt"></i> Velocidad</label>
+        <input type="range" id="pitch" min="0.5" max="2" step="0.1" value="1" oninput="changePitch(this.value)">
+        <span id="pitch-value" class="value-display">1.0x</span>
+      </div>
+    </div>
+
     <div id="buttons-container">
-      <!-- Botones para reproducir los audios -->
-      <button class="audio-button" onclick="playAudio('ratinho.mp3')">Ratinho</button>
-      <button class="audio-button" onclick="playAudio('rapaz.mp3')">Rapaz</button>
-      <button class="audio-button" onclick="playAudio('dançagatinho.mp3')">Dança gatinho</button>
-      <button class="audio-button" onclick="playAudio('uepaaa.mp3')">ueeepaa</button>
-      <button class="audio-button" onclick="playAudio('que isso meu filho.mp3')">Que isso meu filho, Calma</button>
-      <button class="audio-button" onclick="playAudio('ihaaaaaaaaa.mp3')">ihaaaaaaaaa</button>
-      <button class="audio-button" onclick="playAudio('esse e meu patrao.mp3')">esse e meu patrao</button>
-      <button class="audio-button" onclick="playAudio('money.mp3')">money</button>
-      <button class="audio-button" onclick="playAudio('pai para.mp3')">Ay pai para</button>
-      <button class="audio-button" onclick="playAudio('cavalo.mp3')">cavalo</button>
-      <button class="audio-button" onclick="playAudio('ta pegando fogo.mp3')">ta pegando fogo</button>
-      <button class="audio-button" onclick="playAudio('sialdebaran.mp3')">Suiii</button>
-      <button class="audio-button" onclick="playAudio('sape.mp3')">Sape</button>
-      <button class="audio-button" onclick="playAudio('errou.mp3')">Errou</button>
-      <button class="audio-button" onclick="playAudio('faustao fogo.mp3')">Pegando Fogo Faustao</button>
-      <button class="audio-button" onclick="playAudio('OLOOOCO.mp3')">O Loco ALDEB</button>
-      <button class="audio-button" onclick="playAudio('eu-vou-tomar-um-tacaca.mp3')">Tacaca</button>
-      <button class="audio-button" onclick="playAudio('ninguem em ligaçao.mp3')">Ninguem em</button>
-      <button class="audio-button" onclick="playAudio('pai solteiro.mp3')">pai solteiro</button>
-      <button class="audio-button" onclick="playAudio('mamadera.mp3')">Mamadera</button>
-      <button class="audio-button" onclick="playAudio('ESO PERRO.mp3')">eSO pERRO</button>
-      <button class="audio-button" onclick="playAudio('todo mundo de pe.mp3')">td mundo de pe</button>
-      <button class="audio-button" onclick="playAudio('gerencia daniel.mp3')">gerencia daniel</button>
-      <button class="audio-button" onclick="playAudio('gerencia igor.mp3')">gerencia igor</button>
-      <button class="audio-button" onclick="playAudio('twistar riv uy.mp3')">twistar</button>
-      <button class="audio-button" onclick="playAudio('o iluminado.mp3')">O iluminado</button>
-      <button class="audio-button" onclick="playAudio('benzemaaa.mp3')">benzemaaa</button>
-      <button class="audio-button" onclick="playAudio('dmode.mp3')">Dmode</button>
-      <button class="audio-button" onclick="playAudio('du neida.mp3')">du neida</button>
-      <button class="audio-button" onclick="playAudio('asmei.mp3')">asmei</button>
-      <button class="audio-button" onclick="playAudio('desafio.mp3')">Desafio</button>
-      <button class="audio-button" onclick="playAudio('chamba.mp3')">chamba</button>
-      <button class="audio-button" onclick="playAudio('tiro.mp3')">tiro</button>
-      <button class="audio-button" onclick="playAudio('tiro foi ese.mp3')">q tiro foi ese</button>
-      <button class="audio-button" onclick="playAudio('me siento mal AM.mp3')">me siento mal AM</button>
-      <button class="audio-button" onclick="playAudio('me siento mal jaja.mp3')">Me siento mal jaja</button>
-      <button class="audio-button" onclick="playAudio('petrovski.mp3')">Petrovski</button>
-      <button class="audio-button" onclick="playAudio('buzina.mp3')">buzinai</button>    
-      <button class="audio-button" onclick="playAudio('IGORRRRRRR.mp3')">Igor</button>
+      <button class="audio-button" onclick="playAudio('ratinho.mp3', this)"><i class="fas fa-mouse"></i> Ratinho</button>
+      <button class="audio-button" onclick="playAudio('rapaz.mp3', this)"><i class="fas fa-user"></i> Rapaz</button>
+      <button class="audio-button" onclick="playAudio('dançagatinho.mp3', this)"><i class="fas fa-cat"></i> Dança gatinho</button>
+      <button class="audio-button" onclick="playAudio('uepaaa.mp3', this)"><i class="fas fa-surprise"></i> ueepaa</button>
+      <button class="audio-button" onclick="playAudio('que isso meu filho.mp3', this)"><i class="fas fa-child"></i> Que isso meu filho</button>
+      <button class="audio-button" onclick="playAudio('ihaaaaaaaaa.mp3', this)"><i class="fas fa-laugh-squint"></i> ihaaaaaaaa</button>
+      <button class="audio-button" onclick="playAudio('esse e meu patrao.mp3', this)"><i class="fas fa-crown"></i> esse e meu patrao</button>
+      <button class="audio-button" onclick="playAudio('money.mp3', this)"><i class="fas fa-money-bill-wave"></i> money</button>
+      <button class="audio-button" onclick="playAudio('pai para.mp3', this)"><i class="fas fa-hand-paper"></i> Ay pai para</button>
+      <button class="audio-button" onclick="playAudio('cavalo.mp3', this)"><i class="fas fa-horse"></i> cavalo</button>
+      <button class="audio-button" onclick="playAudio('ta pegando fogo.mp3', this)"><i class="fas fa-fire"></i> ta pegando fogo</button>
+      <button class="audio-button" onclick="playAudio('sialdebaran.mp3', this)"><i class="fas fa-star"></i> Suiii</button>
+      <button class="audio-button" onclick="playAudio('sape.mp3', this)"><i class="fas fa-frog"></i> Sape</button>
+      <button class="audio-button" onclick="playAudio('errou.mp3', this)"><i class="fas fa-times-circle"></i> Errou</button>
+      <button class="audio-button" onclick="playAudio('faustao fogo.mp3', this)"><i class="fas fa-tv"></i> Pegando Fogo Faustao</button>
+      <button class="audio-button" onclick="playAudio('OLOOOCO.mp3', this)"><i class="fas fa-brain"></i> O Loco ALDEB</button>
+      <button class="audio-button" onclick="playAudio('eu-vou-tomar-um-tacaca.mp3', this)"><i class="fas fa-utensils"></i> Tacaca</button>
+      <button class="audio-button" onclick="playAudio('ninguem em ligaçao.mp3', this)"><i class="fas fa-phone-slash"></i> Ninguem em</button>
+      <button class="audio-button" onclick="playAudio('pai solteiro.mp3', this)"><i class="fas fa-user-tie"></i> pai solteiro</button>
+      <button class="audio-button" onclick="playAudio('mamadera.mp3', this)"><i class="fas fa-baby-bottle"></i> Mamadera</button>
+      <button class="audio-button" onclick="playAudio('ESO PERRO.mp3', this)"><i class="fas fa-dog"></i> eSO pERRO</button>
+      <button class="audio-button" onclick="playAudio('todo mundo de pe.mp3', this)"><i class="fas fa-people-arrows"></i> td mundo de pe</button>
+      <button class="audio-button" onclick="playAudio('gerencia daniel.mp3', this)"><i class="fas fa-user-cog"></i> gerencia daniel</button>
+      <button class="audio-button" onclick="playAudio('gerencia igor.mp3', this)"><i class="fas fa-user-cog"></i> gerencia igor</button>
+      <button class="audio-button" onclick="playAudio('twistar riv uy.mp3', this)"><i class="fas fa-gamepad"></i> twistar</button>
+      <button class="audio-button" onclick="playAudio('o iluminado.mp3', this)"><i class="fas fa-lightbulb"></i> O iluminado</button>
+      <button class="audio-button" onclick="playAudio('benzemaaa.mp3', this)"><i class="fas fa-hand-holding-water"></i> benzemaaa</button>
+      <button class="audio-button" onclick="playAudio('dmode.mp3', this)"><i class="fas fa-ghost"></i> Dmode</button>
+      <button class="audio-button" onclick="playAudio('du neida.mp3', this)"><i class="fas fa-question"></i> du neida</button>
+      <button class="audio-button" onclick="playAudio('asmei.mp3', this)"><i class="fas fa-heart"></i> asmei</button>
+      <button class="audio-button" onclick="playAudio('desafio.mp3', this)"><i class="fas fa-trophy"></i> Desafio</button>
+      <button class="audio-button" onclick="playAudio('chamba.mp3', this)"><i class="fas fa-briefcase"></i> chamba</button>
+      <button class="audio-button" onclick="playAudio('tiro.mp3', this)"><i class="fas fa-bullseye"></i> tiro</button>
+      <button class="audio-button" onclick="playAudio('tiro foi ese.mp3', this)"><i class="fas fa-crosshairs"></i> q tiro fue ese</button>
+      <button class="audio-button" onclick="playAudio('me siento mal AM.mp3', this)"><i class="fas fa-sad-tear"></i> me siento mal AM</button>
+      <button class="audio-button" onclick="playAudio('me siento mal jaja.mp3', this)"><i class="fas fa-grin-squint-tears"></i> Me siento mal jaja</button>
+      <button class="audio-button" onclick="playAudio('petrovski.mp3', this)"><i class="fas fa-user-ninja"></i> Petrovski</button>
+      <button class="audio-button" onclick="playAudio('buzina.mp3', this)"><i class="fas fa-car"></i> buzina</button>
+      <button class="audio-button" onclick="playAudio('IGORRRRRRR.mp3', this)"><i class="fas fa-volume-up"></i> Igor</button>
+      <button class="audio-button" onclick="playAudio('machuquei.mp3', this)"><i class="fas fa-bone"></i> Machuquei</button>
+    </div>
 
-      <button class="audio-button" onclick="playAudio('machuquei.mp3')">Machuquei</button>
-
-
+    <div class="status-bar">
+      <div class="now-playing">
+        <i class="fas fa-music"></i>
+        <span id="current-track">Selecciona un audio...</span>
+      </div>
+      <div id="audio-time">00:00</div>
     </div>
   </div>
 
-  <script> function playAudio(audioSrc) {
-    var audio = new Audio();
-    audio.src = audioSrc;
-    audio.play();}
+  <footer>
+    Desarrollado por <a href="https://wa.me/59893867429" target="_blank">Jorge Marquez</a> | © 2023 SoundBoard
+  </footer>
 
-      // Función para reproducir el audio con el volumen y el pitch actual
-      function playAudio(audioSrc) {
-      var audio = new Audio();
-      audio.src = audioSrc;
-      audio.volume = document.getElementById('volume').value; // Establece el volumen
-      audio.playbackRate = document.getElementById('pitch').value; // Establece el pitch
-      audio.play();
+  <script>
+    // Variables globales
+    let currentAudio = null;
+    let currentButton = null;
+    
+    // Crear partículas de fondo
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 30;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+        // Posición aleatoria
+        particle.style.left = `${Math.random() * 100}vw`;
+        particle.style.top = `${Math.random() * 100}vh`;
+        
+        // Tamaño aleatorio
+        const size = Math.random() * 4 + 2;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        
+        // Opacidad aleatoria
+        particle.style.opacity = Math.random() * 0.5 + 0.1;
+        
+        // Retraso de animación aleatorio
+        particle.style.animationDelay = `${Math.random() * 15}s`;
+        
+        // Duración de animación aleatoria
+        particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
+        
+        particlesContainer.appendChild(particle);
+      }
     }
-
-    // Función para cambiar el volumen
+    
+    // Reproducir audio
+    function playAudio(audioSrc, button) {
+      // Detener el audio actual si hay uno reproduciéndose
+      if (currentAudio) {
+        currentAudio.pause();
+        if (currentButton) {
+          currentButton.classList.remove('playing');
+        }
+      }
+      
+      // Crear nuevo audio
+      currentAudio = new Audio(audioSrc);
+      currentAudio.volume = document.getElementById('volume').value;
+      currentAudio.playbackRate = document.getElementById('pitch').value;
+      
+      // Actualizar UI
+      const audioName = audioSrc.replace('.mp3', '').replace(/-/g, ' ');
+      document.getElementById('current-track').textContent = audioName;
+      if (button) {
+        button.classList.add('playing');
+        currentButton = button;
+      }
+      
+      // Evento cuando termina la reproducción
+      currentAudio.addEventListener('ended', () => {
+        if (button) {
+          button.classList.remove('playing');
+        }
+        document.getElementById('current-track').textContent = 'Selecciona un audio...';
+        document.getElementById('audio-time').textContent = '00:00';
+      });
+      
+      // Actualizar tiempo de reproducción
+      currentAudio.addEventListener('timeupdate', () => {
+        const minutes = Math.floor(currentAudio.currentTime / 60);
+        const seconds = Math.floor(currentAudio.currentTime % 60);
+        document.getElementById('audio-time').textContent = 
+          `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      });
+      
+      // Reproducir
+      currentAudio.play().catch(e => console.error("Error al reproducir audio:", e));
+    }
+    
+    // Cambiar volumen
     function changeVolume(value) {
-      var audioElements = document.getElementsByTagName('audio');
-      for (var i = 0; i < audioElements.length; i++) {
-        audioElements[i].volume = value;
+      if (currentAudio) {
+        currentAudio.volume = value;
       }
+      document.getElementById('volume-value').textContent = `${Math.round(value * 100)}%`;
     }
-
-    // Función para cambiar el pitch
+    
+    // Cambiar pitch/velocidad
     function changePitch(value) {
-      var audioElements = document.getElementsByTagName('audio');
-      for (var i = 0; i < audioElements.length; i++) {
-        audioElements[i].playbackRate = value;
+      if (currentAudio) {
+        currentAudio.playbackRate = value;
       }
+      document.getElementById('pitch-value').textContent = `${value.toFixed(1)}x`;
     }
-
-    </script>
+    
+    // Inicializar
+    document.addEventListener('DOMContentLoaded', () => {
+      createParticles();
+      
+      // Asignar eventos para teclas rápidas (opcional)
+      document.addEventListener('keydown', (e) => {
+        // Ejemplo: tecla 1 para el primer botón
+        if (e.key === '1') {
+          document.querySelector('.audio-button').click();
+        }
+        // Puedes agregar más teclas rápidas aquí
+      });
+    });
+  </script>
 </body>
-<footer>
-    Desenvolvido por <a href="https://wa.me/59893867429">Jorge Marquez</a>
-</footer>
 </html>
