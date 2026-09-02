@@ -1,187 +1,80 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/ico" href="logo.jpg">
-
-    <title>Calculadora de Sueldo Líquido TWISTAR</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-image: url('/mnt/data/A_professional_web_interface_for_a_salary_calculat.png'); /* Fondo relacionado a dinero */
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            padding: 20px;
-            margin: 0;
-            color: #333;
-        }
-
-        h1, h2 {
-            color: #333;
-            text-align: center;
-        }
-
-        form {
-            background-color: rgba(255, 255, 255, 0.9); /* Fondo semitransparente */
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            max-width: 400px;
-            margin: auto;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 16px;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 16px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-        }
-
-        button {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 12px;
-            width: 100%;
-            border-radius: 8px;
-            font-size: 18px;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        button:hover {
-            background-color: #218838;
-        }
-
-        #resultado {
-            font-size: 18px;
-            font-weight: bold;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .desglose p {
-            font-size: 16px;
-            color: #555;
-            text-align: center;
-        }
-
-        .calculator {
-            background-color: rgba(255, 255, 255, 0.9); /* Fondo semitransparente */
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            max-width: 400px;
-            margin: auto;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
-
-        input[type="number"] {
-            width: 80%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        button {
-            padding: 10px 20px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #218838;
-        }
-
-        .result {
-            margin-top: 20px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora de Sueldo | Twistar</title>
+  <link rel="icon" href="logo.jpg" />
+  <link rel="stylesheet" href="assets/module.css" />
+  <style>
+    .salary-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+    .field { margin-bottom:12px; }
+    .field label { display:block; margin-bottom:6px; font-size:12px; font-weight:750; color:#43566b; }
+    .field input, .field select { width:100%; }
+    .result-card { margin-top:14px; padding:14px; border-radius:12px; background:#edf8f4; color:#0d6c4d; font-weight:800; }
+    .breakdown { display:grid; gap:7px; margin-top:12px; }
+    .breakdown p { margin:0; padding:8px 10px; border-radius:9px; background:#f4f8fb; font-size:12px; }
+    @media(max-width:760px){ .salary-grid{grid-template-columns:1fr;} }
+  </style>
 </head>
-<body>
-  <div class="calculator">
-    <h1>Paso 1:   Suma tu salario nominal + tus comisiones</h1>
-    <input type="number" id="salario" placeholder="Ingresa tu salario nominal" />
-    <input type="number" id="comisiones" placeholder="Ingresa tus comisiones" />
-    <button onclick="calcularTotal()">Calcular</button>
-    <div class="result" id="resultado"></div>
-</div>
+<body class="twistar-module">
+  <main class="module-shell">
+    <header class="module-header">
+      <div class="module-brand">
+        <img class="module-logo" src="logo.jpg" alt="Twistar" />
+        <div><p class="module-kicker">Calculadoras</p><h1>Sueldo Líquido</h1></div>
+      </div>
+      <div class="module-actions"><a class="module-link" href="index.html#salary">Workspace</a></div>
+    </header>
 
-<script>
+    <section class="module-intro">
+      <h2>Calcula salario nominal y líquido</h2>
+      <p>Primero suma salario y comisiones; después aplica los mismos parámetros de BPS, FONASA, FRL e IRPF configurados en la herramienta.</p>
+    </section>
+
+    <div class="salary-grid">
+      <section class="widget-card">
+        <h2>Paso 1 · Salario + comisiones</h2>
+        <div class="field"><label for="salario">Salario nominal</label><input type="number" id="salario" placeholder="Ingresa tu salario nominal" /></div>
+        <div class="field"><label for="comisiones">Comisiones</label><input type="number" id="comisiones" placeholder="Ingresa tus comisiones" /></div>
+        <button type="button" onclick="calcularTotal()">Calcular total</button>
+        <div class="result-card" id="resultado" role="status">Completa los campos para comenzar.</div>
+      </section>
+
+      <section class="widget-card">
+        <h2>Paso 2 · Salario en mano</h2>
+        <div class="field"><label for="inputSalario">Salario nominal</label><input type="number" id="inputSalario" placeholder="Ingresa el resultado del paso 1" /></div>
+        <div class="field"><label for="inputHijos">¿Tiene hijos?</label><select id="inputHijos"><option value="no">No</option><option value="si">Sí</option></select></div>
+        <div class="field"><label for="inputConyuge">¿Tiene cónyuge o concubino?</label><select id="inputConyuge"><option value="no">No</option><option value="si">Sí</option></select></div>
+        <button type="button" onclick="calcular()">Calcular salario líquido</button>
+        <div class="result-card" id="resultado2" role="status">El desglose aparecerá aquí.</div>
+        <div class="breakdown">
+          <p id="descuentoBPS"></p><p id="descuentoFONASA"></p><p id="descuentoFRL"></p><p id="descuentoIRPF"></p><p id="totalDescuentos"></p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
     function calcularTotal() {
-        const salario = parseFloat(document.getElementById('salario').value);
-        const comisiones = parseFloat(document.getElementById('comisiones').value);
-
-        if (!isNaN(salario) && !isNaN(comisiones)) {
-            const total = salario + comisiones;
-            document.getElementById('resultado').textContent = "Total: $" + total.toFixed(2);
-        } else {
-            document.getElementById('resultado').textContent = "Por favor, ingresa números válidos.";
-        }
+      const salario = Number(document.getElementById('salario').value);
+      const comisiones = Number(document.getElementById('comisiones').value);
+      const resultado = document.getElementById('resultado');
+      if (Number.isFinite(salario) && Number.isFinite(comisiones)) {
+        const total = salario + comisiones;
+        resultado.textContent = `Total: $${total.toFixed(2)}`;
+        document.getElementById('inputSalario').value = total.toFixed(2);
+      } else {
+        resultado.textContent = 'Por favor, ingresa números válidos.';
+      }
     }
-</script>
 
-<h1>Paso 2: Calcula tu Salario En mano</h1>
-<form id="salaryForm">
-    <label for="inputSalario">Salario Nominal:</label>
-    <input type="number" placeholder="Ingresa El resultado de paso 1" id="inputSalario" name="inputSalario" required ><br><br>
-
-    <label for="inputHijos">¿Tiene hijos?</label>
-    <select id="inputHijos">
-        <option value="no">No</option>
-        <option value="si">Sí</option>
-    </select><br><br>
-
-    <label for="inputConyuge">¿Tiene cónyuge o concubino?</label>
-    <select id="inputConyuge">
-        <option value="no">No</option>
-        <option value="si">Sí</option>
-    </select><br><br>
-
-    <button type="button" onclick="calcular()">Calcular Salario Líquido (en mano)</button>
-</form>
-
-<h2 id="resultado2"></h2> <!-- Cambié el id a "resultado2" para el segundo cálculo -->
-<div class="desglose">
-    <p id="descuentoBPS"></p>
-    <p id="descuentoFONASA"></p>
-    <p id="descuentoFRL"></p>
-    <p id="descuentoIRPF"></p>
-    <p id="totalDescuentos"></p>
-</div>
-
-<script>
-    const BPC = 6177; // Valor BPC (Base de Prestaciones y Contribuciones)
-    const LIMITE_BPC = 2.5 * BPC; // Límite de 2.5 BPC
-
-    const DESCUENTO_BPS = 0.15; // Descuento del 15% para BPS
-    const DESCUENTO_FRL = 0.001; // Descuento del 0.1% para FRL
-
+    const BPC = 6177;
+    const LIMITE_BPC = 2.5 * BPC;
+    const DESCUENTO_BPS = 0.15;
+    const DESCUENTO_FRL = 0.001;
     const IRPF_FRANJAS = [
-      { desde: 0, hasta: 7 * BPC, tasa: 0 }, 
+      { desde: 0, hasta: 7 * BPC, tasa: 0 },
       { desde: 7 * BPC, hasta: 10 * BPC, tasa: 10 },
       { desde: 10 * BPC, hasta: 15 * BPC, tasa: 15 },
       { desde: 15 * BPC, hasta: 30 * BPC, tasa: 24 },
@@ -193,9 +86,9 @@
 
     function calcularIRPF(salarioImponible) {
       let impuesto = 0;
-      for (let franja of IRPF_FRANJAS) {
+      for (const franja of IRPF_FRANJAS) {
         if (salarioImponible > franja.desde) {
-          let montoGravado = Math.min(salarioImponible, franja.hasta) - franja.desde;
+          const montoGravado = Math.min(salarioImponible, franja.hasta) - franja.desde;
           impuesto += montoGravado * (franja.tasa / 100);
         }
       }
@@ -204,27 +97,19 @@
 
     function calcularFONASA(salario, tieneHijos, tieneConyuge) {
       if (salario <= LIMITE_BPC) {
-        if (tieneConyuge) {
-          return tieneHijos ? 0.05 : 0.03; 
-        } else {
-          return tieneHijos ? 0.06 : 0.03; 
-        }
-      } else {
-        if (tieneConyuge) {
-          return tieneHijos ? 0.08 : 0.065; 
-        } else {
-          return tieneHijos ? 0.06 : 0.045;
-        }
+        if (tieneConyuge) return tieneHijos ? 0.05 : 0.03;
+        return tieneHijos ? 0.06 : 0.03;
       }
+      if (tieneConyuge) return tieneHijos ? 0.08 : 0.065;
+      return tieneHijos ? 0.06 : 0.045;
     }
 
     function calcular() {
-      const salario = parseFloat(document.getElementById('inputSalario').value);
+      const salario = Number(document.getElementById('inputSalario').value);
       const tieneHijos = document.getElementById('inputHijos').value === 'si';
       const tieneConyuge = document.getElementById('inputConyuge').value === 'si';
-
-      if (salario <= 0) {
-        alert("El salario nominal es requerido y debe ser mayor que 0.");
+      if (!Number.isFinite(salario) || salario <= 0) {
+        alert('El salario nominal es requerido y debe ser mayor que 0.');
         return;
       }
 
@@ -233,27 +118,18 @@
       const descuentoFONASA = salario * porcentajeFONASA;
       const descuentoFRL = salario * DESCUENTO_FRL;
       const impuestoIRPF = calcularIRPF(salario);
-
-      // Calcular el total de descuentos
       const totalDescuentos = descuentoBPS + descuentoFONASA + descuentoFRL + impuestoIRPF;
-
       const salarioFinal = salario - totalDescuentos;
 
-      document.getElementById('resultado2').textContent = `El salario final después de impuestos y deducciones es: ${salarioFinal.toFixed(2)} pesos`;
-
-      document.getElementById('descuentoBPS').textContent = `Descuento BPS (15%): ${descuentoBPS.toFixed(2)} pesos`;
-      document.getElementById('descuentoFONASA').textContent = `Descuento FONASA (${(porcentajeFONASA * 100).toFixed(1)}%): ${descuentoFONASA.toFixed(2)} pesos`;
-      document.getElementById('descuentoFRL').textContent = `Descuento FRL (0.1%): ${descuentoFRL.toFixed(2)} pesos`;
-      document.getElementById('descuentoIRPF').textContent = `Descuento IRPF: ${impuestoIRPF.toFixed(2)} pesos`;
-
-      // Mostrar el total de descuentos
-      document.getElementById('totalDescuentos').textContent = `Total de Descuentos: ${totalDescuentos.toFixed(2)} pesos`;
+      document.getElementById('resultado2').textContent = `Salario final: ${salarioFinal.toFixed(2)} pesos`;
+      document.getElementById('descuentoBPS').textContent = `BPS (15%): ${descuentoBPS.toFixed(2)} pesos`;
+      document.getElementById('descuentoFONASA').textContent = `FONASA (${(porcentajeFONASA * 100).toFixed(1)}%): ${descuentoFONASA.toFixed(2)} pesos`;
+      document.getElementById('descuentoFRL').textContent = `FRL (0.1%): ${descuentoFRL.toFixed(2)} pesos`;
+      document.getElementById('descuentoIRPF').textContent = `IRPF: ${impuestoIRPF.toFixed(2)} pesos`;
+      document.getElementById('totalDescuentos').textContent = `Total descuentos: ${totalDescuentos.toFixed(2)} pesos`;
     }
-</script>
+  </script>
 
-<footer>
-    Desenvolvido por <a href="https://wa.me/59893867429">Jorge Marquez</a>
-</footer>
-
+  <footer>Desenvolvido por <a href="https://wa.me/59893867429">Jorge Marquez</a></footer>
 </body>
 </html>
