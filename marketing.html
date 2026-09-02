@@ -1,422 +1,119 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/ico" href="logo.jpg" />
-
-    <title>Métricas de Marketing</title>
-
-    <style>
-      body {
-        font-family: "Arial", sans-serif;
-        background-color: #f0f0f0;
-        margin: 5px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-      }
-
-      .calculator-container {
-        max-width: calc(33.33% - 8px);
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        margin: 10px;
-      }
-
-      label {
-        display: block;
-        margin-bottom: 10px;
-      }
-
-      input {
-        width: calc(100% - 16px);
-        padding: 8px;
-        margin-bottom: 15px;
-        box-sizing: border-box;
-      }
-
-      button {
-        background-color: #3498db;
-        color: #fff;
-        border: none;
-        padding: 10px;
-        border-radius: 5px;
-        cursor: pointer;
-        width: 100%;
-      }
-      #main-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin: 0 auto;
-      }
-
-
-      .resultado-container {
-        margin-top: 15px;
-        text-align: center;
-      }
-      nav {
-  background-color: #30536b;
-  color: white;
-  padding: 10px;
-  text-align: center;
-  width: 100%; /* Agregamos esta línea */
-  box-sizing: border-box; /* Y esta también */
-}
-      .titulo {
-        background-color: #30536b;
-        color: white;
-        padding: 2px;
-        text-align: center;
-      }
-
-      nav a {
-        color: white;
-        text-decoration: none;
-        padding: 10px;
-
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-        transition: box-shadow 0.3s ease;
-      }
-
-      nav a:hover {
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.911);
-      }
-      nav ul {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-      }
-
-      nav li {
-        display: inline;
-        margin-right: 20px;
-      }
-      nav a {
-        color: white;
-        text-decoration: none;
-        padding: 10px;
-
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-        transition: box-shadow 0.3s ease, background-color 0.3s ease;
-      }
-
-      nav a:hover {
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.911),
-          0 0 20px rgba(255, 255, 255, 0.911);
-        background-color: #15531d; /* Cambia esto al color predeterminado cuando haces hover */
-        color: #000;
-        font-weight: bold;
-      }
-
-      nav a:nth-child(1):hover {
-        background-color: #97e69e; /* Cambia esto al color que desees para el primer enlace */
-      }
-    </style>
-   
-  </head>
-  <body>
-    <div id="main-container">
-
-    <nav>
-        <ul>
-          <a href="https://talkai.info/pt/chat/" target="_blank" class="botao-3d">
-            IA
-          </a>
-          <li><a href="marketing.html">Calculadoras</a></li>
-          <li><a href="marketing2.html">Definiciones </a></li>
-          <li><a href="index.html">Pagina de ayuda a agentes </a></li>
-
-        </ul>
-      </nav>
-    <div
-      style="
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        margin: 0 auto;
-      "
-    >
-      <div class="calculator-container">
-        <h2>Calculadora CPM</h2>
-        <H6>Costo por 1000 impresiones</H6>
-        <label for="impressions">Impresiones:</label>
-        <input
-          type="number"
-          id="impressions"
-          placeholder="Ingrese el número de impresiones"
-          required
-        />
-
-        <label for="cost">Costo total:</label>
-        <input
-          type="number"
-          id="cost"
-          placeholder="Ingrese el costo total"
-          required
-        />
-
-        <button onclick="calcularCPM()">Calcular CPM</button>
-
-        <div class="resultado-container">
-          <p id="resultadoCPM"></p>
-        </div>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Métricas de Marketing | Twistar</title>
+  <link rel="icon" href="logo.jpg" />
+  <link rel="stylesheet" href="assets/module.css" />
+  <style>
+    .metric-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+    .metric-card { padding:16px; border:1px solid #dbe4ee; border-radius:14px; background:#fff; box-shadow:0 8px 24px rgba(15,23,42,.06); }
+    .metric-card h2 { margin:0 0 3px; font-size:18px; }
+    .metric-card small { display:block; min-height:34px; color:#73859a; margin-bottom:12px; }
+    .metric-card label { display:block; margin:8px 0 5px; font-size:12px; font-weight:750; color:#43566b; }
+    .metric-card input { width:100%; }
+    .metric-result { min-height:34px; margin-top:12px; padding:8px 10px; border-radius:9px; background:#eef7fb; color:#075b8a; font-weight:800; }
+    @media(max-width:980px){.metric-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+    @media(max-width:620px){.metric-grid{grid-template-columns:1fr;}}
+  </style>
+</head>
+<body class="twistar-module">
+  <main class="module-shell">
+    <header class="module-header">
+      <div class="module-brand">
+        <img class="module-logo" src="logo.jpg" alt="Twistar" />
+        <div><p class="module-kicker">Marketing</p><h1>Métricas y Rendimiento</h1></div>
       </div>
-
-      <!-- Repite la estructura para las demás calculadoras -->
-
-      <div class="calculator-container">
-        <h2>Calculadora CPV</h2>
-        <H6>Costo por vista</H6>
-        <label for="views">Vistas:</label>
-        <input
-          type="number"
-          id="views"
-          placeholder="Ingrese el número de vistas"
-          required
-        />
-
-        <label for="cost2">Costo total:</label>
-        <input
-          type="number"
-          id="cost2"
-          placeholder="Ingrese el costo total"
-          required
-        />
-
-        <button onclick="calcularCPV()">Calcular CPV</button>
-
-        <div class="resultado-container">
-          <p id="resultadoCPV"></p>
-        </div>
+      <div class="module-actions">
+        <a class="module-link" href="index.html#marketing">Workspace</a>
+        <a class="module-link" href="marketing2.html">Definiciones</a>
+        <a class="module-link" href="https://talkai.info/pt/chat/" target="_blank" rel="noopener">IA ↗</a>
       </div>
+    </header>
 
-      <!-- Repite la estructura para las demás calculadoras -->
+    <section class="module-intro">
+      <h2>Calculadoras de marketing</h2>
+      <p>CPM, CPV, CPC, CPL, CPA, ROAS y ROI con una interfaz consistente y validación básica de datos.</p>
+    </section>
 
-      <div class="calculator-container">
-        <h2>Calculadora CPC</h2>
-        <H6>Costo por clic</H6>
-        <label for="clicks">Clicks:</label>
-        <input
-          type="number"
-          id="clicks"
-          placeholder="Ingrese el número de clics"
-          required
-        />
+    <section class="metric-grid" id="metricGrid">
+      <article class="metric-card" data-metric="CPM" data-mode="cpm">
+        <h2>CPM</h2><small>Costo por 1.000 impresiones</small>
+        <label>Impresiones</label><input type="number" data-a min="0" />
+        <label>Costo total</label><input type="number" data-b min="0" step="0.01" />
+        <button type="button" data-calc>Calcular CPM</button><div class="metric-result" data-result></div>
+      </article>
+      <article class="metric-card" data-metric="CPV" data-mode="ratio">
+        <h2>CPV</h2><small>Costo por vista</small>
+        <label>Vistas</label><input type="number" data-a min="0" />
+        <label>Costo total</label><input type="number" data-b min="0" step="0.01" />
+        <button type="button" data-calc>Calcular CPV</button><div class="metric-result" data-result></div>
+      </article>
+      <article class="metric-card" data-metric="CPC" data-mode="ratio">
+        <h2>CPC</h2><small>Costo por clic</small>
+        <label>Clicks</label><input type="number" data-a min="0" />
+        <label>Costo total</label><input type="number" data-b min="0" step="0.01" />
+        <button type="button" data-calc>Calcular CPC</button><div class="metric-result" data-result></div>
+      </article>
+      <article class="metric-card" data-metric="CPL" data-mode="ratio">
+        <h2>CPL</h2><small>Costo por lead</small>
+        <label>Leads</label><input type="number" data-a min="0" />
+        <label>Costo total</label><input type="number" data-b min="0" step="0.01" />
+        <button type="button" data-calc>Calcular CPL</button><div class="metric-result" data-result></div>
+      </article>
+      <article class="metric-card" data-metric="CPA" data-mode="ratio">
+        <h2>CPA</h2><small>Costo por adquisición</small>
+        <label>Adquisiciones</label><input type="number" data-a min="0" />
+        <label>Costo total</label><input type="number" data-b min="0" step="0.01" />
+        <button type="button" data-calc>Calcular CPA</button><div class="metric-result" data-result></div>
+      </article>
+      <article class="metric-card" data-metric="ROAS" data-mode="return">
+        <h2>ROAS</h2><small>Retorno de inversión publicitaria</small>
+        <label>Ingresos</label><input type="number" data-a min="0" step="0.01" />
+        <label>Costo total</label><input type="number" data-b min="0" step="0.01" />
+        <button type="button" data-calc>Calcular ROAS</button><div class="metric-result" data-result></div>
+      </article>
+      <article class="metric-card" data-metric="ROI" data-mode="roi">
+        <h2>ROI</h2><small>Retorno de la inversión</small>
+        <label>Ganancia neta</label><input type="number" data-a step="0.01" />
+        <label>Inversión total</label><input type="number" data-b min="0" step="0.01" />
+        <button type="button" data-calc>Calcular ROI</button><div class="metric-result" data-result></div>
+      </article>
+    </section>
+  </main>
 
-        <label for="cost3">Costo total:</label>
-        <input
-          type="number"
-          id="cost3"
-          placeholder="Ingrese el costo total"
-          required
-        />
+  <script>
+    document.querySelectorAll('.metric-card').forEach(card => {
+      card.querySelector('[data-calc]').addEventListener('click', () => {
+        const a = Number(card.querySelector('[data-a]').value);
+        const b = Number(card.querySelector('[data-b]').value);
+        const result = card.querySelector('[data-result]');
+        const metric = card.dataset.metric;
+        const mode = card.dataset.mode;
+        if (!Number.isFinite(a) || !Number.isFinite(b)) {
+          result.textContent = 'Ingresa valores válidos.';
+          return;
+        }
+        let value;
+        if (mode === 'cpm') {
+          if (a <= 0) return result.textContent = 'Las impresiones deben ser mayores que 0.';
+          value = (b / a) * 1000;
+        } else if (mode === 'ratio') {
+          if (a <= 0) return result.textContent = 'La cantidad debe ser mayor que 0.';
+          value = b / a;
+        } else if (mode === 'return') {
+          if (b <= 0) return result.textContent = 'El costo debe ser mayor que 0.';
+          value = a / b;
+        } else {
+          if (b <= 0) return result.textContent = 'La inversión debe ser mayor que 0.';
+          value = (a / b) * 100;
+        }
+        result.textContent = `${metric}: ${value.toFixed(2)}${mode === 'roi' ? '%' : ''}`;
+      });
+    });
+  </script>
 
-        <button onclick="calcularCPC()">Calcular CPC</button>
-
-        <div class="resultado-container">
-          <p id="resultadoCPC"></p>
-        </div>
-      </div>
-
-      <!-- Repite la estructura para las demás calculadoras -->
-
-      <div class="calculator-container">
-        <h2>Calculadora CPL</h2>
-        <H6>Costo por Lead</H6>
-        <label for="leads">Leads:</label>
-        <input
-          type="number"
-          id="leads"
-          placeholder="Ingrese el número de leads"
-          required
-        />
-
-        <label for="cost4">Costo total:</label>
-        <input
-          type="number"
-          id="cost4"
-          placeholder="Ingrese el costo total"
-          required
-        />
-
-        <button onclick="calcularCPL()">Calcular CPL</button>
-
-        <div class="resultado-container">
-          <p id="resultadoCPL"></p>
-        </div>
-      </div>
-
-      <!-- Repite la estructura para las demás calculadoras -->
-
-      <div class="calculator-container">
-        <h2>Calculadora CPA</h2>
-        <H6>Costo por adquisición</H6>
-        <label for="acquisitions">Adquisiciones:</label>
-        <input
-          type="number"
-          id="acquisitions"
-          placeholder="Ingrese el número de adquisiciones"
-          required
-        />
-
-        <label for="cost5">Costo total:</label>
-        <input
-          type="number"
-          id="cost5"
-          placeholder="Ingrese el costo total"
-          required
-        />
-
-        <button onclick="calcularCPA()">Calcular CPA</button>
-
-        <div class="resultado-container">
-          <p id="resultadoCPA"></p>
-        </div>
-      </div>
-
-      <!-- Repite la estructura para las demás calculadoras -->
-
-      <div class="calculator-container">
-        <h2>Calculadora ROAS</h2>
-        <H6>Retorno de inversión publicitaria (Return on Ad Spend)  </H6>
-        <label for="revenue">Ingresos:</label>
-        <input
-          type="number"
-          id="revenue"
-          placeholder="Ingrese los ingresos generados"
-          required
-        />
-
-        <label for="cost6">Costo total:</label>
-        <input
-          type="number"
-          id="cost6"
-          placeholder="Ingrese el costo total"
-          required
-        />
-
-        <button onclick="calcularROAS()">Calcular ROAS</button>
-
-        <div class="resultado-container">
-          <p id="resultadoROAS"></p>
-        </div>
-      </div>
-
-      <!-- Repite la estructura para las demás calculadoras -->
-
-      <div class="calculator-container">
-        <h2>Calculadora ROI</h2>
-        <H6>Retorno de la inversión (Return on Investment)</H6>
-        <label for="profit">Ganancia neta:</label>
-        <input
-          type="number"
-          id="profit"
-          placeholder="Ingrese la ganancia neta"
-          required
-        />
-
-        <label for="investment">Inversión total:</label>
-        <input
-          type="number"
-          id="investment"
-          placeholder="Ingrese la inversión total"
-          required
-        />
-
-        <button onclick="calcularROI()">Calcular ROI</button>
-
-        <div class="resultado-container">
-          <p id="resultadoROI"></p>
-        </div>
-      </div>
-    </div>
-    <footer>
-        Desenvolvido por <a href="https://wa.me/59893867429">Jorge Marquez</a>
-        
-    </footer>
-</div>
-
-    <script>
-      // Tus funciones de cálculo aquí
-      function calcularCPM() {
-        var impressions =
-          parseFloat(document.getElementById("impressions").value) || 0;
-        var cost = parseFloat(document.getElementById("cost").value) || 0;
-
-        var cpm = (cost / impressions) * 1000;
-
-        document.getElementById("resultadoCPM").innerText =
-          "CPM: " + cpm.toFixed(2);
-      }
-
-      function calcularCPV() {
-        var views = parseFloat(document.getElementById("views").value) || 0;
-        var cost = parseFloat(document.getElementById("cost2").value) || 0;
-
-        var cpv = cost / views;
-
-        document.getElementById("resultadoCPV").innerText =
-          "CPV: " + cpv.toFixed(2);
-      }
-
-      function calcularCPC() {
-        var clicks = parseFloat(document.getElementById("clicks").value) || 0;
-        var cost = parseFloat(document.getElementById("cost3").value) || 0;
-
-        var cpc = cost / clicks;
-
-        document.getElementById("resultadoCPC").innerText =
-          "CPC: " + cpc.toFixed(2);
-      }
-
-      function calcularCPL() {
-        var leads = parseFloat(document.getElementById("leads").value) || 0;
-        var cost = parseFloat(document.getElementById("cost4").value) || 0;
-
-        var cpl = cost / leads;
-
-        document.getElementById("resultadoCPL").innerText =
-          "CPL: " + cpl.toFixed(2);
-      }
-
-      function calcularCPA() {
-        var acquisitions =
-          parseFloat(document.getElementById("acquisitions").value) || 0;
-        var cost = parseFloat(document.getElementById("cost5").value) || 0;
-
-        var cpa = cost / acquisitions;
-
-        document.getElementById("resultadoCPA").innerText =
-          "CPA: " + cpa.toFixed(2);
-      }
-
-      function calcularROAS() {
-        var revenue = parseFloat(document.getElementById("revenue").value) || 0;
-        var cost = parseFloat(document.getElementById("cost6").value) || 0;
-
-        var roas = revenue / cost;
-
-        document.getElementById("resultadoROAS").innerText =
-          "ROAS: " + roas.toFixed(2);
-      }
-
-      function calcularROI() {
-        var profit = parseFloat(document.getElementById("profit").value) || 0;
-        var investment =
-          parseFloat(document.getElementById("investment").value) || 0;
-
-        var roi = (profit / investment) * 100;
-
-        document.getElementById("resultadoROI").innerText =
-          "ROI: " + roi.toFixed(2) + "%";
-      }
-    </script>
-   
-  </body>
+  <footer>Desenvolvido por <a href="https://wa.me/59893867429">Jorge Marquez</a></footer>
+</body>
 </html>
