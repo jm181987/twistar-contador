@@ -1,153 +1,83 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Lucro Diário</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            background-color: #fff;
-            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
-            position: relative;
-        }
-
-        .logo {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 90px; /* Ajusta o tamanho conforme necessário */
-            height: auto; /* Autoajuste da altura */
-        }
-
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #333;
-        }
-
-        input {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-            margin-bottom: 10px;
-        }
-
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-bottom: 10px;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        #resultado, #total {
-            margin-top: 20px;
-        }
-
-        #resultado ul {
-            list-style-type: none;
-            padding-left: 0;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
-
-        #resultado ul li {
-            width: calc(50% - 10px); /* Ajuste para duas colunas */
-            margin-bottom: 5px;
-        }
-
-        #total {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        #btnImprimirPDF {
-            display: none;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora de Ganancias | Twistar</title>
+  <link rel="icon" href="logo.jpg" />
+  <link rel="stylesheet" href="assets/module.css" />
+  <style>
+    .calculator { max-width: 760px; margin: 0 auto; }
+    .field-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+    .field label { display: block; margin-bottom: 6px; font-size: 12px; font-weight: 750; color: #43566b; }
+    .field input { width: 100%; }
+    .result-list { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px 18px; padding: 0; list-style: none; }
+    .result-list li { padding: 8px 10px; border-radius: 9px; background: #f4f8fb; font-size: 13px; }
+    .result-total { margin-top: 14px; padding: 14px; border-radius: 12px; background: #e8f7f1; color: #0c6c4c; font-weight: 850; }
+    #btnImprimirPDF { display: none; }
+    @media (max-width: 680px) { .field-grid, .result-list { grid-template-columns: 1fr; } }
+    @media print { .module-header, .module-intro, #btnImprimirPDF, footer { display:none !important; } body { background:#fff; padding:0; } .widget-card { box-shadow:none; border:0; } }
+  </style>
 </head>
-<body>
-    <div class="container" id="container">
-        <h1>Calculadora de ganancias Diarias</h1>
-        <label for="inversionInicial">Inversion Inicial:</label>
-        <input type="number" id="inversionInicial" min="0">
-        <label for="bonusPercentual">Bonus (%):</label>
-        <input type="number" id="bonusPercentual" min="0">
-        <label for="porcentajeDiario">Porcentage Diario (%):</label>
-        <input type="number" id="porcentajeDiario" min="0" max="100" step="0.01">
-        <button onclick="calcularLucroDiario()">Calcular</button>
-        <button id="btnImprimirPDF" onclick="window.print()">Imprimir en PDF</button>
-        <div id="resultado"></div>
-        <div id="total"></div>
-    </div>
+<body class="twistar-module">
+  <main class="module-shell">
+    <header class="module-header">
+      <div class="module-brand">
+        <img class="module-logo" src="logo.jpg" alt="Twistar" />
+        <div><p class="module-kicker">Calculadoras</p><h1>Ganancias Diarias</h1></div>
+      </div>
+      <div class="module-actions"><a class="module-link" href="index.html#profit">Workspace</a></div>
+    </header>
 
-    <script>
-        function calcularLucroDiario() {
-            var inversionInicial = parseFloat(document.getElementById('inversionInicial').value);
-            var bonusPercentual = parseFloat(document.getElementById('bonusPercentual').value) || 0; // Valor padrão é 0 se o campo estiver vazio
-            var porcentajeDiario = parseFloat(document.getElementById('porcentajeDiario').value);
+    <section class="module-intro">
+      <h2>Proyección de 20 días</h2>
+      <p>Calcula el rendimiento compuesto diario considerando inversión inicial y bonus.</p>
+    </section>
 
-            if (isNaN(inversionInicial) || isNaN(bonusPercentual) || isNaN(porcentajeDiario)) {
-                alert("Por favor, insira números válidos.");
-                return;
-            }
+    <section class="widget-card calculator">
+      <div class="field-grid">
+        <div class="field"><label for="inversionInicial">Inversión inicial</label><input type="number" id="inversionInicial" min="0" step="0.01" /></div>
+        <div class="field"><label for="bonusPercentual">Bonus (%)</label><input type="number" id="bonusPercentual" min="0" step="0.01" /></div>
+        <div class="field"><label for="porcentajeDiario">Porcentaje diario (%)</label><input type="number" id="porcentajeDiario" min="0" max="100" step="0.01" /></div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+        <button type="button" onclick="calcularLucroDiario()">Calcular</button>
+        <button id="btnImprimirPDF" type="button" onclick="window.print()">Imprimir en PDF</button>
+      </div>
+      <div id="resultado" aria-live="polite"></div>
+    </section>
+  </main>
 
-            var bonusAbsoluto = (inversionInicial * bonusPercentual) / 100;
-            inversionInicial += bonusAbsoluto; // Adiciona o bônus ao capital inicial
+  <script>
+    function calcularLucroDiario() {
+      const inversionBase = Number(document.getElementById('inversionInicial').value);
+      const bonusPercentual = Number(document.getElementById('bonusPercentual').value || 0);
+      const porcentajeDiario = Number(document.getElementById('porcentajeDiario').value);
 
-            var inversionAtual = inversionInicial;
-            var ganhos = [];
+      if (!Number.isFinite(inversionBase) || inversionBase < 0 || !Number.isFinite(bonusPercentual) || bonusPercentual < 0 || !Number.isFinite(porcentajeDiario) || porcentajeDiario < 0) {
+        alert('Por favor, ingresa números válidos.');
+        return;
+      }
 
-            for (var dia = 1; dia <= 20; dia++) {
-                var ganhoDia = inversionAtual * (porcentajeDiario / 100);
-                ganhos.push(ganhoDia);
-                inversionAtual += ganhoDia;
-            }
+      const inversionInicial = inversionBase + ((inversionBase * bonusPercentual) / 100);
+      let inversionAtual = inversionInicial;
+      const ganhos = [];
 
-            var resultadoHTML = "<h2>Ganancias Diarias:</h2><ul>";
-            for (var i = 0; i < ganhos.length; i++) {
-                resultadoHTML += "<li>Dia " + (i + 1) + ": $" + ganhos[i].toFixed(2) + "</li>";
-            }
-            resultadoHTML += "</ul>";
+      for (let dia = 1; dia <= 20; dia += 1) {
+        const ganhoDia = inversionAtual * (porcentajeDiario / 100);
+        ganhos.push(ganhoDia);
+        inversionAtual += ganhoDia;
+      }
 
-            var totalGanhos = ganhos.reduce((total, ganho) => total + ganho, 0);
+      const totalGanhos = ganhos.reduce((total, ganho) => total + ganho, 0);
+      document.getElementById('resultado').innerHTML = `
+        <h2>Ganancias diarias</h2>
+        <ul class="result-list">${ganhos.map((ganho, index) => `<li>Día ${index + 1}: <strong>$${ganho.toFixed(2)}</strong></li>`).join('')}</ul>
+        <div class="result-total">Total de ganancia en 20 días: $${totalGanhos.toFixed(2)}</div>`;
+      document.getElementById('btnImprimirPDF').style.display = 'inline-flex';
+    }
+  </script>
 
-            resultadoHTML += "<h2>Total de Ganancia en 20 Dias: $" + totalGanhos.toFixed(2) + "</h2>";
-
-            document.getElementById('resultado').innerHTML = resultadoHTML;
-
-            // Ajusta o tamanho do contêiner após o cálculo
-            document.querySelector('.container').style.height = 'auto';
-
-            // Exibe o botão de imprimir em PDF
-            document.getElementById('btnImprimirPDF').style.display = 'block';
-        }
-    </script>
+  <footer>Desenvolvido por <a href="https://wa.me/59893867429">Jorge Marquez</a></footer>
 </body>
 </html>
