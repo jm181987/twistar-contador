@@ -10,6 +10,9 @@
 
   if (!appShell || !sidebar || !toggle || !navList) return;
 
+  const toggleIcon = toggle.querySelector('.sidebar-edge-icon');
+  const toggleLabel = toggle.querySelector('.sidebar-edge-label');
+
   let prefersCollapsed = false;
   try {
     prefersCollapsed = localStorage.getItem(STORAGE_KEY) === 'true';
@@ -32,10 +35,11 @@
     appShell.classList.toggle('sidebar-collapsed', collapsed);
     sidebar.classList.toggle('collapsed', collapsed);
 
-    toggle.textContent = collapsed ? '⇥' : '⇤';
+    if (toggleIcon) toggleIcon.textContent = collapsed ? '›' : '‹';
+    if (toggleLabel) toggleLabel.textContent = collapsed ? 'Mostrar' : 'Ocultar';
     toggle.setAttribute('aria-expanded', String(!collapsed));
     toggle.setAttribute('aria-label', collapsed ? 'Expandir columna de herramientas' : 'Contraer columna de herramientas');
-    toggle.title = collapsed ? 'Expandir herramientas' : 'Contraer herramientas';
+    toggle.title = collapsed ? 'Mostrar herramientas' : 'Ocultar herramientas';
   }
 
   function persistPreference() {
