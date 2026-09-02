@@ -1,301 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendario</title>
-    <link rel="icon" type="image/ico" href="logo.jpg">
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            margin: 5px;
-        }
-
-        nav {
-            background-color: #55aee9;
-            color: white;
-            padding: 10px;
-            text-align: center;
-        }
-
-        #logo {
-            position: fixed;
-            top: 40px;
-            /* Ajuste conforme necessário */
-            right: 40px;
-            /* Ajuste conforme necessário */
-            max-width: 100px;
-            /* Ajuste conforme necessário */
-            max-height: 100px;
-            /* Ajuste conforme necessário */
-        }
-
-
-        nav a {
-    color: white;
-    text-decoration: none;
-    padding: 10px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    transition: box-shadow 0.3s ease, background-color 0.3s ease;
-}
-
-nav a:hover {
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.911), 0 0 20px rgba(255, 255, 255, 0.911);
-    background-color: #15531d; /* Cambia esto al color predeterminado cuando haces hover */
-    color: #000;
-    font-weight: bold;
-}
-
-nav a:nth-child(1):hover {
-    background-color: #97e69e; /* Cambia esto al color que desees para el primer enlace */
-}
-        nav ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        nav li {
-            display: inline;
-            margin-right: 20px;
-        }
-
-        h1,
-        h2 {
-            color: #333;
-        }
-
-        section {
-            background-color: #fff;
-            padding: 20px;
-            margin: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        label {
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        input {
-            padding: 8px;
-            margin-bottom: 15px;
-        }
-
-        button {
-            background-color: #333;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            cursor: pointer;
-        }
-
-        #resultado {
-            margin-top: 15px;
-        }
-
-        footer {
-            margin-top: 20px;
-            text-align: center;
-            color: #000000;
-        }
-
-        footer a {
-            color: #4446e0;
-            text-decoration: underline;
-        }
-
-        @media only screen and (max-width: 600px) {
-        /* Estilos para telas pequenas (ex. smartphones) */ 
-         nav {
-    flex-direction: column;
-    align-items: center;
-    margin: 2px;
-  }
-  
-
-  nav ul {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  nav li {
-    margin-right: 0;
-    margin-bottom: 10px;
-  }
-
-  #logo {
-    position: static;
-    margin-bottom: 20px;
-  }
-}
-
-        @media only screen and (min-width: 601px) and (max-width: 1024px) {
-            /* Estilos para telas médias (ex. tablets) */
-        }
-
-        @media only screen and (min-width: 1025px) {
-            /* Estilos para telas grandes (ex. desktops) */
-        }
-    </style>
-    <!-- Adicione o link para o estilo do seu Navbar aqui -->
-    <link rel="stylesheet" href="caminho/do/seu/estilo.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f3f6fb" />
+  <title>Calendário Econômico | Twistar</title>
+  <link rel="icon" href="logo.jpg" />
+  <link rel="stylesheet" href="assets/module.css" />
 </head>
+<body class="twistar-module">
+  <main class="module-shell">
+    <header class="module-header">
+      <div class="module-brand">
+        <img class="module-logo" src="logo.jpg" alt="Twistar" />
+        <div>
+          <p class="module-kicker">Mercados</p>
+          <h1>Calendário Econômico</h1>
+        </div>
+      </div>
+      <div class="module-actions">
+        <a class="module-link" href="index.html#calendar">Workspace</a>
+        <a class="module-link" href="forex.html">Forex</a>
+        <a class="module-link" href="indice.html">Índices</a>
+      </div>
+    </header>
 
-<body>
+    <section class="module-intro">
+      <h2>Eventos econômicos em tempo real</h2>
+      <p>Acompanhe divulgações macroeconômicas por país e impacto sem sair do ambiente Twistar.</p>
+    </section>
 
-    <!-- Navbar -->
-    <nav>
-        <img id="logo" src="./logo.jpg" alt="Logo da Empresa">
-        <ul>
-            <li><a href="index.html">Rebater Objeçoes</a></li>
-            <li><a href="cripto.html">Criptos</a></li>
-            <li><a href="acoes.html">Açoes </a></li>
-            <li><a href="forex.html">Forex </a></li>
-            <li><a href="indice.html">Indices </a></li>
-            <li><a href="info.html">Info Campanhas</a></li>
-            <li><a href="meta.html">% Meta</a></li>
-            <li><a href="calen.html">Calendario</a></li>
-        <!-- <li><a onclick="abrirPanelControl()"> Painel Vendas </a></li> -->
-        <li><a href="noticias.html"> Noticias</a></li> 
-            <li><a href="placar.html"> Recordes</a></li> 
-            <li><a href="clientes.html"> Arquivos</a></li> 
-            <!-- Adicione mais itens conforme necessário -->
-        </ul>
-    </nav>
-    <H1 class="titulo">Calendario</H1>
+    <section class="widget-card flush" aria-label="Calendário econômico">
+      <div id="economic-calendar-886676"></div>
+    </section>
+  </main>
 
+  <script src="https://www.cashbackforex.com/Content/remote/remote-calendar-widget.js"></script>
+  <script>
+    RemoteCalendar({
+      DefaultTime: "today",
+      DefaultTheme: "plain",
+      Url: "https://www.cashbackforex.com",
+      SubPath: "economic-calendar",
+      IsShowEmbedButton: true,
+      DefaultCountries: "AE,AR,AT,AU,BE,BH,BR,CA,CH,CL,CN,CO,CY,CZ,DE,DK,EE,EG,ES,EU,FI,FR,GB,GR,HK,HR,HU,ID,IE,IL,IN,IS,IT,JO,JP,KR,LT,LV,MD,MK,MX,MY,NL,NO,NG,NZ,PE,PH,PL,PK,PT,QA,RO,RU,SA,SE,SG,SI,SK,TH,TR,TW,UA,US,VN,ZA,RS,UK,EMU,uy",
+      DefaultImpacts: "HIGH,MEDIUM,LOW,NONE",
+      ContainerId: "economic-calendar-886676"
+    });
+  </script>
 
-    <script>
-        // Función para abrir el enlace del Panel de Control
-        function abrirPanelControl() {
-            window.open('https://twistar.my.canva.site/dashboard', '_blank');
-        }
-
-        // Resto del código existente ...
-    </script>
-    <script>
-        // Función para abrir el enlace del Panel de Control
-        function abrirNoticias() {
-            window.open('https://www.infomoney.com.br', '_blank');
-        }
-
-        // Resto del código existente ...
-
-    </script>
-
-    <!DOCTYPE html>
-    <html lang="en">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Calendario Economico</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-                background-color: #f4f4f4;
-                margin: 5px;
-            }
-
-            .titulo {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-            nav {
-                background-color: #30536b;
-                color: white;
-                padding: 10px;
-                text-align: center;
-                display: flex;
-                justify-content: space-evenly;
-                align-items: center;
-                width: auto;
-            }
-
-            nav a {
-                color: white;
-                text-decoration: none;
-                padding: 10px;
-               
-                box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-                transition: box-shadow 0.3s ease;
-            }
-
-            nav a:hover {
-                box-shadow: 0 0 10px rgba(255, 255, 255, 0.911);
-            }
-
-            nav ul {
-                list-style-type: none;
-                margin: 0;
-                padding: 0;
-                display: flex;
-                align-items: center;
-            }
-
-            nav li {
-                margin-right: 20px;
-            }
-
-            #logo {
-                position: fixed;
-                top: 40px;
-                /* Ajuste conforme necessário */
-                right: 40px;
-                /* Ajuste conforme necessário */
-                max-width: 100px;
-                /* Ajuste conforme necessário */
-                max-height: 100px;
-                /* Ajuste conforme necessário */
-            }
-
-            table {
-                border-collapse: collapse;
-                width: 80%;
-                margin: 20px auto;
-            }
-
-            th,
-            td {
-                border: 1px solid #ddd;
-                padding: 8px;
-                text-align: center;
-                /* Agora centralizando o texto */
-            }
-
-            th {
-                background-color: #f2f2f2;
-            }
-
-            .currency-converter-32006 {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                min-height: 100vh;
-                min-width: 100%;
-            }
-        </style>
-    </head>
-    <div id="economic-calendar-886676"><script type="text/javascript" src="https://www.cashbackforex.com/Content/remote/remote-calendar-widget.js"></script><script type="text/javascript"> RemoteCalendar({"DefaultTime": "today","DefaultTheme": "plain","Url":"https://www.cashbackforex.com", "SubPath":"economic-calendar","IsShowEmbedButton":true,"DefaultCountries":"AE,AR,AT,AU,BE,BH,BR,CA,CH,CL,CN,CO,CY,CZ,DE,DK,EE,EG,ES,EU,FI,FR,GB,GR,HK,HR,HU,ID,IE,IL,IN,IS,IT,JO,JP,KR,LT,LV,MD,MK,MX,MY,NL,NO,NG,NZ,PE,PH,PL,PK,PT,QA,RO,RU,SA,SE,SG,SI,SK,TH,TR,TW,UA,US,VN,ZA,RS,UK,EMU,uy","DefaultImpacts":"HIGH,MEDIUM,LOW,NONE","ContainerId":"economic-calendar-886676"});</script></div>
-
-
-    
-    <!-- Adicione o link para o script da sua página aqui -->
-    <footer>
-        Desenvolvido por <a href="https://wa.me/59893867429">Jorge Marquez</a>
-    </footer>
+  <footer>
+    Desenvolvido por <a href="https://wa.me/59893867429">Jorge Marquez</a>
+  </footer>
 </body>
-
 </html>
