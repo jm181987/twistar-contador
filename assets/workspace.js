@@ -2,11 +2,7 @@
   'use strict';
 
   const tools = [
-    { id: 'objections', title: 'Rebater objeções', subtitle: 'Guía comercial y objeciones', icon: '🎯', href: 'inicio.html', category: 'Ventas' },
     { id: 'clients', title: 'Tipos de clientes', subtitle: 'Perfiles y archivos comerciales', icon: '👥', href: 'clientes.html', category: 'Ventas' },
-    { id: 'info', title: 'Info campañas', subtitle: 'Material y datos de campañas', icon: '🗂️', href: 'info.html', category: 'Ventas' },
-    { id: 'goal', title: 'Meta', subtitle: 'Seguimiento de porcentaje de meta', icon: '🎯', href: 'meta.html', category: 'Ventas' },
-    { id: 'records', title: 'Recordes', subtitle: 'Resultados y ranking', icon: '🏆', href: 'placar.html', category: 'Ventas' },
     { id: 'calendar', title: 'Calendario económico', subtitle: 'Eventos y noticias macro', icon: '🗓️', href: 'calen.html', category: 'Mercados' },
     { id: 'stocks', title: 'Acciones', subtitle: 'Mapa de calor de acciones', icon: '📊', href: 'acoes.html', category: 'Mercados' },
     { id: 'crypto', title: 'Cripto', subtitle: 'Cotizaciones y mapa de calor', icon: '₿', href: 'cripto.html', category: 'Mercados' },
@@ -14,9 +10,7 @@
     { id: 'indices', title: 'Índices', subtitle: 'Índices y gráficos de mercado', icon: '📈', href: 'indice.html', category: 'Mercados' },
     { id: 'profit', title: 'Ganancias', subtitle: 'Calculadora de lucro', icon: '💹', href: 'lucro.html', category: 'Calculadoras' },
     { id: 'market-profit', title: 'Lucro mercados', subtitle: 'Cálculos complementarios', icon: '🧮', href: 'lucromerc.html', category: 'Calculadoras' },
-    { id: 'salary', title: 'Sueldo', subtitle: 'Cálculos de sueldo', icon: '💵', href: 'sueldo.html', category: 'Calculadoras' },
     { id: 'marketing', title: 'Marketing', subtitle: 'Calculadoras de marketing', icon: '📣', href: 'marketing.html', category: 'Marketing' },
-    { id: 'lunch', title: 'Almuerzo', subtitle: 'Avisador y control de regreso', icon: '🍽️', href: 'almuerzo.html', category: 'Operaciones' },
     { id: 'rrhh', title: 'RRHH', subtitle: 'Conversión de números a letras', icon: '🧾', href: 'rrhh.html', category: 'Operaciones' },
     { id: 'news', title: 'Noticias', subtitle: 'Información financiera', icon: '📰', href: 'noticias.html', category: 'Información' },
     { id: 'sounds', title: 'Sonidos', subtitle: 'Biblioteca de audio', icon: '🔊', href: 'sonidos.html', category: 'Utilidades' },
