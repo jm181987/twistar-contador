@@ -7,12 +7,17 @@
   <meta name="description" content="Twistar Workspace: centro operativo para ventas, mercados, campañas y utilidades." />
   <title>Twistar Workspace</title>
   <link rel="icon" href="logo.jpg" />
-  <link rel="stylesheet" href="assets/workspace.css" />
-  <link rel="stylesheet" href="assets/sidebar.css" />
+  <link rel="stylesheet" href="assets/workspace.css?v=20260902-2" />
+  <link rel="stylesheet" href="assets/sidebar.css?v=20260902-2" />
 </head>
 <body>
   <div class="app-shell">
     <aside class="sidebar" id="sidebar" aria-label="Navegación de herramientas">
+      <button class="sidebar-edge-toggle" id="sidebarToggle" type="button" aria-label="Contraer columna de herramientas" aria-controls="sidebar" aria-expanded="true" title="Contraer herramientas">
+        <span class="sidebar-edge-icon" aria-hidden="true">‹</span>
+        <span class="sidebar-edge-label">Ocultar</span>
+      </button>
+
       <div class="brand">
         <div class="brand-mark"><img src="logo.jpg" alt="Twistar" /></div>
         <div class="brand-copy">
@@ -44,7 +49,6 @@
     <main class="main-shell">
       <header class="topbar">
         <div class="topbar-left">
-          <button class="icon-btn desktop-sidebar-toggle" id="sidebarToggle" type="button" aria-label="Contraer columna de herramientas" aria-controls="sidebar" aria-expanded="true" title="Contraer herramientas">⇤</button>
           <button class="icon-btn menu-toggle" id="menuToggle" type="button" aria-label="Abrir menú">☰</button>
           <div class="topbar-title">
             <div class="eyebrow" id="contextLabel">Panel principal</div>
@@ -88,7 +92,7 @@
     </main>
   </div>
 
-  <script src="assets/workspace.js" defer></script>
-  <script src="assets/sidebar.js" defer></script>
+  <script src="assets/workspace.js?v=20260902-2" defer></script>
+  <script src="assets/sidebar.js?v=20260902-2" defer></script>
 </body>
 </html>
