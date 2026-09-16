@@ -3,15 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#06101d" />
-  <meta name="description" content="Twistar Workspace: centro operativo para ventas, mercados, campañas y utilidades." />
+  <meta name="theme-color" content="#050b15" />
+  <meta name="description" content="Twistar Workspace: centro operativo para ventas, mercados, marketing y utilidades." />
   <title>Twistar Workspace</title>
   <link rel="icon" href="logo.jpg" />
-  <link rel="stylesheet" href="assets/workspace.css?v=20260902-3" />
-  <link rel="stylesheet" href="assets/sidebar.css?v=20260902-3" />
+  <link rel="stylesheet" href="assets/workspace.css?v=20260916-v2" />
+  <link rel="stylesheet" href="assets/sidebar.css?v=20260916-v2" />
 </head>
 <body>
-  <div class="app-shell">
+  <div class="ambient ambient-a" aria-hidden="true"></div>
+  <div class="ambient ambient-b" aria-hidden="true"></div>
+
+  <div class="app-shell" id="appShell">
     <aside class="sidebar" id="sidebar" aria-label="Navegación de herramientas">
       <button class="sidebar-edge-toggle" id="sidebarToggle" type="button" aria-label="Contraer columna de herramientas" aria-controls="sidebar" aria-expanded="true" title="Contraer herramientas">
         <span class="sidebar-edge-icon" aria-hidden="true">‹</span>
@@ -21,26 +24,34 @@
       <div class="brand">
         <div class="brand-mark"><img src="logo.jpg" alt="Twistar" /></div>
         <div class="brand-copy">
-          <h1>Twistar Workspace</h1>
-          <p>Centro operativo comercial</p>
+          <div class="brand-line"><h1>Twistar</h1><span class="brand-status" title="Sistema activo"></span></div>
+          <p>Workspace operativo</p>
         </div>
       </div>
+
+      <button class="command-trigger" id="commandTrigger" type="button" aria-label="Abrir buscador rápido">
+        <span class="command-trigger-icon" aria-hidden="true">⌕</span>
+        <span class="command-trigger-copy">Ir a una herramienta</span>
+        <kbd>⌘K</kbd>
+      </button>
 
       <div class="search">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path>
         </svg>
-        <input id="searchInput" type="search" placeholder="Buscar herramienta..." autocomplete="off" aria-label="Buscar herramienta" />
+        <input id="searchInput" type="search" placeholder="Filtrar herramientas..." autocomplete="off" aria-label="Filtrar herramientas" />
+        <kbd>/</kbd>
       </div>
 
       <div class="nav-region">
-        <div class="nav-label">Herramientas</div>
+        <div class="nav-label"><span>Herramientas</span><span id="navCount">0</span></div>
         <nav class="nav-list" id="navList"></nav>
       </div>
 
       <div class="sidebar-footer">
-        Interfaz centralizada con módulos independientes y funciones preservadas.<br />
-        Desarrollado por <a href="https://wa.me/59893867429" target="_blank" rel="noopener">Jorge Marquez</a>
+        <div class="shortcut-row"><span>Búsqueda rápida</span><kbd>⌘K</kbd></div>
+        <div class="shortcut-row"><span>Volver al inicio</span><kbd>Esc</kbd></div>
+        <a href="https://wa.me/59893867429" target="_blank" rel="noopener">Jorge Marquez</a>
       </div>
     </aside>
 
@@ -51,48 +62,83 @@
         <div class="topbar-left">
           <button class="icon-btn menu-toggle" id="menuToggle" type="button" aria-label="Abrir menú">☰</button>
           <div class="topbar-title">
-            <div class="eyebrow" id="contextLabel">Panel principal</div>
+            <div class="eyebrow"><span id="contextLabel">Workspace</span><span class="eyebrow-separator">/</span><span id="viewStatus">Panel principal</span></div>
             <h2 id="pageTitle">Visión general</h2>
           </div>
         </div>
         <div class="actions">
+          <button class="icon-btn" id="focusBtn" type="button" title="Modo foco" aria-label="Activar modo foco" disabled>⛶</button>
           <button class="icon-btn" id="homeBtn" type="button" title="Volver al inicio" aria-label="Volver al inicio">⌂</button>
-          <button class="primary-btn" id="openBtn" type="button" title="Abrir herramienta en otra pestaña">Abrir aparte ↗</button>
+          <button class="primary-btn" id="openBtn" type="button" title="Abrir herramienta en otra pestaña">Abrir aparte <span>↗</span></button>
         </div>
       </header>
 
       <section class="workspace" aria-live="polite">
         <div class="home-view" id="homeView">
           <section class="hero">
-            <div class="hero-content">
-              <div class="hero-badge">● SISTEMA ACTIVO</div>
-              <h3>Todo Twistar, en un solo lugar.</h3>
-              <p>Ventas, mercados, marketing, RRHH y utilidades dentro de una interfaz coherente. Los módulos conservan su lógica propia, mientras el Workspace centraliza navegación, búsqueda y presentación.</p>
-              <div class="stats" aria-label="Resumen del sistema">
-                <div class="stat"><strong id="toolCount">0</strong><span>Módulos internos</span></div>
-                <div class="stat"><strong>1</strong><span>Núcleo visual</span></div>
-                <div class="stat"><strong>100%</strong><span>Funciones preservadas</span></div>
+            <div class="hero-grid"></div>
+            <div class="hero-copy">
+              <div class="hero-badge"><span class="pulse-dot"></span> TWISTAR WORKSPACE 2.0</div>
+              <h3>Todo lo importante.<br><span>Un clic más cerca.</span></h3>
+              <p>Un centro operativo más rápido para consultar mercados, ejecutar cálculos, acceder a materiales y abrir utilidades sin perder el contexto.</p>
+              <div class="hero-actions">
+                <button class="hero-primary" id="heroCommandBtn" type="button">Buscar herramienta <kbd>⌘K</kbd></button>
+                <div class="hero-hint"><span class="live-dot"></span><span id="liveClock">Workspace activo</span></div>
               </div>
+            </div>
+            <div class="hero-visual" aria-hidden="true">
+              <div class="orbit orbit-1"></div>
+              <div class="orbit orbit-2"></div>
+              <div class="core"><img src="logo.jpg" alt="" /></div>
+              <div class="signal signal-a">MARKETS</div>
+              <div class="signal signal-b">TOOLS</div>
+              <div class="signal signal-c">DATA</div>
             </div>
           </section>
 
-          <div class="section-head">
-            <div>
-              <h4>Accesos rápidos</h4>
-              <p>Busca o abre cualquier módulo sin abandonar el panel.</p>
+          <section class="recent-section" id="recentSection" hidden>
+            <div class="section-head compact">
+              <div><span class="section-kicker">CONTINÚA DONDE QUEDASTE</span><h4>Recientes</h4></div>
+              <button class="text-btn" id="clearRecentBtn" type="button">Limpiar</button>
             </div>
+            <div class="recent-list" id="recentList"></div>
+          </section>
+
+          <div class="section-head tools-head">
+            <div><span class="section-kicker">CENTRO DE HERRAMIENTAS</span><h4>Explora el Workspace</h4><p>Filtra por área o abre directamente una herramienta.</p></div>
+            <div class="category-filters" id="categoryFilters" aria-label="Filtrar por categoría"></div>
           </div>
           <div class="cards" id="cards"></div>
         </div>
 
         <div class="tool-frame-wrap" id="frameWrap">
+          <div class="frame-loading" id="frameLoading" aria-live="polite">
+            <div class="loader-orbit"><span></span></div>
+            <strong id="loadingTitle">Cargando herramienta</strong>
+            <small>Preparando el módulo…</small>
+          </div>
           <iframe id="toolFrame" title="Herramienta Twistar" src="about:blank"></iframe>
         </div>
       </section>
     </main>
+
+    <button class="focus-exit" id="focusExit" type="button" aria-label="Salir del modo foco" title="Salir del modo foco">↙ Salir de foco</button>
   </div>
 
-  <script src="assets/workspace.js?v=20260902-3" defer></script>
-  <script src="assets/sidebar.js?v=20260902-3" defer></script>
+  <div class="command-backdrop" id="commandBackdrop" hidden>
+    <div class="command-palette" role="dialog" aria-modal="true" aria-labelledby="commandTitle">
+      <div class="command-search-wrap">
+        <span aria-hidden="true">⌕</span>
+        <input id="commandInput" type="search" placeholder="Escribe el nombre de una herramienta..." autocomplete="off" />
+        <kbd>Esc</kbd>
+      </div>
+      <div class="command-head"><span id="commandTitle">Ir a</span><span id="commandResultCount"></span></div>
+      <div class="command-results" id="commandResults"></div>
+      <div class="command-footer"><span><kbd>↑</kbd><kbd>↓</kbd> navegar</span><span><kbd>Enter</kbd> abrir</span></div>
+    </div>
+  </div>
+
+  <script src="assets/workspace.js?v=20260916-v2" defer></script>
+  <script src="assets/sidebar.js?v=20260916-v2" defer></script>
 </body>
 </html>
